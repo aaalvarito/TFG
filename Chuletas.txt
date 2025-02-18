@@ -1,0 +1,35 @@
+Estructura de la Introducción del TFG
+Contextualización e importancia de la robótica industrial
+
+Breve introducción sobre cómo la automatización ha transformado la industria.
+Importancia de la robótica industrial en la optimización de los procesos productivos.
+Mención del avance tecnológico y su impacto en la competitividad empresarial.
+Historia de la robótica industrial
+
+Orígenes de la robótica en la industria (primeros robots industriales, Joseph Engelberger, Unimate, etc.).
+Evolución de la robótica desde sistemas básicos hasta robots colaborativos y autónomos.
+Tendencias actuales en la industria 4.0.
+Conceptos generales sobre robótica industrial
+
+Definición de robótica industrial.
+Tipos de robots industriales (brazos robóticos, AGVs, cobots, etc.).
+Principales aplicaciones en distintos sectores.
+Beneficios de la robótica industrial
+
+Aumento de la eficiencia y productividad.
+Mejora de la calidad y reducción de errores.
+Reducción de costos operativos y mayor seguridad laboral.
+Flexibilidad en los procesos productivos.
+La Guía GEMMA y su relevancia
+
+Breve explicación de la Guía GEMMA y su uso en la automatización de procesos productivos.
+Su importancia en el diseño y análisis de sistemas robotizados.
+Motivación personal y objetivos del TFG
+
+Razones por las que elegiste este tema.
+Importancia del estudio dentro del ámbito de la ingeniería y la industria.
+Posibles aplicaciones prácticas del proyecto.
+Estructura del trabajo
+
+Breve explicación de cómo está organizado el documento.
+Qué se abordará en cada capítulo.
