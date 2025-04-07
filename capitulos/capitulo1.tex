@@ -15,33 +15,38 @@ La automatización ha sido un pilar fundamental en el desarrollo de la industria
 En este capítulo se presentará el contexto en el que se desarrolla este trabajo, proporcionando una visión general de la automatización en la industria y su evolución hasta la actualidad. Posteriormente, se acotará el enfoque hacia la robótica industrial, destacando su impacto en la optimización de procesos productivos. Finalmente, se delimitará el ámbito específico de este estudio, centrado en la automatización de una línea de producción robotizada, analizando sus beneficios, retos y las tecnologías empleadas.
 
 \section{La automatización industrial}
-\label{sec:miseccion} % etiqueta para luego referenciar esta sección
+\label{sec:primeraseccion} % etiqueta para luego referenciar esta sección
 
 \subsection{Conceptos básicos de la automatización industrial}
 
-La automatización industrial consiste en la implementación de sistemas de control, como computadoras, controladores lógicos programables (PLCs), robots y tecnologías de la información, para gestionar maquinaria y procesos productivos en el sector industrial. Su propósito principal es reducir la intervención humana, reemplazando tareas manuales, especialmente aquellas que implican riesgos, por procesos automatizados.
+La automatización industrial consiste en la implementación de sistemas de control, como computadoras, controladores lógicos programables (PLCs), robots y tecnologías de la información, para gestionar maquinaria y procesos productivos en el sector industrial \cite{definicion}. Su propósito principal es reducir la intervención humana, reemplazando tareas manuales, especialmente aquellas que implican riesgos, por procesos automatizados .
 
-Este concepto surge como una evolución de la mecanización industrial, incorporando dispositivos con gran capacidad de control para optimizar la eficiencia en la fabricación. Con los avances tecnológicos y la llegada de la Industria 4.0, las empresas están modernizando sus sistemas de producción mediante el uso de control informatizado, lo que les permite mejorar la precisión, calidad y rendimiento de sus operaciones. \\
+Este concepto surge como una evolución de la mecanización industrial, incorporando dispositivos con gran capacidad de control para optimizar la eficiencia en la fabricación. Con los avances tecnológicos y la llegada de la Industria 4.0, las empresas están modernizando sus sistemas de producción mediante el uso de control informatizado, lo que les permite mejorar la precisión, calidad y rendimiento de sus operaciones \cite{definicion}. \\
 
-El término ``automatización'' tiene su origen en las palabras griegas ``auto'' (por sí mismo) y ``matos'' (movimiento), y se aplica a mecanismos capaces de funcionar de manera autónoma. Los sistemas automatizados ofrecen un rendimiento superior a los manuales en términos de precisión, potencia y velocidad. En el ámbito del control industrial, es posible monitorizar y regular simultáneamente diversas variables de proceso, como temperatura, flujo, presión, distancia y niveles de líquido, mediante el uso de microprocesadores o controladores de procesamiento de datos. \\
+El término ``automatización'' tiene su origen en las palabras griegas ``auto'' (por sí mismo) y ``matos'' (movimiento), y se aplica a mecanismos capaces de funcionar de manera autónoma. Los sistemas automatizados ofrecen un rendimiento superior a los manuales en términos de precisión, potencia y velocidad. En el ámbito del control industrial, es posible monitorizar y regular simultáneamente diversas variables de proceso, como temperatura, flujo, presión, distancia y niveles de líquido, mediante el uso de PLCs (computadora industrial la cual graba la información de las entradas en memoria, las procesa y escribe en las salidas las acciones oportunas), PACs (Controladores Automatizados Programables que integran PLC y PC), o PCs. \cite{definicion}. \\
 
-La estructura de un sistema de automatización industrial se puede representar mediante un triángulo jerárquico de tres niveles:
+La estructura de un sistema de automatización industrial se puede representar mediante un triángulo jerárquico de cinco niveles:
 
 \begin{enumerate}
-    \item \textbf{Nivel Supervisor}: Compuesto por un ordenador industrial que utiliza software especializado para el control de procesos. Su principal objetivo es la parametrización y visualización del proceso y suele utilizars el protocolo de de comunicación Ethernet industrial.
-    \item \textbf{Nivel de Control}: Incluye dispositivos como PLCs que ejecutan las órdenes del nivel supervisor y controlan directamente la maquinaria en tiempo real. Estos pueden estar conectados a varios dispositivos de E/S y se comunican mediante protocolos industriales.
-    \item \textbf{Nivel de Campo}: Constituido por sensores y actuadores que interactúan directamente con el proceso físico, proporcionando datos y ejecutando acciones según las instrucciones recibidas a través del bus de campo con conexión punto a punto. 
+    \item \textbf{Nivel de gestión}: La alta gerencia usa sistemas ERP para controlar y monitorear todos los procesos de la empresa, desde la producción hasta ventas, compras y proyectos, asegurando eficiencia y alineación entre equipos.\cite{niveles_automatizacion_2}.
+    \item \textbf{Nivel de operación}: Este nivel está controlado por el sistema MES (Un sistema MES conecta el mundo digital con la producción, permitiendo supervisar y sincronizar cada fase del proceso \footnote{  (N.d.). Cursosaula21.com. Retrieved April 7, 2025, from \url{ https://www.cursosaula21.com/que-es-un-sistema-mes/}}), para monitorear la producción. Este sistema integra datos de operaciones, mantenimiento, seguridad, logística y calidad, permitiendo a la gerencia tomar decisiones informadas sobre todo el proceso, desde las materias primas hasta el producto final. \cite{niveles_automatizacion_2}.
+    \item \textbf{Nivel supervisor}: Compuesto por un ordenador industrial que utiliza software especializado para el control de procesos. Su principal objetivo es la parametrización y visualización del proceso y suele utilizars el protocolo de de comunicación Ethernet industrial \cite{niveles_automatizacion_1}.
+    \item \textbf{Nivel de control}: Incluye dispositivos como PLCs que ejecutan las órdenes del nivel supervisor y controlan directamente la maquinaria en tiempo real. Estos pueden estar conectados a varios dispositivos de E/S y se comunican mediante protocolos industriales \cite{niveles_automatizacion_1}.
+    \item \textbf{Nivel de campo}: Constituido por sensores y actuadores que interactúan directamente con el proceso físico conectados al PLC a través de un bus de campo. Los actuadores ejecutan acciones según las instrucciones recibidas normalmente a través de una conexión punto a punto con el PLC. \cite{niveles_automatizacion_1}. 
 \end{enumerate}
 
-Esta estructura permite una gestión eficiente y organizada de los procesos industriales, asegurando que cada componente funcione de manera integrada para optimizar la producción  \footnote{(N.d.). Cursosaula21.com. Retrieved March 21, 2025, from \url{https://www.cursosaula21.com/que-es-la-automatizacion-industrial/}}. 
+Esta estructura permite una gestión eficiente y organizada de los procesos industriales, asegurando que cada componente funcione de manera integrada para optimizar la producción. 
 
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=16cm]{figs/esquema_automatizacion}
   \end{center}
-  \caption{\centering Esquema de un sistema de automatización básico.}
+  \caption{\centering Niveles de la pirámide de automatización. (no conisigo poner la refernecia en el titulo de la imagen)}  
   \label{fig:esquema_automatizacion}
-\end{figure} 
+\end{figure}  
+
+% \footnote{ La Pirámide De Automatización: Clave Para La Integración De Sistemas En Plantas Industriales - Omnielectric Web. (2024, July 2). Omnielectric. \url{ https://omnielectric.es/piramide-de-automatizacion/}}
+
 
 \subsection{Tipos de automatización industrial}
 
@@ -51,7 +56,7 @@ Los sistemas de automatización industrial se clasifican principalmente en cuatr
     \item \textbf{Automatización fija}: Utilizada en procesos específicos y repetitivos donde no se requieren modificaciones en el diseño del producto debido a que aplicar modificaciones resulta casi imposible. Es ideal para la producción a gran escala de productos estables.
     \item \textbf{Automatización programable}: Aplicada en la fabricación por lotes, permite modificar el proceso mediante reprogramación, aunque esto puede consumir tiempo.
     \item \textbf{Automatización flexible}: Variante más avanzada de la automatización programable, que facilita cambios rápidos y automáticos en la producción sin interrupciones significativas.
-    \item \textbf{Sistema Integrado de Automatización}: Conjunto de máquinas, procesos y datos sincronizados bajo un único sistema de control. Integra herramientas como CAD, CAM, robots y sistemas de transporte automatizados para optimizar la producción.
+    \item \textbf{Sistema Integrado de Automatización}: Conjunto de máquinas, procesos y datos sincronizados bajo un único sistema de control. Integra herramientas como CAD, CAM, robots y sistemas de transporte automatizados para optimizar la producción \footnote{ neobotikstg. (2021, May 19). ¿Qué tipos tipos de automatización industrial hay y cuáles necesitas? Neobotik.com. \url{ https://www.neobotik.com/tipos-de-automatizacion-industrial/}}.
 \end{enumerate}
 
 \subsection{Ventajas de la Automatización Industrial}
@@ -67,7 +72,7 @@ Los sistemas de automatización industrial se clasifican principalmente en cuatr
     
     \item \textbf{Mayor seguridad}: Al implementar un sistema automatizado, los trabajadores pasan de realizar tareas directamente en el proceso a supervisarlas, lo que disminuye los riesgos laborales. Las máquinas pueden operar en entornos peligrosos o extremos, sustituyendo a los empleados en situaciones de alto riesgo, como condiciones químicas o temperaturas elevadas, reduciendo así los accidentes laborales.
     
-    \item \textbf{Facilita la monitorización remota}: Muchas operaciones industriales requieren ser controladas a distancia para una supervisión más eficiente. Los sistemas automatizados permiten la comunicación entre el área de producción y el centro de control, permitiendo a los operadores gestionar los procesos de manera remota. Un ejemplo claro de esto es el control automatizado de redes eléctricas.
+    \item \textbf{Facilita la monitorización remota}: Muchas operaciones industriales requieren ser controladas a distancia para una supervisión más eficiente. Los sistemas automatizados permiten la comunicación entre el área de producción y el centro de control, permitiendo a los operadores gestionar los procesos de manera remota.
 \end{itemize}
 
 \subsection{Desventajas de la Automatización Industrial}
@@ -75,21 +80,21 @@ Los sistemas de automatización industrial se clasifican principalmente en cuatr
 \begin{itemize}
     \item \textbf{Aumento de la contaminación}: Muchas máquinas requieren motores que funcionan con combustibles o productos químicos que pueden generar emisiones contaminantes.
     
-    \item \textbf{Menor flexibilidad}: Una máquina automatizada está diseñada para realizar tareas específicas, lo que limita la capacidad de adaptación a nuevas funciones en comparación con un trabajador humano. Actualmente, ciertas tareas, como el ensamblaje de productos con formas irregulares, siguen dependiendo del trabajo manual, aunque los avances en inteligencia artificial están cambiando esta realidad.
+    \item \textbf{Menor flexibilidad}: Una máquina automatizada está diseñada para realizar tareas específicas, lo que limita la capacidad de adaptación a nuevas funciones en comparación con un trabajador humano. Actualmente, ciertas tareas, como el ensamblaje de productos con formas irregulares, siguen dependiendo del trabajo manual.
     
-    \item \textbf{Altos costos de implementación}: La inversión inicial para adoptar un sistema automatizado es elevada. Además de los gastos en investigación y desarrollo, es necesario considerar los costos de mantenimiento, formación del personal y servicio técnico, lo que suma un desafío económico para las empresas que buscan automatizar sus procesos.
+    \item \textbf{Altos costos de implementación}: La inversión inicial para adoptar un sistema automatizado es elevada. Además de los gastos en investigación y desarrollo, es necesario considerar los costos de mantenimiento, formación del personal y servicio técnico, lo que suma un desafío económico para las empresas que buscan automatizar sus procesos \footnote{ Ventajas y desventajas de la automatización industrial. (2016, July 29). MCR.  \url{ https://mcr.es/ventajas-y-desventajas-de-la-automatizacion-industrial/}}.
 \end{itemize}
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=12cm]{figs/automatizacion_industrial.jpg}
+    \includegraphics[width=9.5cm]{figs/automatizacion_industrial.jpg}
   \end{center}
   \caption{\centering Ejemplo de aplicación de automatización industrial.}
   \label{fig:automatizacion_industrial}
 \end{figure}
 
 \section{La robótica}
-\label{sec:miseccion} % etiqueta para luego referenciar esta sección
+\label{sec:segundaseccion} % etiqueta para luego referenciar esta sección
 
 La robótica es la disciplina científica que integra conocimientos de electrónica, mecánica e informática para desarrollar sistemas automatizados capaces de realizar tareas de manera autónoma o semiautónoma. Los componentes que conforman un robot son esenciales para su funcionamiento, desde la estructura mecánica (brazos, ruedas, actuadores, etc.), que debe garantizar un movimiento preciso y estabilidad, hasta los sistemas electrónicos que deben ser totalmente compatibles y funcionales para permitir la correcta operación. Además, los algoritmos que se implementan deben ser robustos, seguros y capaces de adaptarse a diversas situaciones y condiciones del entorno. \\
 
@@ -124,7 +129,7 @@ Desde la aparición de los primeros prototipos de robots industriales, ha surgid
 \end{figure}
 
 \section{Evolución e historia de la robótica industrial}
-\label{sec:segundaseccion}
+\label{sec:terceraseccion}
 
 La robótica industrial aparece por primera vez a mediados del siglo XX en Europa a manos del británico Bill Taylor, estudiante que sobre 1937 creó el robot Gargantua, un robot en forma de grua cuya principal función era la colocación de objetos, dando lugar al primer modelo de pick \& place \footnote{Marketing. (2021, February 2). Historia y Evolución de la Robótica Industrial. EDS Robotics. \url{https://www.edsrobotics.com/blog/evolucion-robotica-industrial/}}. 
 
@@ -147,7 +152,7 @@ Por otro lado, George Devol fue el encargado de crear la primera empresa de rob�
 	\label{fig:ancientrel}
 \end{figure}
 
-En los años 60 y 70 ya empezaron a aparecer modelos de brazos robóticos más elaborados y de mayor tamaño con elementos como sensores o cámaras incorporados en ellos. En 1973 la empresa alemana KUKA crea Famulus, el primer robot industrial con motores eléctricos y en 1974 Victor Scheinman desarrolla el robot PUMA (Programmable Universal Machine for Assembly), el cual se convierá en un estándar en la industria \footnote{Sutori. (n.d.). Sutori.com. Retrieved February 24, 2025, from \url{ https://www.sutori.com/es/historia/linea-de-tiempo-evolucion-de-la-robotica-industrial--6w6pytow1tj3grr5scVKU1Ns}}. \\
+En los años 60 y 70 ya empezaron a aparecer modelos de brazos robóticos más elaborados y de mayor tamaño con elementos como sensores o cámaras incorporados en ellos. En 1973 la empresa alemana KUKA crea Famulus, el primer robot industrial con motores eléctricos y en 1974 Victor Scheinman desarrolla el robot PUMA (Programmable Universal Machine for Assembly), el cual se convierá en un estándar en la industria. \\
 
 En los años 80 la robótica industrial alcanzó su máximo desarrollo debido a que la fabricación y venta de esta aumentó un 80\% y, aunque EEUU fue el impulsor de esta industria, también empezó a desarrollarse en Asia y Europa. Destaca el robot Motoman L10 de Yaskawa desarrollado en 1981, el cual introduce el uso de retroalimentación por visión, lo que permite a los robots la identificación de objetos y su entorno o el PUMA 560, primer prototipo de robot quirúrgico. 
 
@@ -171,10 +176,10 @@ A partir de la década de 1990, la robótica industrial experimentó un crecimie
 
 Entrando al siglo XXI se crean los primeros robots colaborativos, conocidos como cobots, concebidos para cooperar de manera directa con las personas. Estos dispositivos se caracterizan por su seguridad, adaptabilidad y facilidad de programación, convirtiéndose en una solución ideal para entornos industriales donde es necesario combinar tareas manuales y automatizadas. 
 
-En los años 2010, la Industria 4.0 emergió como una nueva fase en la manufactura, caracterizada por la digitalización y la interconexión de sistemas de producción.  Los robots industriales se convirtieron en componentes clave de las fábricas inteligentes, colaborando estrechamente con humanos y otros sistemas automatizados para optimizar la eficiencia y la flexibilidad en la producción. 
+En los años 2010, la Industria 4.0 emergió como una nueva fase en la manufactura, caracterizada por la digitalización y la interconexión de sistemas de producción.  Los robots industriales se convirtieron en componentes clave de las fábricas inteligentes, colaborando estrechamente con humanos y otros sistemas automatizados para optimizar la eficiencia y la flexibilidad en la producción\footnote{Sutori. (n.d.). Sutori.com. Retrieved February 24, 2025, from \url{ https://www.sutori.com/es/historia/linea-de-tiempo-evolucion-de-la-robotica-industrial--6w6pytow1tj3grr5scVKU1Ns}}. 
 
 \section{Tipos de robots industriales}
-\label{sec:terceraseccion}
+\label{sec:cuartaseccion}
 
 En este apartado se van a abordar los conceptos esenciales de la robótica industrial, proporcionando una visión general de los distintos tipos de robots, sus componentes principales y las distintas técnicas existentes para operar con ellos. Comprender estos fundamentos es crucial para desarrollar soluciones eficientes y optimizar los procesos de producción.
 
@@ -259,32 +264,20 @@ Estos robots también tienen el nombre de robots polares y están basados en el 
 \section{Motivación del trabajo}
 \label{sec:quintaseccion}
 
-En los textos puedes poner palabras en \textit{cursiva}, para aquellas expresiones en sentido \textit{figurado}, palabras como \textit{robota}, que está fuera del diccionario castellano, o bien para resaltar palabras de una colección: \textit{(a)} es la primera letra del abecedario, \textit{(b)} es la segunda, etc.\\
+A lo largo de mi formación académica, he adquirido conocimientos en diversas áreas de la robótica, incluyendo robótica de servicio, automatización, planificación, sistemas distribuidos y programación con Arduino, entre otras. Sin embargo, el ámbito que más ha despertado mi interés ha sido el de la robótica industrial. \\
 
+Es cierto que la robótica industrial no tiene una presencia destacada en mi formación académica, ya que únicamente se imparten dos o tres asignaturas centradas en este ámbito. En consecuencia, mi conocimiento sobre el sector no es especialmente profundo. No obstante, desde el primer día me ha resultado un área fascinante, especialmente todo lo relacionado con los brazos robóticos y los PLCs, cuya programación es mucho más interactiva y dinámica en comparación con otros tipos de robots, como aquellos que emplean ROS. Además, me resulta especialmente atractivo trabajar en un entorno controlado, ya que ello me permite desarrollar programas con la certeza de que ningún factor externo afectará su funcionamiento. \\
 
+Con este trabajo, mi objetivo es adquirir una formación sólida y obtener los conocimientos necesarios para desarrollarme profesionalmente en el sector de la robótica industrial, complementando y ampliando así lo aprendido durante la carrera. Considero que este ámbito tiene un gran futuro, ya que la producción industrial en masa seguirá siendo fundamental debido al consumismo global y al crecimiento demográfico. Además, el sector continúa evolucionando constantemente con el desarrollo de nuevas técnicas y robots, lo que ha impulsado su expansión desde sus inicios en la década de 1940. He elegido esta rama de la robótica porque es la que más me apasiona y me genera mayor satisfacción entre todas las que he explorado. Considero que es fundamental dedicarse a una profesión que realmente motive y entusiasme, ya que ello contribuye significativamente a la realización personal y profesional. \\
 
-No olvides incluir imágenes y referenciarlas, como la Figura \ref{fig:Robot_intro}.
-
-\subsection{Números}
-\label{sec:subseccion}
-
-En lugar de tener secciones interminables, como la Sección \ref{sec:miseccion}, divídelas en subsecciones.
-
-Para hablar de números, mételos en el entorno \textit{math} de \LaTeX, por ejemplo, $1.5Kg$. También puedes usar el símbolo del Euro como aquí: 1.500\euro.
-
-\subsection{Listas}
-
-Cuando describas una colección, usa \texttt{itemize} para ítems o \texttt{enumerate} para enumerados. Por ejemplo:
+A continuación, se presentan los siguientes capítulos:
 
 \begin{itemize}
- \item \textit{Entorno de simulación.} Hemos usado dos entornos de simulación: uno en 3D y otro en 2D.
- \item \textit{Entornos reales.} Dentro del campus, hemos realizado experimentos en Biblioteca y en el edificio de Gestión.
-\end{itemize}\
-
-\begin{enumerate}
- \item Primer elemento de la colección.
- \item Segundo elemento de la colección.
-\end{enumerate}\
+    \item \textbf{Objetivos}: Se detallarán y explicarán los objetivos a cumplir en este trabajo.
+    \item \textbf{Plataforma de desarrollo}: Se describirá el funcionamiento del hardware del sistema industrial, junto con sus componentes y herramientas utilizadas.
+    \item \textbf{Diseño}: Se abordará la programación del software implementado en el sistema, explicando su finalidad y funcionamiento.
+    \item \textbf{Conclusiones}: Se expondrán las conclusiones finales del trabajo, incluyendo un análisis de los conocimientos adquiridos a lo largo del desarrollo del proyecto.
+\end{itemize}
 
 \paragraph{Referencias bibliográficas}
 \label{sec:referencias}
@@ -295,10 +288,4 @@ Las referencias, con todo su contenido, están recogidas en el fichero \texttt{b
 
 Existen numerosos estilos para reflejar una referencia bibliográfica. El estilo establecido por defecto en este documento es APA, que es uno de los estilos más comunes, pero lo puedes modificar en el archivo \texttt{memoria.tex}; concretamente, cambiando el campo \verb|apalike| a otro en la instrucción \verb|\bibliographystyle{apalike}|. 
 
-\
-
-\
-
-\
-
-Y, para terminar este capítulo, resume brevemente qué vas a contar en los siguientes.
+https://burjcdigital.urjc.es/server/api/core/bitstreams/80cd7f76-b95f-42fe-a619-452f6968d7b8/content
