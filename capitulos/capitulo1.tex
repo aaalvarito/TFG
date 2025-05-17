@@ -10,7 +10,7 @@
 
 \vspace{1cm}
 
-La automatización ha sido un pilar fundamental en el desarrollo de la industria moderna, permitiendo mejoras significativas en eficiencia, calidad y seguridad. Desde la evolución Industrial hasta la actualidad, la evolución de las tecnologías ha dado paso a sistemas cada vez más sofisticados, donde la integración de robots ha transformado los entornos de producción, ofreciendo resultados de mayor calidad y reduciendo costes y tiempos de producción. En particular, la robótica industrial ha desempeñado un papel clave en sectores como la automoción, la electrónica y la manufactura, ofreciendo soluciones flexibles y altamente eficientes para la producción en serie.\\
+La automatización ha sido un pilar fundamental en el desarrollo de la industria moderna, permitiendo mejoras significativas en eficiencia, calidad y seguridad \cite{definicion_2}. Desde la evolución Industrial hasta la actualidad, la evolución de las tecnologías ha dado paso a sistemas cada vez más sofisticados, donde la integración de robots ha transformado los entornos de producción, ofreciendo resultados de mayor calidad y reduciendo costes y tiempos de producción \cite{definicion_2}. En particular, la robótica industrial ha desempeñado un papel clave en sectores como la automoción, la electrónica y la manufactura, ofreciendo soluciones flexibles y altamente eficientes para la producción en serie \cite{definicion_2}.\\
 
 En este capítulo se presentará el contexto en el que se desarrolla este trabajo, proporcionando una visión general de la automatización en la industria y su evolución hasta la actualidad. Posteriormente, se acotará el enfoque hacia la robótica industrial, destacando su impacto en la optimización de procesos productivos. Finalmente, se delimitará el ámbito específico de este estudio, centrado en la automatización de una línea de producción robotizada, analizando sus beneficios, retos y las tecnologías empleadas.
 
@@ -19,17 +19,25 @@ En este capítulo se presentará el contexto en el que se desarrolla este trabaj
 
 \subsection{Conceptos básicos de la automatización industrial}
 
-La automatización industrial consiste en la implementación de sistemas de control, como computadoras, controladores lógicos programables (PLCs), robots y tecnologías de la información, para gestionar maquinaria y procesos productivos en el sector industrial \cite{definicion}. Su propósito principal es reducir la intervención humana, reemplazando tareas manuales, especialmente aquellas que implican riesgos, por procesos automatizados .
+La automatización industrial consiste en la implementación de sistemas de control, como computadoras, controladores lógicos programables (computadora industrial la cual graba la información de las entradas en memoria, las procesa y escribe en las salidas las acciones oportunas), robots y tecnologías de la información, para gestionar maquinaria y procesos productivos en el sector industrial \cite{definicion}. Su propósito principal es reducir la intervención humana, reemplazando tareas manuales, especialmente aquellas que implican riesgos, por procesos automatizados .
 
 Este concepto surge como una evolución de la mecanización industrial, incorporando dispositivos con gran capacidad de control para optimizar la eficiencia en la fabricación. Con los avances tecnológicos y la llegada de la Industria 4.0, las empresas están modernizando sus sistemas de producción mediante el uso de control informatizado, lo que les permite mejorar la precisión, calidad y rendimiento de sus operaciones \cite{definicion}. \\
 
-El término ``automatización'' tiene su origen en las palabras griegas ``auto'' (por sí mismo) y ``matos'' (movimiento), y se aplica a mecanismos capaces de funcionar de manera autónoma. Los sistemas automatizados ofrecen un rendimiento superior a los manuales en términos de precisión, potencia y velocidad. En el ámbito del control industrial, es posible monitorizar y regular simultáneamente diversas variables de proceso, como temperatura, flujo, presión, distancia y niveles de líquido, mediante el uso de PLCs (computadora industrial la cual graba la información de las entradas en memoria, las procesa y escribe en las salidas las acciones oportunas), PACs (Controladores Automatizados Programables que integran PLC y PC), o PCs. \cite{definicion}. \\
+El término ``automatización'' tiene su origen en las palabras griegas ``auto'' (por sí mismo) y ``matos'' (movimiento), y se aplica a mecanismos capaces de funcionar de manera autónoma. Los sistemas automatizados ofrecen un rendimiento superior a los manuales en términos de precisión, potencia y velocidad \cite{definicion}. En el ámbito del control industrial, es posible monitorizar y regular simultáneamente diversas variables de proceso, como temperatura, flujo, presión, distancia y niveles de líquido, mediante el uso de PLCs, PACs (Controladores Automatizados Programables que integran PLC y PC), o PCs. \cite{definicion}. \\
 
-La estructura de un sistema de automatización industrial se puede representar mediante un triángulo jerárquico de cinco niveles:
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=13.5cm]{figs/automatizacion_industrial.jpg}
+  \end{center}
+  \caption{\centering Ejemplo de aplicación de automatización industrial.}
+  \label{fig:automatizacion_industrial}
+\end{figure}
+
+La estructura de un sistema de automatización industrial se puede representar mediante un triángulo jerárquico de cinco niveles como se observa en la imagen ~\ref{fig:esquema_automatizacion}:
 
 \begin{enumerate}
     \item \textbf{Nivel de gestión}: La alta gerencia usa sistemas ERP para controlar y monitorear todos los procesos de la empresa, desde la producción hasta ventas, compras y proyectos, asegurando eficiencia y alineación entre equipos.\cite{niveles_automatizacion_2}.
-    \item \textbf{Nivel de operación}: Este nivel está controlado por el sistema MES (Un sistema MES conecta el mundo digital con la producción, permitiendo supervisar y sincronizar cada fase del proceso \footnote{  (N.d.). Cursosaula21.com. Retrieved April 7, 2025, from \url{ https://www.cursosaula21.com/que-es-un-sistema-mes/}}), para monitorear la producción. Este sistema integra datos de operaciones, mantenimiento, seguridad, logística y calidad, permitiendo a la gerencia tomar decisiones informadas sobre todo el proceso, desde las materias primas hasta el producto final. \cite{niveles_automatizacion_2}.
+    \item \textbf{Nivel de operación}: Este nivel está controlado por el sistema MES. Un sistema MES conecta el mundo digital con la producción, permitiendo supervisar, sincronizar cada fase del proceso y monitorear la producción \footnote{  (N.d.). Cursosaula21.com. Retrieved April 7, 2025, from \url{ https://www.cursosaula21.com/que-es-un-sistema-mes/}}. Este sistema integra datos de operaciones, mantenimiento, seguridad, logística y calidad, permitiendo a la gerencia tomar decisiones informadas sobre todo el proceso, desde las materias primas hasta el producto final. \cite{niveles_automatizacion_2}.
     \item \textbf{Nivel supervisor}: Compuesto por un ordenador industrial que utiliza software especializado para el control de procesos. Su principal objetivo es la parametrización y visualización del proceso y suele utilizars el protocolo de de comunicación Ethernet industrial \cite{niveles_automatizacion_1}.
     \item \textbf{Nivel de control}: Incluye dispositivos como PLCs que ejecutan las órdenes del nivel supervisor y controlan directamente la maquinaria en tiempo real. Estos pueden estar conectados a varios dispositivos de E/S y se comunican mediante protocolos industriales \cite{niveles_automatizacion_1}.
     \item \textbf{Nivel de campo}: Constituido por sensores y actuadores que interactúan directamente con el proceso físico conectados al PLC a través de un bus de campo. Los actuadores ejecutan acciones según las instrucciones recibidas normalmente a través de una conexión punto a punto con el PLC. \cite{niveles_automatizacion_1}. 
@@ -39,14 +47,13 @@ Esta estructura permite una gestión eficiente y organizada de los procesos indu
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=16cm]{figs/esquema_automatizacion}
+    \includegraphics[width=15.5cm]{figs/esquema_automatizacion}
   \end{center}
-  \caption{\centering Niveles de la pirámide de automatización. (no conisigo poner la refernecia en el titulo de la imagen)}  
+  \caption{\centering Niveles de la pirámide de automatización. \cite{imagen_niveles_automatizacion}}  
   \label{fig:esquema_automatizacion}
 \end{figure}  
 
-% \footnote{ La Pirámide De Automatización: Clave Para La Integración De Sistemas En Plantas Industriales - Omnielectric Web. (2024, July 2). Omnielectric. \url{ https://omnielectric.es/piramide-de-automatizacion/}}
-
+\newpage
 
 \subsection{Tipos de automatización industrial}
 
@@ -56,12 +63,13 @@ Los sistemas de automatización industrial se clasifican principalmente en cuatr
     \item \textbf{Automatización fija}: Utilizada en procesos específicos y repetitivos donde no se requieren modificaciones en el diseño del producto debido a que aplicar modificaciones resulta casi imposible. Es ideal para la producción a gran escala de productos estables \cite{tipos_industrial}.
     \item \textbf{Automatización programable}: Aplicada en la fabricación por lotes, permite modificar el proceso mediante reprogramación, aunque esto puede consumir tiempo \cite{tipos_industrial}.
     \item \textbf{Automatización flexible}: Variante más avanzada de la automatización programable, que facilita cambios rápidos y automáticos en la producción sin interrupciones significativas \cite{tipos_industrial}.
+    \newpage
     \item \textbf{Sistema Integrado de Automatización}: Conjunto de máquinas, procesos y datos sincronizados bajo un único sistema de control. Integra herramientas como CAD, CAM, robots y sistemas de transporte automatizados para optimizar la producción \cite{tipos_industrial}.
 \end{enumerate}
 
-\subsection{Ventajas y desventajas de la Automatización Industrial}
+\subsection{Ventajas y desventajas de la automatización industrial}
 
-La automatización industrial ha transformado profundamente los procesos de producción, introduciendo tecnologías avanzadas que permiten aumentar la eficiencia, mejorar la calidad y reducir los costos operativos. Sin embargo, junto con estos beneficios, también surgen desafíos y limitaciones que deben ser considerados por las empresas antes de implementar estos sistemas. A continuación, se presentan las principales ventajas y desventajas de la automatización industrial:
+La automatización industrial ha transformado profundamente los procesos de producción, introduciendo tecnologías avanzadas que permiten aumentar la eficiencia, mejorar la calidad y reducir los costos operativos \cite{des_ventajas_1}. A continuación, se presentan las principales ventajas:
 
 \begin{itemize}
 
@@ -77,6 +85,12 @@ La automatización industrial ha transformado profundamente los procesos de prod
 
 \item \textbf{Facilita la monitorización remota}: Muchas operaciones industriales requieren ser controladas a distancia para una supervisión más eficiente. Los sistemas automatizados permiten la comunicación entre el área de producción y el centro de control, permitiendo a los operadores gestionar los procesos de manera remota \cite{des_ventajas_2}.
 
+\end{itemize}
+
+Sin embargo, junto con estos beneficios, como sucede en cualquier ámbito, también surgen desafíos y limitaciones que deben ser considerados por las empresas antes de implementar estos sistemas. Por eso, seguidamente se muestran algunas desventajas de la automatización industrial:
+
+\begin{itemize}
+
 \item \textbf{Aumento de la contaminación}: Muchas máquinas requieren motores que funcionan con combustibles o productos químicos que pueden generar emisiones contaminantes \cite{des_ventajas_1}.
 
 \item \textbf{Menor flexibilidad}: Una máquina automatizada está diseñada para realizar tareas específicas, lo que limita la capacidad de adaptación a nuevas funciones en comparación con un trabajador humano. Actualmente, ciertas tareas, como el ensamblaje de productos con formas irregulares, siguen dependiendo del trabajo manual \cite{des_ventajas_1}.
@@ -84,18 +98,57 @@ La automatización industrial ha transformado profundamente los procesos de prod
 \item \textbf{Altos costos de implementación}: La inversión inicial para adoptar un sistema automatizado es elevada. Además de los gastos en investigación y desarrollo, es necesario considerar los costos de mantenimiento, formación del personal y servicio técnico, lo que suma un desafío económico para las empresas que buscan automatizar sus procesos \cite{des_ventajas_2}.
 \end{itemize}
 
+\subsection{Equipos para la automatización industrial}
+
+La automatización industrial se apoya en una amplia gama de dispositivos diseñados para controlar, supervisar y optimizar procesos dentro de entornos productivos. Entre estos equipos, destacan los Controladores Lógicos Programables (PLCs) y las Interfaces Hombre-Máquina (HMI), los cuales cumplen un papel fundamental en la implementación y operación de sistemas automatizados modernos.
+
+\subsubsection{Controladores lógicos programables (PLCs)}
+
+Un PLC (Controlador Lógico Programable) es una computadora diseñada específicamente para automatizar procesos industriales. Su tarea principal es controlar de manera eficiente y segura los sistemas que conforman una máquina o proceso, lo cual es clave para el avance tecnológico de las industrias. Estos dispositivos operan mediante un ciclo en el que se realiza un autodiagnóstico, se leen las entradas, se ejecuta el programa y finalmente se actualizan las salidas, lo que les permite adaptarse rápidamente a las condiciones cambiantes del entorno  \cite{plc_info}.
+
+Existen distintos tipos de PLC, cada uno adaptado a las necesidades particulares de cada industria. Entre los más comunes se encuentran los modelos compactos, modulares o de banda estrecha. Marcas como Siemens y Allen Bradley son líderes en este mercado, ofreciendo una amplia variedad de productos y accesorios para mejorar la automatización de los procesos. Los PLCs se usan en una gran variedad de sectores, incluyendo la fabricación de cemento, plásticos, muebles, automotriz, transporte, energía y seguridad, ayudando a mejorar la eficiencia y reducir los costos operativos  \cite{plc_info}.
+
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=13cm]{figs/automatizacion_industrial.jpg}
+    \includegraphics[width=9.5cm]{figs/info_plc}
   \end{center}
-  \caption{\centering Ejemplo de aplicación de automatización industrial.}
-  \label{fig:automatizacion_industrial}
-\end{figure}
+  \caption{\centering PLC de la serie Siemens S7-1500.}
+  \label{fig:info_plc}
+\end{figure} 
+
+Una de las principales características de los PLC es su capacidad para controlar entradas y salidas de manera segura. Además, son compatibles con varios lenguajes de programación, lo que permite su fácil integración con sistemas de supervisión y control. Estos dispositivos pueden ser reprogramados según las necesidades del proceso, lo que les da gran flexibilidad y adaptabilidad en entornos industriales que están en constante cambio  \cite{plc_info}. \\
+
+El lenguaje de programación utilizado para los PLCs y en este proyecto es el lenguaje KOP, también conocido como \textbf{Ladder}. Este lenguaje es ampliamente utilizado en la programación de PLC, especialmente en los dispositivos Siemens. Su popularidad se debe a su antigüedad, disponibilidad, mantenibilidad y facilidad de uso. Diseñado para imitar los diagramas eléctricos tradicionales, permite a técnicos e ingenieros familiarizados con estos esquemas adaptarse fácilmente a la programación en este lenguaje. Su naturaleza gráfica permite una comprensión rápida de la lógica del programa, lo que simplifica el proceso de mantenimiento y resolución de problemas \cite{ladder_info}.
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=14cm]{figs/ladder}
+  \end{center}
+  \caption{\centering Ejemplo del lenguaje de programación Ladder.}
+  \label{fig:ladder}
+\end{figure} 
+
+
+\subsubsection{Interfaz humano máquina (HMI)}
+
+Una Interfaz Hombre-Máquina (HMI) es un dispositivo que permite a los operarios comunicarse con sistemas automatizados dentro de un entorno industrial. Básicamente, actúa como una pantalla o panel táctil desde el cual se puede supervisar, controlar y ajustar el funcionamiento de una máquina o proceso. Los HMI permiten visualizar datos en tiempo real, como temperaturas, velocidades o estados de operación, y también enviar comandos para modificar parámetros o detener procesos si es necesario \cite{hmi}.
+
+Además, estos dispositivos están pensados para funcionar en condiciones industriales exigentes, con diseños robustos y duraderos \cite{hmi}. También soportan múltiples idiomas y pueden adaptarse a distintos sectores y tipos de máquinas \cite{hmi}. En resumen, un HMI es una herramienta fundamental para mejorar la comunicación entre las personas y los sistemas automatizados, permitiendo un control más intuitivo, rápido y preciso de los procesos industriales.
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=13cm]{figs/HMI}
+  \end{center}
+  \caption{\centering HMI Siemens.}
+  \label{fig:ladder}
+\end{figure} 
 
 \section{La robótica}
 \label{sec:segundaseccion} % etiqueta para luego referenciar esta sección
 
-La robótica es la disciplina científica que integra conocimientos de electrónica, mecánica e informática para desarrollar sistemas automatizados capaces de realizar tareas de manera autónoma o semiautónoma. Los componentes que conforman un robot son esenciales para su funcionamiento, desde la estructura mecánica (brazos, ruedas, actuadores, etc.), que debe garantizar un movimiento preciso y estabilidad, hasta los sistemas electrónicos que deben ser totalmente compatibles y funcionales para permitir la correcta operación. Además, los algoritmos que se implementan deben ser robustos, seguros y capaces de adaptarse a diversas situaciones y condiciones del entorno.
+La robótica es la disciplina científica que integra conocimientos de electrónica, mecánica e informática para desarrollar sistemas automatizados capaces de realizar tareas de manera autónoma o semiautónoma \cite{definicion_robot}. \\
+
+A diferencia de la robótica industrial, en la robótica tradicional se utilizan componentes específicos diseñados para una tarea concreta, pasando por la estructura mecánica (brazos, ruedas, actuadores, etc.), que debe garantizar un movimiento preciso y estabilidad, hasta los sistemas electrónicos que deben ser totalmente compatibles y funcionales para permitir la correcta operación. Además, los algoritmos que se implementan deben ser robustos, seguros y capaces de adaptarse a diversas situaciones y condiciones del entorno.
 
 Entre estos componentes, uno de los más importantes para lograr dicha adaptación al entorno son los sensores, ya que juegan un papel crucial proporcionando al robot la información necesaria sobre su entorno. Estos sensores, de diversos tipos, miden una amplia gama de magnitudes físicas, como la luz, posición, velocidad, fuerza, temperatura..., funcionando de manera análoga a los órganos sensoriales en los seres humanos. 
 
@@ -105,23 +158,19 @@ Finalmente, los actuadores son los encargados de ejecutar las acciones determina
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=10cm]{figs/Robot_intro}
+    \includegraphics[width=8cm]{figs/Robot_intro}
   \end{center}
   \caption{\centering RB-WATCHER de Robotink.}
   \label{fig:Robot_intro}
 \end{figure}
 
-\subsection{Robótica Industrial}
+\subsection{Robótica industrial}
 
 Según la norma internacional ISO 8373:2012 un robot industrial se define como ``un manipulador multifuncional, reprogramable y controlado automáticamente, programable en tres o más ejes que puede estar fijo en un área o móvil para su uso en aplicaciones de automatización industrial'' \cite{definicion_iso}. Todo ello a partir de trayectorias variables para ejecutar diversas tareas cíclicas y adaptables. 
 
 La robótica industrial es una disciplina de la ingeniería robótica dedicada al diseño, desarrollo y fabricación de robots industriales con el propósito de automatizar tareas repetitivas tradicionalmente realizadas por seres humanos. Estos sistemas robóticos se caracterizan por seguir una secuencia de instrucciones predefinidas, ejecutando ciclos de trabajo continuos en líneas de producción de diversos sectores industriales. Estos robots son considerados industriales debido a que se utilizan en la industria manufacturera en sectores como la automoción, electrónica, alimentación, farmacéutico... En ellos contribuyen significativamente a mejorar la eficiencia, la velocidad y la calidad de los procesos productivos \cite{info_robotica_industrial_1}. 
 
 A diferencia de los robots de servicio, los robots industriales operan en entornos altamente controlados, lo que simplifica su programación y control. Debido a estas condiciones estables, estos robots suelen tener más de tres grados de libertad, permitiéndoles realizar movimientos complejos con gran precisión. Aunque su aplicación principal ha sido históricamente en entornos industriales, su uso se ha expandido hacia sectores como la minería, la agricultura, el comercio y la salud, demostrando su versatilidad y adaptabilidad. \\
-
-Diferenciar entre brazo robotico y brazo industrial \\
-
-Desde la aparición de los primeros prototipos de robots industriales, ha surgido un debate sobre su impacto en el empleo humano, con preocupaciones respecto a una posible sustitución de la mano de obra. Sin embargo, numerosos estudios sostienen que, lejos de desplazar a los trabajadores, estos sistemas robóticos buscan mejorar las condiciones laborales, eliminando tareas monótonas o peligrosas \cite{info_robotica_industrial_2}. 
 
 \begin{figure} [h!]
   \begin{center}
@@ -130,6 +179,14 @@ Desde la aparición de los primeros prototipos de robots industriales, ha surgid
   \caption{\centering Partes de un brazo robótico industrial.}
   \label{fig:brazo_industrials}
 \end{figure}
+
+Para que un brazo robótico sea considerado industrial, debe cumplir con una serie de características técnicas y funcionales que lo hagan adecuado para entornos de producción. Entre ellas, destacan la precisión y la repetibilidad, que permiten realizar tareas con tolerancias muy ajustadas. También debe tener una estructura robusta y una capacidad de carga suficiente según la aplicación, así como al menos seis grados de libertad para poder ejecutar movimientos complejos \cite{brazo_industrial}.
+
+Otra característica fundamental es la velocidad de operación, ya que en entornos industriales es clave mantener ritmos de trabajo altos. Además, debe ser fácilmente programable y compatible con sistemas de automatización como PLCs o entornos como ROS, y permitir la integración con sensores, cámaras o herramientas específicas  \cite{brazo_industrial}.
+
+Desde el punto de vista de seguridad y conectividad, debe cumplir con normativas como la ISO 10218 y ser compatible con protocolos industriales como PROFINET o EtherCAT \cite{brazo_industrial}. \\
+
+Desde la aparición de los primeros prototipos de robots industriales, ha surgido un debate sobre su impacto en el empleo humano, con preocupaciones respecto a una posible sustitución de la mano de obra. Sin embargo, numerosos estudios sostienen que, lejos de desplazar a los trabajadores, estos sistemas robóticos buscan mejorar las condiciones laborales, eliminando tareas monótonas o peligrosas \cite{info_robotica_industrial_2}. 
 
 \subsection{Tipos de robots industriales}
  
@@ -161,7 +218,7 @@ Estos robots articulados son los más comunes en el sector de fabricación enfoc
 
 \subsubsection{Robot cilíndrico}
 
-Los robots cilíndricos se caratcerizan por tener movimientos cilíndricos debido a que están compuestos de dos articulaciones prismáticas y otra de revolución. Esta morfología le permite movimientos de rotación en torno a su propio eje y con las articulaciones prismáticas ajusta la altitud y radio de trabajo. Su principal aplicación es la de ``pick and place'' las cuales no requieren desplazamiento \cite{tipos_robots_2}.
+Los robots cilíndricos se caratcerizan por tener movimientos cilíndricos debido a que están compuestos de dos articulaciones prismáticas y otra de revolución. Esta morfología le permite movimientos de rotación en torno a su propio eje y con las articulaciones prismáticas ajusta la altitud y radio de trabajo. Su principal aplicación es la de ``pick and place'' las cuales no requieren desplazamiento, aunque actualmente están prácticamente en desuso \cite{tipos_robots_2}.
 
 \begin{figure} [h!]
   \begin{center}
@@ -173,7 +230,7 @@ Los robots cilíndricos se caratcerizan por tener movimientos cilíndricos debid
 
 \subsubsection{Robot SCARA}
 
-Este tipo de robots tiene como peculiaridad que poseen un brazo con libertad en un plano XY, pero con restricción de movimiento en el eje Z. Estos modelos están formados por dos eslabones en adición a dos juntas de revolución y una prismática. La función de la articulación prismática es desplazar en el eje Z el EOAT y tiene diversas aplicaciones como la paletización, el ensambalaje o biomedicina \cite{tipos_robots_1}.
+Este tipo de robot tiene como peculiaridad que posee un brazo con todos los grados de libertad de desplazamiento en el espacio y rotación respecto al eje Z. Estos modelos están formados por dos eslabones en adición a dos juntas de revolución y una prismática. La función de la articulación prismática es desplazar en el eje Z el EOAT y tiene diversas aplicaciones como la paletización, el ensambalaje o biomedicina \cite{tipos_robots_1}.
 
 \begin{figure} [h!]
   \begin{center}
@@ -184,12 +241,12 @@ Este tipo de robots tiene como peculiaridad que poseen un brazo con libertad en 
 \end{figure} 
 
 \subsubsection{Robot delta}
-Los robots delta están formados por tres eslabones unidos al un EOAT mediante tres juntas universales y una base común. La base está formada por tres articulaciones primáticas o en su lugar accionadas por revoluciones, y, su función, es proporionarle cuatro grados de libertad al EOAT para que pueda moverse en todos los ejes cartesianos y girar sobre su eje Z. Sus principales aplicaciones son la de ``pick and place'' de forma veloz (debido a que no tiene que mover toda la estructura mecánica como otro tipo de brazos, sino que solo mueve el TCP o punto central de la herramienta). en la industria alimentaria, electrónica y farmacéutica \cite{tipos_robots_2}.
+Los robots delta están formados por tres eslabones unidos a un EOAT mediante tres juntas universales y una base común. La base está formada por tres articulaciones primáticas o en su lugar accionadas por revoluciones, y, su función, es proporionarle cuatro grados de libertad al EOAT para que pueda moverse en todos los ejes cartesianos y girar sobre su eje Z. Sus principales aplicaciones son la de ``pick and place'' de forma veloz dentro de la industria alimentaria, electrónica y farmacéutica principalmente (debido a que no tiene que mover toda la estructura mecánica como otro tipo de brazos, sino que solo mueve el TCP o punto central de la herramienta) \cite{tipos_robots_2}.
 
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=5cm]{figs/robot_delta}
+    \includegraphics[width=4.8cm]{figs/robot_delta}
   \end{center}
   \caption{\centering Robot delta.}
   \label{fig:robot_delta}
@@ -207,25 +264,119 @@ Estos robots también tienen el nombre de robots polares y están basados en el 
   \label{fig:robot_esferico}
 \end{figure} 
 
-\subsubsection{Historia}
-
-Entrando al siglo XXI se crean los primeros robots colaborativos, conocidos como cobots, concebidos para cooperar de manera directa con las personas. Estos dispositivos se caracterizan por su seguridad, adaptabilidad y facilidad de programación, convirtiéndose en una solución ideal para entornos industriales donde es necesario combinar tareas manuales y automatizadas. 
-
-En los años 2010, la Industria 4.0 emergió como una nueva fase en la manufactura, caracterizada por la digitalización y la interconexión de sistemas de producción.  Los robots industriales se convirtieron en componentes clave de las fábricas inteligentes, colaborando estrechamente con humanos y otros sistemas automatizados para optimizar la eficiencia y la flexibilidad en la producción\footnote{Sutori. (n.d.). Sutori.com. Retrieved February 24, 2025, from \url{ https://www.sutori.com/es/historia/linea-de-tiempo-evolucion-de-la-robotica-industrial--6w6pytow1tj3grr5scVKU1Ns}}. 
-
 \section{Unión entre la automatización y la robótica}
 \label{sec:terceraseccion}
 
-definicion PLC, comunicaciones, simulador didactico, guía Gemma, Grafcet \\
+Entrando al siglo XXI se desarrollan los primeros robots colaborativos, conocidos como cobots, concebidos para cooperar de manera directa con las personas. Estos dispositivos se caracterizan por su seguridad, adaptabilidad y facilidad de programación, convirtiéndose en una solución ideal para entornos industriales donde es necesario combinar tareas manuales y automatizadas  \cite{intro_union}. 
+
+En los años 2010, la Industria 4.0 emergió como una nueva fase en la manufactura, caracterizada por la digitalización y la interconexión de sistemas de producción.  Los robots industriales se convirtieron en componentes clave de las fábricas inteligentes, colaborando estrechamente con humanos y otros sistemas automatizados para optimizar la eficiencia y la flexibilidad en la producción \cite{intro_union}. 
+
+\subsection{Comunicaciones entre los dispositivos}
+
+Las comunicaciones entre dispositivos industriales son fundamentales para que los procesos de producción actuales funcionen de forma segura, eficiente y automatizada \cite{intro_com}. Gracias a ellas, sensores, actuadores, controladores y sistemas de gestión pueden intercambiar datos constantemente, asegurando que todo el proceso esté coordinado y optimizado. El objetivo principal de estas comunicaciones es transformar la información captada del entorno en datos útiles que faciliten la toma de decisiones rápidas y eficaces \cite{intro_com}. Esto no solo mejora la eficiencia de la producción, sino que también ayuda a prevenir errores, optimizar el uso de recursos y mantener los procesos en marcha sin interrupciones. A diferencia de las redes convencionales, las comunicaciones industriales deben cumplir con requisitos muy exigentes: alta fiabilidad, resistencia a condiciones adversas, capacidad para operar en tiempo real y determinismo. \cite{intro_com}. 
+
+La tecnología de \textbf{bus de campo} apareció a finales de los años 80 con el objetivo de ofrecer un método estandarizado para conectar múltiples dispositivos de campo en entornos industriales. El bus de campo es una red de comunicación industrial bidireccional y multipunto que conecta dispositivos de campo inteligentes, sustituyendo los sistemas de control centralizados por redes distribuidas. Permite que múltiples sensores y actuadores se comuniquen con el controlador sin conexiones individuales, reduciendo cables y distancia \cite{info_bus}. Existen múltiples variantes desarrolladas por fabricantes para diferentes nichos destacando: PROFIBUS en automoción y control de procesos, CANbus en el sector automotriz y maquinaria y Foundation Fieldbus en industrias de petróleo y gas entre otros \cite{bus_vs_ethernet}.
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=12cm]{figs/bus_de_campo}
+  \end{center}
+  \caption{\centering Ejemplo básico de dus de campo. \cite{info_bus}}
+  \label{fig:bus_de_campo}
+\end{figure} 
+
+Por otro lado, la tecnología \textbf{Ethernet industrial} surge como una evolución de Ethernet tradicional, adaptándose a los estrictos requerimientos de entornos industriales donde la robustez, el intercambio de datos en tiempo real y la resistencia a interferencias son esenciales. A partir del estándar IEEE 802.3, Ethernet industrial integra mejoras específicas para la automatización, soportando protocolos como Modbus TCP/IP, PROFINET y EtherCAT \cite{bus_vs_ethernet}.
+
+Entre sus principales ventajas frente a los sistemas de bus de campo tradicionales destacan sus altas velocidades de comunicación (desde 10 Mbps hasta 10 Gbps), su apertura e interoperabilidad, la escalabilidad de la red y su rentabilidad. Estas características permiten su uso tanto en el monitoreo en tiempo real como en la integración de sistemas de gestión y supervisión de plantas industriales, convirtiéndolo en la base de las redes industriales modernas \cite{bus_vs_ethernet}.
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=12cm]{figs/ethernet_industrial}
+  \end{center}
+  \caption{\centering Ejemplo básico de red de ethernet industrial. \cite{ethernet_imagen}}
+  \label{fig:ethernet_industrial}
+\end{figure} 
+
+
+\subsection{Metodología de la automatización industrial}
+
+En la automatización industrial, es fundamental seguir una metodología clara que permita diseñar, implementar y controlar los procesos de forma ordenada y eficiente. Para ello, existen herramientas y enfoques que ayudan a representar el comportamiento del sistema, identificar sus distintos modos de funcionamiento y supervisar su estado en tiempo real.
+
+Una de las herramientas más utilizadas es el GRAFCET, un lenguaje gráfico que permite describir de forma sencilla el funcionamiento secuencial de un sistema. Junto a él, la guía GEMMA ayuda a identificar los distintos modos de operación del sistema (como arranque, parada o fallo), y sirve como complemento al GRAFCET para organizar mejor el control general del proceso. Por último, los sistemas SCADA juegan un papel clave en la supervisión de procesos industriales, permitendo al operador visualizar en tiempo real lo que ocurre en planta, modificar parámetros y detectar posibles errores de forma rápida.
+
+\subsubsection{GRAFCET}
+
+El modelo GRAFCET (Graphe Fonctionnel de Commande Étape Transition) es un método gráfico que se utiliza en la automatización industrial para representar y controlar procesos secuenciales. Creado en 1977 por la AFCET (Asociación Francesa para la Cibernética Económica y Técnica), su objetivo es describir el comportamiento de los sistemas de control mediante un diagrama de etapas y transiciones \cite{grafcet_info}. Esto no es un lenguaje de programación, sino una forma de resolver el problema de automatización secuencial previo a su programación en el PLC. A continuación, se describen los distintos elementos que conforman un GRAFCET:
+
+\begin{enumerate}
+    \item \textbf{Etapas}: Se representan como cuadros numerados en el diagrama. Cada etapa indica un estado específico del sistema y las acciones que deben llevarse a cabo cuando esa etapa está activa. La etapa inicial se representa con un doble cuadrado.
+    \item \textbf{Transiciones}: Son las condiciones que deben cumplirse para que el sistema pase de una etapa a otra. Estas condiciones se representan por líneas que cruzan de manera perpendicular las etapas. Las transiciones se activan cuando se cumple una condición lógica, como el final de un proceso o la llegada de una señal.
+    \item \textbf{Uniones}: Representan las conexiones entre varias etapas y permiten que se ejecuten acciones simultáneas en diferentes partes del sistema. Las uniones facilitan la ejecución de procesos en paralelo.
+    \item \textbf{Acciones}: Son las operaciones que se realizan cuando una etapa está activa. Estas acciones están directamente vinculadas a la etapa correspondiente.
+\end{enumerate}
+    
+Este modelo resulta muy útil en procesos industriales donde las operaciones siguen una secuencia lógica y estructurada. Se utiliza comúnmente en la programación de PLCs (Controladores Lógicos Programables), ya que permite controlar sistemas paso a paso y asegura que las acciones se realicen de manera secuencial. GRAFCET también mejora la comunicación entre los diseñadores y los operadores, ofreciendo una forma clara y efectiva de entender y gestionar los procesos de automatización \cite{grafcet_info}.
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=8cm]{figs/grafcet_def}
+  \end{center}
+  \caption{\centering Ejemplo básico de GRAFCET.}
+  \label{fig:grafcet_def}
+\end{figure} 
+
+Una vez creado el Grafcet, para poder introducir la lógica pensada en el PLC, hay que traducir la información al lenguaje ladder, que es el cual entiende el PLC. Para ello se deben asignar direcciones de memoria en el PLC a cada etapa, entradas, salidas y demás elementos como contadores o temporizadores. Una vez traducido el Grafcet al lenguaje Ladder e introducido en el PLC ya se puede ejecutar la secuencia realizada del sistema.
+
+\subsubsection{Guia GEMMA}
+
+La Guía GEMMA (Guía para la Elaboración de los Modelos de los Modos de Marcha y Parada de una Automatización) es una metodología utilizada en el ámbito de la automatización industrial para representar de forma clara y estructurada los diferentes modos de funcionamiento de una máquina o sistema  \cite{guia_gemma}. La guía GEMMA está compuesta por bloques que representan cada uno de estos modos y sus posibles transiciones, lo que proporciona una visión global y ordenada del comportamiento del sistema  \cite{guia_gemma}.
+
+El núcleo de la guía se basa en tres grandes categorías: funcionamiento, parada o puesta en marcha, y defecto. En cada categoría se pueden identificar varios subestados como:
+
+\begin{itemize}
+  \item  \textbf{Funcionamiento}: La producción en curso o marcha de cierre \cite{guia_gemma}.
+  \item \textbf{Parada o puesta en marcha}: La parada al estado inicial o de final de ciclo \cite{guia_gemma}.
+  \item \textbf{Defecto}: La parada de emergencia \cite{guia_gemma}. 
+\end{itemize} 
+
+Además de su valor como herramienta de planificación, GEMMA se integra fácilmente con otras metodologías como el GRAFCET, permitiendo diseñar automatismos más seguros y eficientes. Al normalizar los distintos modos de operación y facilitar la interpretación de los estados de una automatización, la Guía GEMMA se ha convertido en un recurso esencial para la automatización de procesos.
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=15cm]{figs/guia_gemma}
+  \end{center}
+  \caption{\centering Ejemplo de guía gemma complejo. \cite{guia_gemma}}
+  \label{fig:guia_gemma}
+\end{figure} 
+
+\subsubsection{Sistemas SCADA}
+
+Un sistema SCADA (Supervisory Control and Data Acquisition) es una herramienta clave en la automatización industrial, diseñada para supervisar y controlar procesos a distancia mediante la recopilación y análisis de datos en tiempo real \cite{scada}. Estos sistemas permiten monitorear variables críticas como temperatura, presión o caudal, facilitando una operación eficiente y segura de plantas industriales, líneas de producción, redes eléctricas o infraestructuras inteligentes \cite{scada}.
+
+Los sistemas SCADA recopilan información a través de sensores y dispositivos conectados a una red de comunicaciones, ya sea cableada o inalámbrica. Esta información se procesa en un software especializado que permite visualizar los datos, generar alarmas ante anomalías y controlar equipos de forma remota \cite{scada}. Entre sus funciones principales se incluyen la monitorización en tiempo real, análisis de datos, generación de alertas y control de dispositivos como válvulas o motores \cite{scada}.
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=15cm]{figs/SCADA}
+  \end{center}
+  \caption{\centering Ejemplo de un diagrama básico con sistema SCADA. \cite{scada_img}}
+  \label{fig:SCADA}
+\end{figure} 
+
+Existen diferentes tipos de sistemas SCADA según su arquitectura: centralizados, donde todos los componentes están en una misma ubicación; distribuidos, con componentes separados conectados por una red; y híbridos, que combinan características de ambos \cite{scada}. Implementar un sistema SCADA adecuado puede mejorar significativamente la eficiencia operativa y la capacidad de respuesta ante incidencias en entornos industriales.
 
 \section{Motivación del trabajo}
 \label{sec:cuartaseccion}
 
-A lo largo de mi formación académica, he adquirido conocimientos en diversas áreas de la robótica, incluyendo robótica de servicio, automatización, planificación, sistemas distribuidos y programación con Arduino, entre otras. Sin embargo, el ámbito que más ha despertado mi interés ha sido el de la robótica industrial. \\
+A lo largo de mi formación académica, he adquirido conocimientos en diversas áreas de la robótica, incluyendo robótica de servicio, automatización, planificación, sistemas distribuidos y programación con Arduino, entre otras. Sin embargo, el ámbito que más ha despertado mi interés ha sido el de la robótica industrial. 
 
-Es cierto que la robótica industrial no tiene una presencia destacada en mi formación académica, ya que únicamente se imparten dos o tres asignaturas centradas en este ámbito. En consecuencia, mi conocimiento sobre el sector no es especialmente profundo. No obstante, desde el primer día me ha resultado un área fascinante, especialmente todo lo relacionado con los brazos robóticos y los PLCs, cuya programación es mucho más interactiva y dinámica en comparación con otros tipos de robots, como aquellos que emplean ROS. Además, me resulta especialmente atractivo trabajar en un entorno controlado, ya que ello me permite desarrollar programas con la certeza de que ningún factor externo afectará su funcionamiento. \\
+Es cierto que la robótica industrial no tiene una presencia destacada en mi grado, ya que únicamente se imparten dos o tres asignaturas centradas en este ámbito. En consecuencia, mi conocimiento sobre el sector no es especialmente profundo. No obstante, desde el primer día me ha resultado un área fascinante, especialmente todo lo relacionado con los brazos robóticos y los PLCs, cuya programación es mucho más interactiva y dinámica en comparación con otros tipos de robots, como aquellos que emplean ROS. Además, me resulta especialmente atractivo trabajar en un entorno controlado, ya que ello me permite desarrollar programas con la certeza de que ningún factor externo afectará su funcionamiento. 
 
-Con este trabajo, mi objetivo es adquirir una formación sólida y obtener los conocimientos necesarios para desarrollarme profesionalmente en el sector de la robótica industrial, complementando y ampliando así lo aprendido durante la carrera. Considero que este ámbito tiene un gran futuro, ya que la producción industrial en masa seguirá siendo fundamental debido al consumismo global y al crecimiento demográfico. Además, el sector continúa evolucionando constantemente con el desarrollo de nuevas técnicas y robots, lo que ha impulsado su expansión desde sus inicios en la década de 1940. He elegido esta rama de la robótica porque es la que más me apasiona y me genera mayor satisfacción entre todas las que he explorado. Considero que es fundamental dedicarse a una profesión que realmente motive y entusiasme, ya que ello contribuye significativamente a la realización personal y profesional. \\
+En este trabajo se va a utilizar dos simuladores didáctcos para aprender todos estos conocimientos mencionados (cuyas características se detallarán posteriormente). Me siento muy agradecido y afortunado de poder contar con este material, ya que me permite mejorar mis habilidades en este sector de una forma interactiva y utilizando un sistema físico, el cual aporta grandes beneficios al realismo del proyecto. Esto se traduce a tratar con los errores reales de los sensores y actuadores, adquirir experiencia real, lidiar con problemas mecánicos, solucionar imprevistos..., y estas aptitudes en un entorno simulado no pueden conseguirse. 
+
+En cuanto a la empleabilidad, la automatización industrial es una excelente opción laboral. La transformación digital que impulsa la Industria 4.0, con tecnologías como el IoT, la robótica y la inteligencia artificial, está generando una gran demanda de profesionales. Sectores clave como la automoción, la alimentación y la logística apuestan cada vez más por la automatización para seguir siendo competitivos. Además, la falta de perfiles cualificados en el mercado aumenta aún más las oportunidades. A esto se suman unos salarios de entrada bastante competitivos, que mejoran con la experiencia, y la posibilidad de acceder a oportunidades internacionales.
+
+Con este trabajo, mi objetivo es adquirir una formación sólida y obtener los conocimientos necesarios para desarrollarme profesionalmente en el sector de la robótica industrial, complementando y ampliando así lo aprendido durante la carrera. Considero que este ámbito tiene un gran futuro, ya que la producción industrial en masa seguirá siendo fundamental debido al consumismo global y al crecimiento demográfico. Además, el sector continúa evolucionando constantemente con el desarrollo de nuevas técnicas y robots, lo que ha impulsado su expansión desde sus inicios en la década de 1940. He elegido esta rama de la robótica porque es la que más me apasiona y me genera mayor satisfacción entre todas las que he explorado. Creo que es fundamental dedicarse a una profesión que realmente motive y entusiasme, ya que ello contribuye significativamente a la realización personal y profesional. \\
 
 A continuación, se presentan los siguientes capítulos:
 
