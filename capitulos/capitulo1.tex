@@ -140,7 +140,7 @@ Además, estos dispositivos están pensados para funcionar en condiciones indust
     \includegraphics[width=13cm]{figs/HMI}
   \end{center}
   \caption{\centering HMI Siemens.}
-  \label{fig:ladder}
+  \label{fig:HMI}
 \end{figure} 
 
 \section{La robótica}
@@ -304,6 +304,8 @@ En la automatización industrial, es fundamental seguir una metodología clara q
 
 Una de las herramientas más utilizadas es el GRAFCET, un lenguaje gráfico que permite describir de forma sencilla el funcionamiento secuencial de un sistema. Junto a él, la guía GEMMA ayuda a identificar los distintos modos de operación del sistema (como arranque, parada o fallo), y sirve como complemento al GRAFCET para organizar mejor el control general del proceso. Por último, los sistemas SCADA juegan un papel clave en la supervisión de procesos industriales, permitendo al operador visualizar en tiempo real lo que ocurre en planta, modificar parámetros y detectar posibles errores de forma rápida.
 
+\newpage
+
 \subsubsection{GRAFCET}
 
 El modelo GRAFCET (Graphe Fonctionnel de Commande Étape Transition) es un método gráfico que se utiliza en la automatización industrial para representar y controlar procesos secuenciales. Creado en 1977 por la AFCET (Asociación Francesa para la Cibernética Económica y Técnica), su objetivo es describir el comportamiento de los sistemas de control mediante un diagrama de etapas y transiciones \cite{grafcet_info}. Esto no es un lenguaje de programación, sino una forma de resolver el problema de automatización secuencial previo a su programación en el PLC. A continuación, se describen los distintos elementos que conforman un GRAFCET:
@@ -315,7 +317,7 @@ El modelo GRAFCET (Graphe Fonctionnel de Commande Étape Transition) es un méto
     \item \textbf{Acciones}: Son las operaciones que se realizan cuando una etapa está activa. Estas acciones están directamente vinculadas a la etapa correspondiente.
 \end{enumerate}
     
-Este modelo resulta muy útil en procesos industriales donde las operaciones siguen una secuencia lógica y estructurada. Se utiliza comúnmente en la programación de PLCs (Controladores Lógicos Programables), ya que permite controlar sistemas paso a paso y asegura que las acciones se realicen de manera secuencial. GRAFCET también mejora la comunicación entre los diseñadores y los operadores, ofreciendo una forma clara y efectiva de entender y gestionar los procesos de automatización \cite{grafcet_info}.
+Este modelo resulta muy útil en procesos industriales donde las operaciones siguen una secuencia lógica y estructurada. Se utiliza comúnmente en la programación de PLCs (Controladores Lógicos Programables), ya que permite controlar sistemas paso a paso y asegura que las acciones se realicen de manera secuencial \cite{grafcet_info}.
 
 \begin{figure} [h!]
   \begin{center}
@@ -368,21 +370,23 @@ Existen diferentes tipos de sistemas SCADA según su arquitectura: centralizados
 \section{Motivación del trabajo}
 \label{sec:cuartaseccion}
 
-A lo largo de mi formación académica, he adquirido conocimientos en diversas áreas de la robótica, incluyendo robótica de servicio, automatización, planificación, sistemas distribuidos y programación con Arduino, entre otras. Sin embargo, el ámbito que más ha despertado mi interés ha sido el de la robótica industrial. 
+A lo largo de mi formación académica, he podido adquirir conocimientos en diferentes áreas de la robótica, tanto desde el punto de vista teórico como práctico. Algo que comparten muchas asignaturas es el uso de simuladores, que permiten aplicar lo aprendido en un entorno virtual. Estos simuladores tienen muchas ventajas como el programar sin miedo a dañar un robot real, personalizar el entorno según la aplicación que se quiera simular e incluso experimentar con diferentes configuraciones de manera sencilla y sin costes adicionales.
 
-Es cierto que la robótica industrial no tiene una presencia destacada en mi grado, ya que únicamente se imparten dos o tres asignaturas centradas en este ámbito. En consecuencia, mi conocimiento sobre el sector no es especialmente profundo. No obstante, desde el primer día me ha resultado un área fascinante, especialmente todo lo relacionado con los brazos robóticos y los PLCs, cuya programación es mucho más interactiva y dinámica en comparación con otros tipos de robots, como aquellos que emplean ROS. Además, me resulta especialmente atractivo trabajar en un entorno controlado, ya que ello me permite desarrollar programas con la certeza de que ningún factor externo afectará su funcionamiento. 
+Aun así, trabajar solo con simuladores no es lo mismo que hacerlo con sistemas reales. La experiencia práctica que se obtiene al enfrentarse a un entorno físico es mucho más rica y completa. En la realidad, hay que lidiar con errores de sensores, fallos en los actuadores, problemas mecánicos o situaciones imprevistas que obligan a pensar y reaccionar. Estas experiencias ayudan a desarrollar habilidades muy valiosas, como la capacidad de resolver problemas, tomar decisiones rápidas y adaptarse a los cambios, cosas que un simulador, por muy avanzado que sea, no siempre puede ofrecer.
 
-En este trabajo se va a utilizar dos simuladores didáctcos para aprender todos estos conocimientos mencionados (cuyas características se detallarán posteriormente). Me siento muy agradecido y afortunado de poder contar con este material, ya que me permite mejorar mis habilidades en este sector de una forma interactiva y utilizando un sistema físico, el cual aporta grandes beneficios al realismo del proyecto. Esto se traduce a tratar con los errores reales de los sensores y actuadores, adquirir experiencia real, lidiar con problemas mecánicos, solucionar imprevistos..., y estas aptitudes en un entorno simulado no pueden conseguirse. 
+Con este trabajo, mi objetivo es crear una aplicación usando dos simuladores didácticos que sirva como herramienta de apoyo para que otros alumnos puedan aprender de forma más interactiva y entretenida. Utilizar este tipo de recursos no solo puede hacer más ameno el aprendizaje, sino que también puede despertar mayor interés por la robótica y automatización y facilitar la comprensión de los conceptos. Además, combinar el uso de simuladores con prácticas reales puede ser una muy buena forma de reforzar la formación y preparar mejor a los estudiantes para los retos que encontrarán en el entorno profesional. 
 
-En cuanto a la empleabilidad, la automatización industrial es una excelente opción laboral. La transformación digital que impulsa la Industria 4.0, con tecnologías como el IoT, la robótica y la inteligencia artificial, está generando una gran demanda de profesionales. Sectores clave como la automoción, la alimentación y la logística apuestan cada vez más por la automatización para seguir siendo competitivos. Además, la falta de perfiles cualificados en el mercado aumenta aún más las oportunidades. A esto se suman unos salarios de entrada bastante competitivos, que mejoran con la experiencia, y la posibilidad de acceder a oportunidades internacionales.
+En cuanto a las salidas profesionales, la automatización industrial representa una opción laboral muy atractiva. Con la transformación digital impulsada por la Industria 4.0 y el auge de tecnologías como el Internet de las Cosas (IoT), la robótica o la inteligencia artificial, la demanda de profesionales cualificados en este ámbito no ha dejado de crecer. Sectores como la automoción, la alimentación o la logística están apostando cada vez más por la automatización para mantenerse competitivos en un mercado globalizado.
 
-Con este trabajo, mi objetivo es adquirir una formación sólida y obtener los conocimientos necesarios para desarrollarme profesionalmente en el sector de la robótica industrial, complementando y ampliando así lo aprendido durante la carrera. Considero que este ámbito tiene un gran futuro, ya que la producción industrial en masa seguirá siendo fundamental debido al consumismo global y al crecimiento demográfico. Además, el sector continúa evolucionando constantemente con el desarrollo de nuevas técnicas y robots, lo que ha impulsado su expansión desde sus inicios en la década de 1940. He elegido esta rama de la robótica porque es la que más me apasiona y me genera mayor satisfacción entre todas las que he explorado. Creo que es fundamental dedicarse a una profesión que realmente motive y entusiasme, ya que ello contribuye significativamente a la realización personal y profesional. \\
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=14cm]{figs/grafico_futuro}
+  \end{center}
+  \caption{\centering Tendencias del mercado global de automatización industrial. \cite{grafico_empleabilidad}}
+  \label{fig:grafico_futuro}
+\end{figure} 
 
-A continuación, se presentan los siguientes capítulos:
+Como se observa en la figura  ~\ref{fig:grafico_futuro}, se preveé que cada año se invierta más dinero en la automatización industrial,
+por lo que personalmente, considero que este campo tiene un gran futuro. La producción industrial en masa seguirá siendo clave para satisfacer la demanda del mercado, impulsada por el crecimiento demográfico y el alto nivel de consumo. Por otro lado, el desarrollo continuo de nuevas tecnologías y robots hace que el sector esté en constante evolución, tal y como viene ocurriendo desde sus orígenes en la década de 1940.
 
-\begin{itemize}
-    \item \textbf{Objetivos}: Se detallarán y explicarán los objetivos a cumplir en este trabajo.
-    \item \textbf{Plataforma de desarrollo}: Se describirá el funcionamiento del hardware del sistema industrial, junto con sus componentes y herramientas utilizadas.
-    \item \textbf{Diseño}: Se abordará la programación del software implementado en el sistema, explicando su finalidad y funcionamiento.
-    \item \textbf{Conclusiones}: Se expondrán las conclusiones finales del trabajo, incluyendo un análisis de los conocimientos adquiridos a lo largo del desarrollo del proyecto.
-\end{itemize}
+Además, la escasez de perfiles especializados hace que las oportunidades laborales sean aún mayores, y la experiencia utilizando estos simuladores en tu etápa académica puede provocar que una empresa se decante por ti por encima de otras personas que no haya utilizado un sistema físico. A esto se suman unos salarios de entrada bastante competitivos, que tienden a mejorar con la experiencia y ofrecen una buena calidad de vida. 
