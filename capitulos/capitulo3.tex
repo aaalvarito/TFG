@@ -129,9 +129,66 @@ En cuanto a su hardware, presenta una memoria de trabajo de 200 kB y una memoria
 
 \section{HMI}
 
-\section{Brazo UR5}
+El HMI utilizado para este proyecto es el \textbf{SIMATIC HMI KTP700 Basic PN}. Este es un panel HMI de la segunda generación de Basic Panels de Siemens, diseñado para ofrecer una interfaz hombre-máquina eficiente, compacta y rentable en tareas de visualización y operación dentro de entornos industriales. Este modelo cuenta con una pantalla táctil de 7 pulgadas, con una resolución de 800 × 480 píxeles (WVGA) y una profundidad de color de 64.000 colores, lo que proporciona una visualización clara, detallada y moderna de los procesos industriales \cite{HMI_KTP}.
 
+Una de sus principales ventajas es la combinación de pantalla táctil y teclas de función (8 teclas de función programables), lo cual permite al operador interactuar de forma rápida e intuitiva con el sistema, incluso con guantes o en entornos con condiciones difíciles. El panel también está equipado con una interfaz PROFINET integrada, lo que lo hace ideal para la comunicación directa con controladores SIMATIC S7-1200 y otros dispositivos de automatización compatibles \cite{HMI_KTP}.
 
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=15cm]{figs/HMI_cap_3}
+  \end{center}
+  \caption{\centering SIMATIC HMI KTP700 Basic PN.}
+  \label{fig:HMI_cap_3}
+\end{figure} 
 
+El KTP700 Basic PN dispone de una interfaz USB que permite conectar dispositivos periféricos como ratones, teclados o memorias USB para la transferencia de recetas, actualizaciones de firmware o copias de seguridad de datos de usuario \cite{HMI_KTP}. Además, este HMI admite la configuración y programación a través del entorno de desarrollo TIA Portal (Totally Integrated Automation) con WinCC Basic, lo que asegura una integración coherente y eficiente con el resto de componentes del sistema de automatización \cite{HMI_KTP}.
+
+En cuanto a su diseño físico, el dispositivo tiene unas dimensiones compactas de 214 × 158 × 39 mm y está pensado para montaje en panel \cite{HMI_KTP}. Cuenta con una protección frontal IP65, lo que le confiere resistencia frente a polvo y chorros de agua, haciéndolo apto para condiciones industriales exigentes \cite{HMI_KTP}. También incluye funciones como alarmas, tendencias, gestión de recetas y multilenguaje, lo que lo convierte en una solución versátil para aplicaciones industriales básicas.
+
+\section{TIA Portal}
+
+TIA Portal (Totally Integrated Automation Portal) es una plataforma de ingeniería desarrollada por Siemens que integra en un único entorno todas las herramientas necesarias para la configuración, programación, supervisión y mantenimiento de sistemas de automatización industrial. Fue diseñado con el objetivo de unificar y simplificar la ingeniería de proyectos, mejorando la eficiencia en el desarrollo, la puesta en marcha y la operación de sistemas de control.
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=14cm]{figs/TIA_portal}
+  \end{center}
+  \caption{\centering Pantallazo de la aplicación TIA Portal.}
+  \label{fig:TIA_portal}
+\end{figure} 
+
+Esta plataforma permite trabajar de forma integrada con controladores PLC, interfaces HMI, sistemas SCADA, variadores de velocidad, dispositivos de seguridad y redes industriales, todo desde una única interfaz \cite{TIA_portal}. El entorno TIA Portal combina software como STEP 7 (para programación de PLC), WinCC (para interfaces HMI y SCADA), Startdrive (para variadores SINAMICS), Safety Advanced (para funciones de seguridad) y Energy Suite (para gestión energética) \cite{TIA_portal}.
+
+En este proyecto se ha utilizado la versión \textbf{TIA Portal V16}, la cual permitedividir los proyectos en unidades de software independientes, permitiendo una programación modular con interfaces definidas \cite{TIA_portal}. Esto facilita la colaboración entre varios ingenieros, mejora la reutilización de código y simplifica la gestión de proyectos complejos.
+
+En cuanto a la programación de PLCs, TIA Portal V16 ofrece soporte completo para los controladores SIMATIC S7-1200, S7-1500, S7-300 y S7-400, así como para soluciones de seguridad integradas mediante STEP 7 Safety \cite{TIA_portal}. La integración con WinCC permite el diseño y configuración de interfaces HMI.
+
+La plataforma también incluye herramientas de simulación como PLCSIM y HMISIM, que permiten probar y validar la lógica de control y las interfaces HMI sin necesidad de hardware físico \cite{TIA_portal}. Esto reduce los tiempos de desarrollo y facilita la detección temprana de errores. Además, la compatibilidad con estándares abiertos y protocolos de comunicación como PROFINET, OPC UA y Modbus garantiza una integración fluida con otros sistemas y dispositivos en entornos de automatización industrial \cite{TIA_portal}.
+
+\section{Brazo UR5e}
+
+El UR5e es un brazo robótico colaborativo de seis ejes desarrollado por Universal Robots, diseñado para automatizar tareas industriales de forma segura y eficiente. Con una capacidad de carga útil de hasta 5 kg y un alcance de 850 mm, el UR5e es especialmente adecuado para aplicaciones que requieren precisión y flexibilidad, como ensamblaje, manipulación de materiales, soldadura ligera y pruebas de calidad \cite{UR5e}.
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=8.4cm]{figs/UR5e}
+  \end{center}
+  \caption{\centering Robot UR5e de Universal Robots. \cite{UR5e}}
+  \label{fig:UR5e}
+\end{figure} 
+
+Una de las características distintivas del UR5e es su diseño colaborativo, que permite su integración en entornos donde comparte espacio con operadores humanos sin necesidad de barreras de seguridad, siempre que se realice una evaluación de riesgos adecuada \cite{UR5e}. Esto es posible gracias a sus sensores de fuerza y par integrados, que detectan contactos inesperados y detienen el movimiento del robot para evitar lesiones o daños \cite{UR5e}.
+
+El UR5e se controla mediante el software PolyScope, una interfaz intuitiva que se opera a través de un panel de enseñanza con pantalla táctil. PolyScope permite programar el robot de manera sencilla, incluso sin experiencia previa en programación, mediante la guía manual del brazo para enseñar posiciones y trayectorias \cite{UR5e}. Para usuarios avanzados, también se ofrece la posibilidad de programar utilizando el lenguaje URScript, lo que proporciona un mayor control y flexibilidad en aplicaciones complejas.
+
+Su diseño ligero, con un peso total de aproximadamente 20,6 kg, permite montarlo en diversas orientaciones y ubicaciones, adaptándose a diferentes necesidades de producción \cite{UR5e}. Además, el UR5e es compatible con una amplia gama de accesorios y herramientas a través del ecosistema UR+, que ofrece soluciones certificadas para tareas específicas, como pinzas, cámaras y sensores adicionales \cite{UR5e}. 
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=10.5cm]{figs/PolyScope}
+  \end{center}
+  \caption{\centering Pantalla táctil PolyScope. \cite{PolyScope_img}}
+  \label{fig:PolyScope}
+\end{figure} 
 
 
