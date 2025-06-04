@@ -27,7 +27,7 @@ El término ``automatización'' tiene su origen en las palabras griegas ``auto''
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=13.5cm]{figs/automatizacion_industrial.jpg}
+    \includegraphics[width=13cm]{figs/automatizacion_industrial.jpg}
   \end{center}
   \caption{\centering Ejemplo de aplicación de automatización industrial.}
   \label{fig:automatizacion_industrial}
@@ -37,7 +37,7 @@ La estructura de un sistema de automatización industrial se puede representar m
 
 \begin{enumerate}
     \item \textbf{Nivel de gestión}: La alta gerencia usa sistemas ERP para controlar y monitorear todos los procesos de la empresa, desde la producción hasta ventas, compras y proyectos, asegurando eficiencia y alineación entre equipos.\cite{niveles_automatizacion_2}.
-    \item \textbf{Nivel de operación}: Este nivel está controlado por el sistema MES. Un sistema MES conecta el mundo digital con la producción, permitiendo supervisar, sincronizar cada fase del proceso y monitorear la producción \footnote{  (N.d.). Cursosaula21.com. Retrieved April 7, 2025, from \url{ https://www.cursosaula21.com/que-es-un-sistema-mes/}}. Este sistema integra datos de operaciones, mantenimiento, seguridad, logística y calidad, permitiendo a la gerencia tomar decisiones informadas sobre todo el proceso, desde las materias primas hasta el producto final. \cite{niveles_automatizacion_2}.
+    \item \textbf{Nivel de operación}: Este nivel está controlado por el sistema MES. Un sistema MES conecta el mundo digital con la producción, permitiendo supervisar, sincronizar cada fase del proceso y monitorear la producción \cite{sistema_MES}. Este sistema integra datos de operaciones, mantenimiento, seguridad, logística y calidad, permitiendo a la gerencia tomar decisiones informadas sobre todo el proceso, desde las materias primas hasta el producto final. \cite{niveles_automatizacion_2}.
     \item \textbf{Nivel supervisor}: Compuesto por un ordenador industrial que utiliza software especializado para el control de procesos. Su principal objetivo es la parametrización y visualización del proceso y suele utilizars el protocolo de de comunicación Ethernet industrial \cite{niveles_automatizacion_1}.
     \item \textbf{Nivel de control}: Incluye dispositivos como PLCs que ejecutan las órdenes del nivel supervisor y controlan directamente la maquinaria en tiempo real. Estos pueden estar conectados a varios dispositivos de E/S y se comunican mediante protocolos industriales \cite{niveles_automatizacion_1}.
     \item \textbf{Nivel de campo}: Constituido por sensores y actuadores que interactúan directamente con el proceso físico conectados al PLC a través de un bus de campo. Los actuadores ejecutan acciones según las instrucciones recibidas normalmente a través de una conexión punto a punto con el PLC. \cite{niveles_automatizacion_1}. 
@@ -118,11 +118,11 @@ Existen distintos tipos de PLC, cada uno adaptado a las necesidades particulares
 
 Una de las principales características de los PLC es su capacidad para controlar entradas y salidas de manera segura. Además, son compatibles con varios lenguajes de programación, lo que permite su fácil integración con sistemas de supervisión y control. Estos dispositivos pueden ser reprogramados según las necesidades del proceso, lo que les da gran flexibilidad y adaptabilidad en entornos industriales que están en constante cambio  \cite{plc_info}. \\
 
-El lenguaje de programación utilizado para los PLCs y en este proyecto es el lenguaje KOP, también conocido como \textbf{Ladder}. Este lenguaje es ampliamente utilizado en la programación de PLC, especialmente en los dispositivos Siemens. Su popularidad se debe a su antigüedad, disponibilidad, mantenibilidad y facilidad de uso. Diseñado para imitar los diagramas eléctricos tradicionales, permite a técnicos e ingenieros familiarizados con estos esquemas adaptarse fácilmente a la programación en este lenguaje. Su naturaleza gráfica permite una comprensión rápida de la lógica del programa, lo que simplifica el proceso de mantenimiento y resolución de problemas \cite{ladder_info}.
+El lenguaje de programación utilizado para los PLCs y en este proyecto es el lenguaje KOP, también conocido como \textbf{Ladder}. Su popularidad se debe a su antigüedad, disponibilidad, mantenibilidad y facilidad de uso. Diseñado para imitar los diagramas eléctricos tradicionales, permite a técnicos e ingenieros familiarizados con estos esquemas adaptarse fácilmente a la programación en este lenguaje. Su naturaleza gráfica permite una comprensión rápida de la lógica del programa, lo que simplifica el proceso de mantenimiento y resolución de problemas \cite{ladder_info}.
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=14cm]{figs/ladder}
+    \includegraphics[width=15cm]{figs/ladder}
   \end{center}
   \caption{\centering Ejemplo del lenguaje de programación Ladder.}
   \label{fig:ladder}
@@ -146,15 +146,13 @@ Además, estos dispositivos están pensados para funcionar en condiciones indust
 \section{La robótica}
 \label{sec:segundaseccion} % etiqueta para luego referenciar esta sección
 
-La robótica es la disciplina científica que integra conocimientos de electrónica, mecánica e informática para desarrollar sistemas automatizados capaces de realizar tareas de manera autónoma o semiautónoma \cite{definicion_robot}. \\
+La robótica es la disciplina científica que integra conocimientos de electrónica, mecánica e informática para desarrollar sistemas automatizados capaces de realizar tareas de manera autónoma o semiautónoma \cite{definicion_robot}. 
 
-A diferencia de la robótica industrial, en la robótica tradicional se utilizan componentes específicos diseñados para una tarea concreta, pasando por la estructura mecánica (brazos, ruedas, actuadores, etc.), que debe garantizar un movimiento preciso y estabilidad, hasta los sistemas electrónicos que deben ser totalmente compatibles y funcionales para permitir la correcta operación \cite{definicion_robot_2}. Además, los algoritmos que se implementan deben ser robustos, seguros y capaces de adaptarse a diversas situaciones y condiciones del entorno.
+La robótica, en términos generales, abarca el diseño, construcción y programación de sistemas capaces de percibir su entorno, procesar información y ejecutar acciones de manera autónoma \cite{definicion_robot_2}. A diferencia de la robótica industrial, que se centra principalmente en tareas repetitivas, de alta precisión y en entornos estructurados como fábricas, la robótica tradicional se caracteriza por la diversidad de aplicaciones y la necesidad de adaptarse a contextos más variables y no estructurados. Esto implica la utilización de componentes versátiles, diseñados específicamente para cumplir funciones concretas en ámbitos como la robótica móvil, de exploración, educativa o de asistencia personal \cite{definicion_robot_2}.
 
-Entre estos componentes, uno de los más importantes para lograr dicha adaptación al entorno son los sensores, ya que juegan un papel crucial proporcionando al robot la información necesaria sobre su entorno \cite{definicion_robot_2}. Estos sensores, de diversos tipos, miden una amplia gama de magnitudes físicas, como la luz, posición, velocidad, fuerza, temperatura..., funcionando de manera análoga a los órganos sensoriales en los seres humanos \cite{definicion_robot_2}. 
+En estos sistemas, los sensores juegan un papel crucial al proporcionar información del entorno que permite la adaptación del comportamiento del robot. Estos sensores, que pueden medir variables como luz, distancia, posición, velocidad, temperatura o fuerza, actúan como los "sentidos" del sistema robótico, y son fundamentales para su interacción efectiva con entornos complejos y no predecibles \cite{definicion_robot_2}. En contraste, en la robótica industrial los sensores suelen estar optimizados para tareas concretas dentro de procesos controlados y altamente repetitivos, donde las condiciones del entorno apenas varían.
 
-Una vez que los sensores recogen los datos del entorno, el software del robot procesa esta información, proporcionando la inteligencia necesaria para tomar decisiones \cite{definicion_robot_2}. Utilizando algoritmos avanzados o inteligencia artificial, el robot es capaz de generar respuestas adecuadas a las entradas, lo que resulta en la ejecución de una acción específica, como un movimiento o la interacción con su entorno. 
-
-Finalmente, los actuadores son los encargados de ejecutar las acciones determinadas por el sistema de control, permitiendo que el robot lleve a cabo tareas como moverse o manipular objetos. Los actuadores son fundamentales para la efectividad del robot, ya que son los elementos que materializan las decisiones procesadas en acciones físicas tangibles \cite{definicion_robot_2}. 
+Por su parte, el software y los algoritmos que controlan el comportamiento del robot en la robótica tradicional deben ser especialmente robustos, adaptativos y, en muchos casos, incorporar técnicas de inteligencia artificial o aprendizaje automático \cite{definicion_robot_2}. Esto permite al robot reaccionar de forma flexible a situaciones no previstas, algo menos común en la robótica industrial, donde los algoritmos suelen estar más orientados a la eficiencia, estabilidad y cumplimiento exacto de ciclos de producción \cite{definicion_robot_2}. Finalmente, los actuadores son los responsables de ejecutar las decisiones del sistema de control y deben estar diseñados para responder con precisión y versatilidad, siendo capaces de adaptarse a tareas muy variadas, a diferencia de los actuadores industriales, que suelen estar optimizados para movimientos repetitivos y bien definidos en líneas de montaje automatizadas \cite{definicion_robot_2}.
 
 \begin{figure} [h!]
   \begin{center}
@@ -166,7 +164,7 @@ Finalmente, los actuadores son los encargados de ejecutar las acciones determina
 
 \subsection{Robótica industrial}
 
-Según la norma internacional ISO 8373:2012 un robot industrial se define como ``un manipulador multifuncional, reprogramable y controlado automáticamente, programable en tres o más ejes que puede estar fijo en un área o móvil para su uso en aplicaciones de automatización industrial'' \cite{definicion_iso}. Todo ello a partir de trayectorias variables para ejecutar diversas tareas cíclicas y adaptables. 
+Según la norma internacional ISO 8373:2021 un robot industrial se define como ``un manipulador multifuncional, reprogramable y controlado automáticamente, programable en tres o más ejes que puede estar fijo en un área o móvil para su uso en aplicaciones de automatización industrial'' \cite{definicion_iso}. Todo ello a partir de trayectorias variables para ejecutar diversas tareas cíclicas y adaptables. 
 
 La robótica industrial es una disciplina de la ingeniería robótica dedicada al diseño, desarrollo y fabricación de robots industriales con el propósito de automatizar tareas repetitivas tradicionalmente realizadas por seres humanos. Estos sistemas robóticos se caracterizan por seguir una secuencia de instrucciones predefinidas, ejecutando ciclos de trabajo continuos en líneas de producción de diversos sectores industriales. Estos robots son considerados industriales debido a que se utilizan en la industria manufacturera en sectores como la automoción, electrónica, alimentación, farmacéutico... En ellos contribuyen significativamente a mejorar la eficiencia, la velocidad y la calidad de los procesos productivos \cite{info_robotica_industrial_1}. 
 
@@ -184,85 +182,9 @@ Para que un brazo robótico sea considerado industrial, debe cumplir con una ser
 
 Otra característica fundamental es la velocidad de operación, ya que en entornos industriales es clave mantener ritmos de trabajo altos. Además, debe ser fácilmente programable y compatible con sistemas de automatización como PLCs o entornos como ROS, y permitir la integración con sensores, cámaras o herramientas específicas  \cite{brazo_industrial}.
 
-Desde el punto de vista de seguridad y conectividad, debe cumplir con normativas como la ISO 10218 y ser compatible con protocolos industriales como PROFINET o EtherCAT \cite{brazo_industrial}. \\
+Desde el punto de vista de seguridad y conectividad, debe cumplir con normativas como la ISO 10218 y ser compatible con protocolos industriales como PROFINET o EtherCAT \cite{brazo_industrial}. 
 
 Desde la aparición de los primeros prototipos de robots industriales, ha surgido un debate sobre su impacto en el empleo humano, con preocupaciones respecto a una posible sustitución de la mano de obra. Sin embargo, numerosos estudios sostienen que, lejos de desplazar a los trabajadores, estos sistemas robóticos buscan mejorar las condiciones laborales, eliminando tareas monótonas o peligrosas \cite{info_robotica_industrial_2}. 
-
-\subsection{Tipos de robots industriales}
- 
-Existen una gran variedad de diseños y configuraciones de robots industriales debido a las diversas aplicaciones y entronos en los que estos se emplean. Esta clasificación puede realizarse según diversos criterios, siendo el más común el tipo de configuración mecánica, que determina los grados de libertad, el alcance y la versatilidad del robot.
-
-\subsubsection{Robot cartesiano}
-
-Los robots cartesianos se componen de tres articulaciones prismáticas y utilizan el sistema de coordenadas tridimensionales, el cual lo forman los ejes X, Y y Z. Los movimientos de estos robots son lineales por lo que su funcionamiento es sencillo y se limita a movimiento de traslación. Suelen ser utilizados para mover cargas pesadas linealmente en las que no es necesario rotarlas \cite{tipos_robots_1}. 
-
-\begin{figure} [h!]
-  \begin{center}
-    \includegraphics[width=7cm]{figs/robot_cartesiano}
-  \end{center}
-  \caption{\centering Robot cartesiano.}
-  \label{fig:robot_cartesiano}
-\end{figure} 
-
-\subsubsection{Robot antropomórfico}
-
-Estos robots articulados son los más comunes en el sector de fabricación enfocados en aplicaciones complejas como el montaje de productos, soldadura o mecanizado. El ``end effector'' (pieza situada en el extremo final del brazo) poseen seis grados de libertad para poder operar en cualquier situación. Los brazos de este estilo poseen tres articulaciones de giro y otra opcional en el EOAT (herramientas conectadas al extremo final del brazo con las cuales se opera con el entorno) \cite{tipos_robots_2}.
-
-\begin{figure} [h!]
-  \begin{center}
-    \includegraphics[width=6cm]{figs/robot_antropomorfico}
-  \end{center}
-  \caption{\centering Robot antropomórfico.}
-  \label{fig:robot_antropomorfico}
-\end{figure} 
-
-\subsubsection{Robot cilíndrico}
-
-Los robots cilíndricos se caratcerizan por tener movimientos cilíndricos debido a que están compuestos de dos articulaciones prismáticas y otra de revolución. Esta morfología le permite movimientos de rotación en torno a su propio eje y con las articulaciones prismáticas ajusta la altitud y radio de trabajo. Su principal aplicación es la de ``pick and place'' las cuales no requieren desplazamiento, aunque actualmente están prácticamente en desuso \cite{tipos_robots_2}.
-
-\begin{figure} [h!]
-  \begin{center}
-    \includegraphics[width=5.5cm]{figs/robot_cilindrico}
-  \end{center}
-  \caption{\centering Robot cilíndrico.}
-  \label{fig:robot_cilindrico}
-\end{figure} 
-
-\subsubsection{Robot SCARA}
-
-Este tipo de robot tiene como peculiaridad que posee un brazo con todos los grados de libertad de desplazamiento en el espacio y rotación respecto al eje Z. Estos modelos están formados por dos eslabones en adición a dos juntas de revolución y una prismática. La función de la articulación prismática es desplazar en el eje Z el EOAT y tiene diversas aplicaciones como la paletización, el ensambalaje o biomedicina \cite{tipos_robots_1}.
-
-\begin{figure} [h!]
-  \begin{center}
-    \includegraphics[width=6cm]{figs/robot_SCARA}
-  \end{center}
-  \caption{\centering Robot SCARA.}
-  \label{fig:robot_SCARA}
-\end{figure} 
-
-\subsubsection{Robot delta}
-Los robots delta están formados por tres eslabones unidos a un EOAT mediante tres juntas universales y una base común. La base está formada por tres articulaciones primáticas o en su lugar accionadas por revoluciones, y, su función, es proporionarle cuatro grados de libertad al EOAT para que pueda moverse en todos los ejes cartesianos y girar sobre su eje Z. Sus principales aplicaciones son la de ``pick and place'' de forma veloz dentro de la industria alimentaria, electrónica y farmacéutica principalmente (debido a que no tiene que mover toda la estructura mecánica como otro tipo de brazos, sino que solo mueve el TCP o punto central de la herramienta) \cite{tipos_robots_2}.
-
-
-\begin{figure} [h!]
-  \begin{center}
-    \includegraphics[width=4.8cm]{figs/robot_delta}
-  \end{center}
-  \caption{\centering Robot delta.}
-  \label{fig:robot_delta}
-\end{figure} 
-
-\subsubsection{Robot esférico}
-
-Estos robots también tienen el nombre de robots polares y están basados en el sistema de coordenadas polares consiguiendo un área de trabajo esférica. La longitud del enlace entre el EOAT y la articulación de revolución más cercana establecen su rango de movimiento permitiendo un mayor alcance en comparación a otros modelos. So aplicación más común es en aplicaciones de carga de mñaquinas debido a su largo alcance \cite{tipos_robots_2}.
-
-\begin{figure} [h!]
-  \begin{center}
-    \includegraphics[width=4cm]{figs/robot_esferico}
-  \end{center}
-  \caption{\centering Robot esférico.}
-  \label{fig:robot_esferico}
-\end{figure} 
 
 \section{Unión entre la automatización y la robótica}
 \label{sec:terceraseccion}
@@ -275,11 +197,11 @@ En los años 2010, la Industria 4.0 emergió como una nueva fase en la manufactu
 
 Las comunicaciones entre dispositivos industriales son fundamentales para que los procesos de producción actuales funcionen de forma segura, eficiente y automatizada \cite{intro_com}. Gracias a ellas, sensores, actuadores, controladores y sistemas de gestión pueden intercambiar datos constantemente, asegurando que todo el proceso esté coordinado y optimizado. El objetivo principal de estas comunicaciones es transformar la información captada del entorno en datos útiles que faciliten la toma de decisiones rápidas y eficaces \cite{intro_com}. Esto no solo mejora la eficiencia de la producción, sino que también ayuda a prevenir errores, optimizar el uso de recursos y mantener los procesos en marcha sin interrupciones. A diferencia de las redes convencionales, las comunicaciones industriales deben cumplir con requisitos muy exigentes: alta fiabilidad, resistencia a condiciones adversas, capacidad para operar en tiempo real y determinismo. \cite{intro_com}. 
 
-La tecnología de \textbf{bus de campo} apareció a finales de los años 80 con el objetivo de ofrecer un método estandarizado para conectar múltiples dispositivos de campo en entornos industriales. El bus de campo es una red de comunicación industrial bidireccional y multipunto que conecta dispositivos de campo inteligentes, sustituyendo los sistemas de control centralizados por redes distribuidas. Permite que múltiples sensores y actuadores se comuniquen con el controlador sin conexiones individuales, reduciendo cables y distancia \cite{info_bus}. Existen múltiples variantes desarrolladas por fabricantes para diferentes nichos destacando: PROFIBUS en automoción y control de procesos, CANbus en el sector automotriz y maquinaria y Foundation Fieldbus en industrias de petróleo y gas entre otros \cite{bus_vs_ethernet}.
+La tecnología de \textbf{bus de campo} apareció a finales de los años 80 con el objetivo de ofrecer un método estandarizado para conectar múltiples dispositivos de campo en entornos industriales. El bus de campo es una red de comunicación industrial bidireccional y multipunto que conecta dispositivos de campo inteligentes, sustituyendo los sistemas de control centralizados por redes distribuidas \cite{info_bus}. Existen múltiples variantes desarrolladas por fabricantes para diferentes nichos destacando: PROFIBUS en automoción y control de procesos, CANbus en el sector automotriz y maquinaria y Foundation Fieldbus en industrias de petróleo y gas entre otros \cite{bus_vs_ethernet}.
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=12cm]{figs/bus_de_campo}
+    \includegraphics[width=15cm]{figs/bus_de_campo}
   \end{center}
   \caption{\centering Ejemplo básico de dus de campo. \cite{info_bus}}
   \label{fig:bus_de_campo}
@@ -291,7 +213,7 @@ Entre sus principales ventajas frente a los sistemas de bus de campo tradicional
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=12cm]{figs/ethernet_industrial}
+    \includegraphics[width=15.5cm]{figs/ethernet_industrial}
   \end{center}
   \caption{\centering Ejemplo básico de red de ethernet industrial. \cite{ethernet_imagen}}
   \label{fig:ethernet_industrial}
@@ -370,23 +292,25 @@ Existen diferentes tipos de sistemas SCADA según su arquitectura: centralizados
 \section{Motivación del trabajo}
 \label{sec:cuartaseccion}
 
-A lo largo de mi formación académica, he podido adquirir conocimientos en diferentes áreas de la robótica, tanto desde el punto de vista teórico como práctico. Algo que comparten muchas asignaturas es el uso de simuladores, que permiten aplicar lo aprendido en un entorno virtual. Estos simuladores tienen muchas ventajas como el programar sin miedo a dañar un robot real, personalizar el entorno según la aplicación que se quiera simular e incluso experimentar con diferentes configuraciones de manera sencilla y sin costes adicionales.
+La automatización industrial representa una opción laboral muy atractiva, con la transformación digital impulsada por la Industria 4.0 y el auge de tecnologías como el Internet de las Cosas (IoT), la robótica o la inteligencia artificial, la demanda de profesionales cualificados en este ámbito no ha dejado de crecer. Sectores como la automoción, la alimentación o la logística están apostando cada vez más por la automatización para mantenerse competitivos en un mercado globalizado.
 
-Aun así, trabajar solo con simuladores no es lo mismo que hacerlo con sistemas reales. La experiencia práctica que se obtiene al enfrentarse a un entorno físico es mucho más rica y completa. En la realidad, hay que lidiar con errores de sensores, fallos en los actuadores, problemas mecánicos o situaciones imprevistas que obligan a pensar y reaccionar. Estas experiencias ayudan a desarrollar habilidades muy valiosas, como la capacidad de resolver problemas, tomar decisiones rápidas y adaptarse a los cambios, cosas que un simulador, por muy avanzado que sea, no siempre puede ofrecer.
-
-Con este trabajo, mi objetivo es crear una aplicación usando dos simuladores didácticos que sirva como herramienta de apoyo para que otros alumnos puedan aprender de forma más interactiva y entretenida. Utilizar este tipo de recursos no solo puede hacer más ameno el aprendizaje, sino que también puede despertar mayor interés por la robótica y automatización y facilitar la comprensión de los conceptos. Además, combinar el uso de simuladores con prácticas reales puede ser una muy buena forma de reforzar la formación y preparar mejor a los estudiantes para los retos que encontrarán en el entorno profesional. 
-
-En cuanto a las salidas profesionales, la automatización industrial representa una opción laboral muy atractiva. Con la transformación digital impulsada por la Industria 4.0 y el auge de tecnologías como el Internet de las Cosas (IoT), la robótica o la inteligencia artificial, la demanda de profesionales cualificados en este ámbito no ha dejado de crecer. Sectores como la automoción, la alimentación o la logística están apostando cada vez más por la automatización para mantenerse competitivos en un mercado globalizado.
+\newpage
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=14cm]{figs/grafico_futuro}
+    \includegraphics[width=15cm]{figs/grafico_futuro}
   \end{center}
   \caption{\centering Tendencias del mercado global de automatización industrial. \cite{grafico_empleabilidad}}
   \label{fig:grafico_futuro}
 \end{figure} 
 
 Como se observa en la figura  ~\ref{fig:grafico_futuro}, se preveé que cada año se invierta más dinero en la automatización industrial,
-por lo que personalmente, considero que este campo tiene un gran futuro. La producción industrial en masa seguirá siendo clave para satisfacer la demanda del mercado, impulsada por el crecimiento demográfico y el alto nivel de consumo. Por otro lado, el desarrollo continuo de nuevas tecnologías y robots hace que el sector esté en constante evolución, tal y como viene ocurriendo desde sus orígenes en la década de 1940.
+por lo que este campo tiene un gran futuro. La producción industrial en masa seguirá siendo clave para satisfacer la demanda del mercado, impulsada por el crecimiento demográfico y el alto nivel de consumo. Por otro lado, el desarrollo continuo de nuevas tecnologías y robots hace que el sector esté en constante evolución, tal y como viene ocurriendo desde sus orígenes en la década de 1940.
 
-Además, la escasez de perfiles especializados hace que las oportunidades laborales sean aún mayores, y la experiencia utilizando estos simuladores en tu etápa académica puede provocar que una empresa se decante por ti por encima de otras personas que no haya utilizado un sistema físico. A esto se suman unos salarios de entrada bastante competitivos, que tienden a mejorar con la experiencia y ofrecen una buena calidad de vida. 
+La creciente escasez de perfiles especializados en el ámbito de la automatización y la robótica incrementa notablemente las oportunidades laborales para quienes cuentan con formación en estas áreas. La familiaridad con simuladores durante la etapa académica puede representar un valor añadido en los procesos de selección, al proporcionar una ventaja comparativa frente a candidatos sin experiencia práctica con sistemas físicos. A ello se suma la existencia de salarios de entrada competitivos, que tienden a incrementarse con la experiencia y que, en general, permiten acceder a una buena calidad de vida.
+
+El trabajo tiene como objetivo el desarrollo de una aplicación basada en el uso de dos simuladores didácticos, concebida como una herramienta de apoyo para facilitar el aprendizaje de contenidos relacionados con la robótica y la automatización. La utilización de este tipo de recursos permite fomentar un aprendizaje más interactivo y dinámico, lo cual contribuye a una mayor motivación del alumnado y a una mejor asimilación de los conceptos teóricos. Asimismo, la combinación de entornos virtuales con prácticas reales constituye una estrategia eficaz para reforzar la formación técnica y preparar al estudiante para los desafíos propios del ámbito profesional.
+
+A lo largo de la formación académica de los ingenieros, se adquieren conocimientos en diferentes disciplinas, tanto desde el punto de vista teórico como práctico. Una característica común en numerosas asignaturas es la utilización de simuladores, los cuales permiten aplicar los conocimientos adquiridos en entornos virtuales controlados. Estos entornos ofrecen múltiples ventajas, entre las que se incluyen la posibilidad de programar sin riesgo de dañar un robot físico, la personalización del entorno de trabajo en función de la aplicación deseada, y la experimentación con distintas configuraciones de forma sencilla y sin incurrir en costes adicionales.
+
+Aun así, trabajar solo con simuladores no es lo mismo que hacerlo con sistemas reales. La experiencia práctica que se obtiene al enfrentarse a un entorno físico es mucho más rica y completa. En la realidad, hay que lidiar con errores de sensores, fallos en los actuadores, problemas mecánicos o situaciones imprevistas que obligan a pensar y reaccionar. Estas experiencias ayudan a desarrollar habilidades muy valiosas, como la capacidad de resolver problemas, tomar decisiones rápidas y adaptarse a los cambios, cosas que un simulador, por muy avanzado que sea, no siempre puede ofrecer.

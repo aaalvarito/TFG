@@ -6,24 +6,26 @@
 \emph{Cualquier cosa que pueda ser automatizada, será automatizada..}\\
 \end{minipage}\\
 
-Robert Cannon, \textit{Título}\\
+Robert Cannon\\
 \end{flushright}
 
 \vspace{1cm}
 
-En este capítulo se detallan los recursos hardware y software empleados para llevar a cabo el desarrollo de la aplicación. A nivel hardware, se han utilizado dos maquetas didácticas de automatización industrial, cada una equipada con un PLC, junto con una interfaz HMI y un brazo robótico colaborativo de la empresa Universal Robots (UR). En cuanto al software, se han utilizado distintos entornos de desarrollo específicos para cada dispositivo: el software TIA Portal para la programación de los PLCs y la configuración de la HMI, y la plataforma URSim para la simulación y control del brazo robótico. Además, se han empleado librerías propias de los fabricantes, sistemas operativos compatibles con las herramientas utilizadas y conexiones mediante protocolos estándar de comunicación industrial como Profinet. Aparte de la programación individual de cada componente del sistema, se ha llevado a cabo el montaje completo y el conexionado de todos los elementos desde su estado inicial de fábrica.
+En este capítulo se detallan los recursos hardware y software empleados para llevar a cabo el desarrollo de la aplicación. A nivel hardware, se han utilizado dos maquetas didácticas de automatización industrial del fabricante FESTO, cada una equipada con un PLC y una interfaz HMI común de SIEMENS y un brazo robótico colaborativo de la empresa Universal Robots (UR). En cuanto al software, se han utilizado distintos entornos de desarrollo específicos para cada dispositivo: el software TIA Portal para la programación de los PLCs y la configuración de la HMI, y la plataforma URSim para la simulación y control del brazo robótico. Además, se han empleado librerías propias de los fabricantes, sistemas operativos compatibles con las herramientas utilizadas y conexiones mediante protocolos estándar de comunicación industrial como Profinet. También se ha realizado el montaje completo y el conexionado de todos los elementos.
 
 \section{Estación distribución}
 
-La estación de distribución con cinta transportadora de Festo Didactic es un módulo del sistema MPS (Modular Production System) que simula una parte de una línea de producción automatizada. Su función principal es clasificar, alinear y transportar piezas de trabajo desde un punto de alimentación hacia otras estaciones del sistema \cite{estacion_distribucion}. Este sistema está diseñado para la formación técnica en automatización industrial, permitiendo a estudiantes y profesionales aprender a manejar sensores, actuadores, sistemas neumáticos, cintas transportadoras y PLCs. En la tabla \ref{fig:estacion_distribucion_3} se detallan las características generales del sistema: \\
+La estación de distribución con cinta transportadora de Festo Didactic \footnote{Image retrieved from Festo.com. (N.d.). Retrieved June 4, 2025, from \url{https://www.festo.com/es/es/p/estacion-de-distribucion-id_PROD_DID_8034566/}} es un módulo del sistema MPS (Modular Production System) que simula una parte de una línea de producción automatizada. Su función principal es clasificar, alinear y transportar piezas de trabajo desde un punto de alimentación hacia otras estaciones del sistema \cite{estacion_distribucion}. Este sistema está diseñado para la formación técnica en automatización industrial, permitiendo a estudiantes aprender a manejar sensores, actuadores, sistemas neumáticos, cintas transportadoras y PLCs. \\
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=11.5cm]{figs/estacion_distribucion_1}
+    \includegraphics[width=12.5cm]{figs/estacion_distribucion_1}
   \end{center}
   \caption{\centering Estación distribución. \cite{estacion_distribucion}}
   \label{fig:estacion_distribucion_1}
 \end{figure} 
+
+En la tabla \ref{fig:estacion_distribucion_3} se detallan las características generales del sistema:
 
 \begin{figure} [h!]
   \begin{center}
@@ -65,7 +67,7 @@ La estación distribución está formada por los siguientes componentes:
 
 \section{Estación unión}
 
-La estación de unión de Festo Didactic simula un proceso industrial en el que se unen dos piezas mediante un actuador neumático equipado con una ventosa (Pick\&Place) \cite{estacion_union}. El objetivo de esta estación es colocerle o retirerle las tapas a las piezas que estén correctamente orientadas y así terminar la secuencia. La estación está compuesta por un brazo neumático, dos cintas para mover las piezas y tapas, sensores que detectan su presencia y adicionalmente un sensor cuya función es detectar la orientación de las piezas \cite{estacion_union}. Esta estación permite realizar prácticas de automatización como control secuencial, posicionamiento y verificación del montaje. Es ideal para formación técnica en tareas típicas de ensamblaje automatizadas. Además se adjuntan las características generales de la estación como se puede ver en el gráfico \ref{fig:estacion_union_3}:
+La estación de unión de Festo Didactic\footnote{Image retrieved Festo.com.  (N.d.). Retrieved June 4, 2025, from  \url{https://www.festo.com/es/es/p/estacion-de-union-id_PROD_DID_8063910/}} simula un proceso industrial en el que se unen dos piezas mediante un actuador neumático equipado con una ventosa (Pick\&Place) \cite{estacion_union}. El objetivo de esta estación es colocerle o retirerle las tapas a las piezas que estén correctamente orientadas y así terminar la secuencia. La estación está compuesta por un brazo neumático, dos cintas para mover las piezas y tapas, sensores que detectan su presencia y adicionalmente un sensor cuya función es detectar la orientación de las piezas \cite{estacion_union}. Esta estación permite realizar prácticas de automatización como control secuencial, posicionamiento y verificación del montaje. Es ideal para formación técnica en tareas típicas de ensamblaje automatizadas. Además se adjuntan las características generales de la estación como se puede ver en el gráfico \ref{fig:estacion_union_3}:
 
 \clearpage
 
