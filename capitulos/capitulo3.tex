@@ -37,29 +37,29 @@ En la tabla \ref{fig:estacion_distribucion_3} se detallan las características g
 
 \clearpage
 
-Las piezas utilizadas en las estaciones MPS de Festo Didactic suelen estar diseñadas en tres colores: rosa, negro y aluminio. Estas piezas representan distintos tipos de materiales o componentes y las diferencias de color permiten que los sensores ópticos las distingan fácilmente, lo que facilita su clasificación, inspección o tratamiento diferenciado por el sistema automatizado. Cada pieza mantiene dimensiones normalizadas para un manejo preciso y repetible y vienen equipadas con una tapa la cual puede ser colocada en estas para ofrecer mayor libertad al crear el proceso automático \\
+Las piezas utilizadas en las estaciones MPS de Festo Didactic suelen estar divididas en tres colores: rosa, negro y metálico. Estas piezas representan distintos tipos de materiales o componentes, lo que permite que los sensores (como óptico o inductivo) las distingan fácilmente facilitando su clasificación, inspección o tratamiento diferenciado por el sistema automatizado. Cada pieza mantiene dimensiones normalizadas para un manejo preciso y repetible y vienen equipadas con una tapa la cual puede ser colocada en estas para ofrecer mayor libertad al crear el proceso automático \\
 
 La estación distribución está formada por los siguientes componentes:
 
 \begin{itemize}
-   \item \textbf{Stapelmagazin (almacén de piezas):} Sistema de alimentación que permite introducir piezas de trabajo de manera ordenada a mitad de la cinta transportadora. Funciona como un cargador vertical donde las piezas se apilan y se liberan una a una mediante un actuador neumático (máximo 7 piezas) \cite{estacion_distribucion}. Está diseñado para asegurar una alimentación controlada y repetible en los procesos de automatización \cite{estacion_distribucion}.
+   \item \textbf{Almacén de piezas:} Sistema de alimentación que permite introducir piezas de trabajo de manera ordenada a mitad de la cinta transportadora. Funciona como un cargador vertical donde las piezas se apilan y se liberan una a una mediante un actuador neumático (máximo 7 piezas) \cite{estacion_distribucion}. Está diseñado para asegurar una alimentación controlada y repetible en los procesos de automatización \cite{estacion_distribucion}.
    
     \item \textbf{Cinta transportadora:} Encargada de desplazar las piezas entre las estaciones. Puede moverse en ambas direcciones. 
     
      \item \textbf{Separador:} Actuador neumático situada al inicio de la cinta cuya función es controlar el flujo de piezas en la cinta transportadora. Si se activa retiene las piezas provenientes del inicio de la cinta y da paso a las almacenadas en el almacén de piezas \cite{estacion_distribucion}.
      
-      \item \textbf{Sensor para la distinción de piezas:} El sistema viene equipado con un módulo extra situado a la mitad de la cinta el cual es capaz de distinguir el color de la pieza. Si la pieza es de color negro se activa un bit, si es rosa se activan dos y si es metálica tres \cite{estacion_distribucion}.
+      \item \textbf{Sensor para la distinción de piezas:} El sistema viene equipado con un módulo extra situado a la mitad de la cinta el cual es capaz de distinguir el color y material de la pieza. Este sensor distingue entre tres tipos de piezas dependiendo de cuantos bits se activen. Cada bit que se activa es la salida de un sensor, el primerio es un sensor óptico que detecta presencia y se activa siempre (pieza negra), el segundo es òptico también y se enciende si la pieza rebota luz de color (pieza rosa) y el tercero es un sensor inductivo el cual se activa si la pieza es metálica. \cite{estacion_distribucion}.
 
-    \item \textbf{Sensores:} La estación posee sensores ópticos y de proximidad que detectan la presencia, posición o características de las piezas, proporcionando datos al PLC.
+    \item \textbf{Sensores láser:} La estación posee sensores ópticos y de proximidad que detectan la presencia de las piezas, funcionan mediante un láser el cual le proporciona datos al PLC.
 
     \item \textbf{Estructura mecánica modular:} Bastidor de perfiles de aluminio que soporta todos los componentes y permite su integración con otras estaciones del sistema MPS \cite{estacion_distribucion}.
 \end{itemize}
 
-\clearpage
+A continuación, se muestra una imágen en la que se observan todos los componentes:
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=17cm]{figs/estacion_distribucion_2}
+    \includegraphics[width=15cm]{figs/estacion_distribucion_2}
   \end{center}
   \caption{\centering Componentes de la estación distribución.}
   \label{fig:estacion_distribucion_2}
@@ -67,13 +67,12 @@ La estación distribución está formada por los siguientes componentes:
 
 \section{Estación unión}
 
-La estación de unión de Festo Didactic\footnote{Image retrieved Festo.com.  (N.d.). Retrieved June 4, 2025, from  \url{https://www.festo.com/es/es/p/estacion-de-union-id_PROD_DID_8063910/}} simula un proceso industrial en el que se unen dos piezas mediante un actuador neumático equipado con una ventosa (Pick\&Place) \cite{estacion_union}. El objetivo de esta estación es colocerle o retirerle las tapas a las piezas que estén correctamente orientadas y así terminar la secuencia. La estación está compuesta por un brazo neumático, dos cintas para mover las piezas y tapas, sensores que detectan su presencia y adicionalmente un sensor cuya función es detectar la orientación de las piezas \cite{estacion_union}. Esta estación permite realizar prácticas de automatización como control secuencial, posicionamiento y verificación del montaje. Es ideal para formación técnica en tareas típicas de ensamblaje automatizadas. Además se adjuntan las características generales de la estación como se puede ver en el gráfico \ref{fig:estacion_union_3}:
+La estación de unión de Festo Didactic\footnote{Image retrieved Festo.com.  (N.d.). Retrieved June 4, 2025, from  \url{https://www.festo.com/es/es/p/estacion-de-union-id_PROD_DID_8063910/}} simula un proceso industrial en el que se unen dos piezas mediante un actuador neumático equipado con una ventosa (Pick\&Place) \cite{estacion_union}. El objetivo de esta estación es colocerle o retirerle las tapas a las piezas que estén correctamente orientadas y así terminar la secuencia. La estación está compuesta por un brazo neumático, dos cintas para mover las piezas y tapas, sensores que detectan su presencia y adicionalmente un sensor cuya función es detectar la orientación de las piezas \cite{estacion_union}. Esta estación permite realizar prácticas de automatización como control secuencial, posicionamiento y verificación del montaje. Es ideal para formación técnica en tareas típicas de ensamblaje automatizadas. Se adjuntan las características generales de la estación como se puede ver en el gráfico \ref{fig:estacion_union_3}:
 
-\clearpage
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=10.75cm]{figs/estacion_union_1}
+    \includegraphics[width=9.75cm]{figs/estacion_union_1}
   \end{center}
   \caption{\centering Estación unión. \cite{estacion_union}}
   \label{fig:estacion_union_1}
@@ -81,21 +80,26 @@ La estación de unión de Festo Didactic\footnote{Image retrieved Festo.com.  (N
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=15cm]{figs/estacion_union_3}
+    \includegraphics[width=14.5cm]{figs/estacion_union_3}
   \end{center}
   \caption{\centering Características generales de la estación unión. \cite{estacion_union}}
   \label{fig:estacion_union_3}
 \end{figure} 
 
-El Módulo de \textbf{Cinta Transportadora 1} transporta, separa y acumula piezas de hasta 40 mm de diámetro. Está impulsado por un motor de corriente continua con control de velocidad y dirección, y utiliza sensores ópticos para detectar la presencia de piezas al inicio, medio y al final de la cinta \cite{estacion_union}. Un electroimán que actúa como retenedor permite detener y liberar piezas individualmente a la altura del brazo, y un sensor difuso con salida digital y analógica identifica la orientación de las piezas el cual se ayuda de un retenedor para poder hacerlo correctamente sin que se mueva la pieza \cite{estacion_union}.
+La estación unión está compuesta principalmente por tres módulos:
 
-El Módulo de \textbf{Cinta Transportadora 2} tiene funciones similares, pero está diseñado para manejar tanto cuerpos de piezas como tapas. También utiliza un motor de corriente continua y sensores ópticos para controlar el flujo de materiales \cite{estacion_union}.
+\begin{itemize}
 
-El Módulo \textbf{Pick\&Place} es un manipulador de dos ejes que utiliza carros deslizantes de precisión y sensores de proximidad para detectar las posiciones finales. Puede equiparse con una ventosa de fuelle o un gripper paralelo para agarrar las piezas, y cuenta con un filtro de vacío y un presostato para asegurar una sujeción fiable \cite{estacion_union}. La fuerza del eje vertical puede ajustarse mediante un regulador de presión, y el módulo incluye todos los componentes necesarios para su funcionamiento, como generador de vacío, válvulas y conexiones eléctricas \cite{estacion_union}.
+	 \item El Módulo de \textbf{Cinta Transportadora 1} transporta, separa y acumula piezas de hasta 40 mm de diámetro. Está impulsado por un motor de corriente continua con control de velocidad y dirección, y utiliza sensores ópticos para detectar la presencia de piezas al inicio, medio y al final de la cinta \cite{estacion_union}. Un electroimán que actúa como retenedor permite detener y liberar piezas individualmente a la altura del brazo, y un sensor difuso con salida digital y analógica identifica la orientación de las piezas el cual se ayuda de un retenedor para poder hacerlo correctamente sin que se mueva la pieza \cite{estacion_union}.
+
+	 \item El Módulo de \textbf{Cinta Transportadora 2} tiene funciones similares, pero está diseñado para manejar tanto cuerpos de piezas como tapas. También utiliza un motor de corriente continua y sensores ópticos para controlar el flujo de materiales \cite{estacion_union}.
+
+	 \item El Módulo \textbf{Pick\&Place} es un manipulador de dos ejes que utiliza carros deslizantes de precisión y sensores de proximidad para detectar las posiciones finales. La fuerza del eje vertical puede ajustarse mediante un regulador de presión con una ventosa de fuelle y cuenta con un filtro de vacío y un presostato para asegurar una sujeción fiable \cite{estacion_union}.
+\end{itemize}
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=14.5cm]{figs/estacion_union_2}
+    \includegraphics[width=14cm]{figs/estacion_union_2}
   \end{center}
   \caption{\centering Componentes de la estación unión. \cite{estacion_union}}
   \label{fig:estacion_union_2}
@@ -113,7 +117,7 @@ El Módulo \textbf{Pick\&Place} es un manipulador de dos ejes que utiliza carros
 
 Para la elaboración de este trabajo se ha utilizado el PLC Siemens S7-1200, concretamente el modelo \textbf{6ES7 215-1BG40-0XB0}. Este modelo forma parte de la familia de controladores compactos de Siemens, ampliamente utilizados en aplicaciones de automatización industrial. El PLC corresponde a la CPU 1215C con alimentación AC/DC y salidas a relé, lo que le otorga una gran versatilidad para controlar y supervisar sistemas de pequeña y mediana escala \cite{PLC_siemens}.
 
-Entre sus características más destacadas se encuentran sus 14 entradas digitales de 24 V DC, 10 salidas digitales tipo relé de 2 A, 2 entradas analógicas (0–10 V DC) y 2 salidas analógicas (0–20 mA DC) \cite{PLC_siemens}. Esta combinación de entradas y salidas permite conectar una gran variedad de sensores y actuadores directamente al PLC sin necesidad de módulos adicionales, lo que reduce costes y espacio en armarios de control.
+Entre sus características más destacadas se encuentran sus 14 entradas digitales de 24 V DC, 10 salidas digitales tipo relé de 2 A, 2 entradas analógicas (0–10 V DC) y 2 salidas analógicas (0–20 mA DC) \cite{PLC_siemens}. Esta combinación de entradas y salidas permite conectar una gran variedad de sensores y actuadores directamente al PLC sin necesidad de módulos adicionales, y además, su módulo de E/S es compatible eléctricamente con las E/S de las estaciones.
 
 En términos de comunicación, esta CPU incorpora dos puertos PROFINET con función de switch integrado, lo que facilita su integración en redes industriales y la comunicación con dispositivos HMI, otros PLCs o sistemas SCADA \cite{PLC_siemens}. Además, es compatible con protocolos de comunicación abiertos como TCP/IP, ISO-on-TCP, UDP y MODBUS, y permite el uso de servidor OPC UA mediante licencia, una característica clave para entornos de Industria 4.0 \cite{PLC_siemens}.
 
@@ -167,7 +171,7 @@ En cuanto a la programación de PLCs, TIA Portal V16 ofrece soporte completo par
 
 La plataforma también incluye herramientas de simulación como PLCSIM y HMISIM, que permiten probar y validar la lógica de control y las interfaces HMI sin necesidad de hardware físico \cite{TIA_portal}. Esto reduce los tiempos de desarrollo y facilita la detección temprana de errores. Además, la compatibilidad con estándares abiertos y protocolos de comunicación como PROFINET, OPC UA y Modbus garantiza una integración fluida con otros sistemas y dispositivos en entornos de automatización industrial \cite{TIA_portal}.
 
-\section{Brazo UR5e}
+\section{Cobot UR5e}
 
 El UR5e es un brazo robótico colaborativo de seis ejes desarrollado por Universal Robots, diseñado para automatizar tareas industriales de forma segura y eficiente. Con una capacidad de carga útil de hasta 5 kg y un alcance de 850 mm, el UR5e es especialmente adecuado para aplicaciones que requieren precisión y flexibilidad, como ensamblaje, manipulación de materiales, soldadura ligera y pruebas de calidad \cite{UR5e}.
 
@@ -189,7 +193,7 @@ Su diseño ligero, con un peso total de aproximadamente 20,6 kg, permite montarl
   \begin{center}
     \includegraphics[width=10.5cm]{figs/PolyScope}
   \end{center}
-  \caption{\centering Pantalla táctil PolyScope. \cite{PolyScope_img}}
+  \caption{\centering Pantalla táctil PolyScope. \cite{PloyScope_img}}
   \label{fig:PolyScope}
 \end{figure} 
 
