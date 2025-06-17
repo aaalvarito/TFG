@@ -14,6 +14,7 @@ Robert Cannon\\
 En este capítulo se detallan los recursos hardware y software empleados para llevar a cabo el desarrollo de la aplicación. A nivel hardware, se han utilizado dos maquetas didácticas de automatización industrial del fabricante FESTO, cada una equipada con un PLC y una interfaz HMI común de SIEMENS y un brazo robótico colaborativo de la empresa Universal Robots (UR). En cuanto al software, se han utilizado distintos entornos de desarrollo específicos para cada dispositivo: el software TIA Portal para la programación de los PLCs y la configuración de la HMI, y la plataforma URSim para la simulación y control del brazo robótico. Además, se han empleado librerías propias de los fabricantes, sistemas operativos compatibles con las herramientas utilizadas y conexiones mediante protocolos estándar de comunicación industrial como Profinet. También se ha realizado el montaje completo y el conexionado de todos los elementos.
 
 \section{Estación distribución}
+\label{sec:estacion_distribucion}
 
 La estación de distribución con cinta transportadora de Festo Didactic \footnote{Image retrieved from Festo.com. (N.d.). Retrieved June 4, 2025, from \url{https://www.festo.com/es/es/p/estacion-de-distribucion-id_PROD_DID_8034566/}} es un módulo del sistema MPS (Modular Production System) que simula una parte de una línea de producción automatizada. Su función principal es clasificar, alinear y transportar piezas de trabajo desde un punto de alimentación hacia otras estaciones del sistema \cite{estacion_distribucion}. Este sistema está diseñado para la formación técnica en automatización industrial, permitiendo a estudiantes aprender a manejar sensores, actuadores, sistemas neumáticos, cintas transportadoras y PLCs. \\
 
@@ -66,6 +67,7 @@ A continuación, se muestra una imágen en la que se observan todos los componen
 \end{figure} 
 
 \section{Estación unión}
+\label{sec:estacion_union}
 
 La estación de unión de Festo Didactic\footnote{Image retrieved Festo.com.  (N.d.). Retrieved June 4, 2025, from  \url{https://www.festo.com/es/es/p/estacion-de-union-id_PROD_DID_8063910/}} simula un proceso industrial en el que se unen dos piezas mediante un actuador neumático equipado con una ventosa (Pick\&Place) \cite{estacion_union}. El objetivo de esta estación es colocerle o retirerle las tapas a las piezas que estén correctamente orientadas y así terminar la secuencia. La estación está compuesta por un brazo neumático, dos cintas para mover las piezas y tapas, sensores que detectan su presencia y adicionalmente un sensor cuya función es detectar la orientación de las piezas \cite{estacion_union}. Esta estación permite realizar prácticas de automatización como control secuencial, posicionamiento y verificación del montaje. Es ideal para formación técnica en tareas típicas de ensamblaje automatizadas. Se adjuntan las características generales de la estación como se puede ver en el gráfico \ref{fig:estacion_union_3}:
 
@@ -114,6 +116,7 @@ La estación unión está compuesta principalmente por tres módulos:
 \end{figure} 
 
 \section{PLCs Siemens 1200s}
+\label{sec:plc}
 
 Para la elaboración de este trabajo se ha utilizado el PLC Siemens S7-1200, concretamente el modelo \textbf{6ES7 215-1BG40-0XB0}. Este modelo forma parte de la familia de controladores compactos de Siemens, ampliamente utilizados en aplicaciones de automatización industrial. El PLC corresponde a la CPU 1215C con alimentación AC/DC y salidas a relé, lo que le otorga una gran versatilidad para controlar y supervisar sistemas de pequeña y mediana escala \cite{PLC_siemens}.
 
@@ -134,6 +137,7 @@ Su programación se realiza a través del software \textbf{STEP 7 (TIA Portal)} 
 En cuanto a su hardware, presenta una memoria de trabajo de 200 kB y una memoria de carga de 4 MB, además de la posibilidad de insertar una tarjeta SIMATIC Memory Card para ampliar almacenamiento o realizar copias de seguridad \cite{PLC_siemens}. El diseño compacto (130 × 100 × 75 mm) y el grado de protección IP20 lo hacen ideal para entornos industriales controlados.
 
 \section{HMI}
+\label{sec:hmi}
 
 El HMI utilizado para este proyecto es el \textbf{SIMATIC HMI KTP700 Basic PN}. Este es un panel HMI de la segunda generación de Basic Panels de Siemens, diseñado para ofrecer una interfaz hombre-máquina eficiente, compacta y rentable en tareas de visualización y operación dentro de entornos industriales. Este modelo cuenta con una pantalla táctil de 7 pulgadas, con una resolución de 800 × 480 píxeles (WVGA) y una profundidad de color de 64.000 colores, lo que proporciona una visualización clara, detallada y moderna de los procesos industriales \cite{HMI_KTP}.
 
@@ -152,6 +156,7 @@ El KTP700 Basic PN dispone de una interfaz USB que permite conectar dispositivos
 En cuanto a su diseño físico, el dispositivo tiene unas dimensiones compactas de 214 × 158 × 39 mm y está pensado para montaje en panel \cite{HMI_KTP}. Cuenta con una protección frontal IP65, lo que le confiere resistencia frente a polvo y chorros de agua, haciéndolo apto para condiciones industriales exigentes \cite{HMI_KTP}. También incluye funciones como alarmas, tendencias, gestión de recetas y multilenguaje, lo que lo convierte en una solución versátil para aplicaciones industriales básicas.
 
 \section{TIA Portal}
+\label{sec:tia_portal}
 
 TIA Portal (Totally Integrated Automation Portal) es una plataforma de ingeniería desarrollada por Siemens que integra en un único entorno todas las herramientas necesarias para la configuración, programación, supervisión y mantenimiento de sistemas de automatización industrial. Fue diseñado con el objetivo de unificar y simplificar la ingeniería de proyectos, mejorando la eficiencia en el desarrollo, la puesta en marcha y la operación de sistemas de control.
 
@@ -172,6 +177,7 @@ En cuanto a la programación de PLCs, TIA Portal V16 ofrece soporte completo par
 La plataforma también incluye herramientas de simulación como PLCSIM y HMISIM, que permiten probar y validar la lógica de control y las interfaces HMI sin necesidad de hardware físico \cite{TIA_portal}. Esto reduce los tiempos de desarrollo y facilita la detección temprana de errores. Además, la compatibilidad con estándares abiertos y protocolos de comunicación como PROFINET, OPC UA y Modbus garantiza una integración fluida con otros sistemas y dispositivos en entornos de automatización industrial \cite{TIA_portal}.
 
 \section{Cobot UR5e}
+\label{sec:ur5e}
 
 El UR5e es un brazo robótico colaborativo de seis ejes desarrollado por Universal Robots, diseñado para automatizar tareas industriales de forma segura y eficiente. Con una capacidad de carga útil de hasta 5 kg y un alcance de 850 mm, el UR5e es especialmente adecuado para aplicaciones que requieren precisión y flexibilidad, como ensamblaje, manipulación de materiales, soldadura ligera y pruebas de calidad \cite{UR5e}.
 
