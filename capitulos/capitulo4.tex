@@ -28,7 +28,19 @@ A continuación, se muestra un diagrama de conexiones de todos los dispositivos:
   \label{fig:conexion_dispositivos}
 \end{figure} 
 
-hablar de comunicacion plcs y plc ur
+Para intercambiar mensajes y datos entre los dos PLCs se han utilizado las funciones de comunicación RECV y SEND. SEND permite enviar información desde un PLC a otro, mientras que RECV se encarga de recibir esos datos en el destino. Estas funciones son muy útiles para coordinar procesos distribuidos y compartir datos en tiempo real en redes como Ethernet/IP o Profinet. Para la comunicación entre los PLCs, se ha definido una estructura de datos específica para cada uno, la cual se utiliza en el intercambio de mensajes. Estas estructuras contienen toda la información necesaria para el proceso, permitiendo compartir y sincronizar los datos de forma eficiente entre los distintos controladores. Cada PLC envía y recibe mensajes a una frecuencia de 5Hz y van activando o desactivando los campos de la estructura según en la etapa que se encuentren. Seguidamente se muestra una imagen de las estructuras de datos y las funciones de comunicación de los PLCs:
+
+\clearpage
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=8cm]{figs/comunicacion_plcs}
+  \end{center}
+  \caption{\centering Funciones SEND y RECV entre los PLCs (foto temporal).}
+  \label{fig:comunicacion_plcs}
+\end{figure} 
+
+falta hablar de la comunicacion plc y ur
 
 \section{Funcionamiento estación distribución}
 \label{sec:funcionamiento_distribucion}
@@ -168,10 +180,56 @@ El grafcet de la estación distribución puede observarse en la figura \ref{fig:
   \label{fig:grafcet_union}
 \end{figure}
 
+\clearpage
+
 
 \section{Aplicación de la Guía Gemma}
 \label{sec:aplicacion_gemma}
 
+La aplicación de la Guía Gemma explicada en la sección \ref{sec:terceraseccion} es un aspecto muy importante a la hora de programar las estaciones si se quiere obtener un resultado funcional, seguro y estructurado.  Facilita la identificación de modos de funcionamiento, fallos y transiciones entre estados. Para la aplicación de la Guía Gemma en el proyecto se han utilizado los siguientes estados:
+
+\begin{table}[H] 
+\begin{center}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|P{3.5cm}|P{4cm}|P{7cm}|}
+\hline
+\textbf{Modo} & \textbf{Tipo} & \textbf{Objetivo} \\
+\hline
+
+\multirow{2}{=}{Proceso de funcionamiento} 
+    & F1: Producción normal & Se realizan las tareas principales del sistema. \\
+\cline{2-3}
+    & F4: Marchas de verificación sin orden & Se realiza un control manual de los actuadores y la comprobación del funcionamiento de los sensores. \\
+\hline
+
+\multirow{3}{=}{Proceso de parada o puesta en marcha} 
+    & A1: Parada en el estado inicial & Estado de reposo de la máquina. \\
+\cline{2-3}
+    & A2: Parada solicitada al final de ciclo & Estado al que se llega  cuando se termina el ciclo y pasa al estado inicial\\
+\cline{2-3}
+    & A3: Parada solicitada en un estado determinado & Estado al que llega la máquina alternativo el cual no coincide con el final de ciclo. \\
+\cline{2-3}
+    & A4: Parada obtenida & Estado de reposo diferente al principal. \\
+\hline
+
+Proceso en defecto & D1: Parada de emergencia & Estado al que llega el sistema tras una parada de emergencia. Se para el funcionamiento de todo el sistema. \\
+\hline
+
+\end{tabular}
+
+\caption{Estados de la Guía Gemma utilizados en el sistema.}
+\label{cuadro:union}
+\end{center}
+\end{table}
+
+\subsubsection{Proceso de funcionamiento}
+
+
+\subsubsection{Proceso de parada o puesta en marcha}
+
+
+\subsubsection{Proceso en defecto}
 
 \clearpage
 
@@ -180,13 +238,29 @@ El grafcet de la estación distribución puede observarse en la figura \ref{fig:
 
 El cobot UR5e es un brazo robótico colaborativo diseñado para trabajar de forma segura junto a operarios. En este proyecto, su función principal es comunicarse con los PLCs para ejecutar una secuencia de paletizado en la fase final del ciclo global del sistema. Una vez que la estación de distribución completa su ciclo, el PLC 1 envía una señal al UR5e indicándole que inicie su secuencia. Al finalizar la operación de paletizado, el cobot notifica al PLC 1 que ha concluido, permitiendo así reiniciar el ciclo completo. El propósito de integrar el brazo en la ejecución del sistema es simular su uso dentro del proceso automático (aunque físicamente no se pudo integrar debido a la distancia entre estaciones) y aportar así mayor realismo y complejidad al resultado final. 
 
-El cobot viene equipado con una pinza neumática como herramienta. Esta pinza permite sujetar, mover y soltar objetos de forma rápida y eficiente. Es ideal para tareas repetitivas como ensamblaje, paletizado, manipulación de piezas o carga de máquinas, especialmente cuando no se requiere un control preciso de la fuerza. Esta pinza se ha utilizado para la secuencia de paletizado, la cual siguie el esquema llamado \textbf{paletizado por capas}. Este tipo de paletizado por capas consiste en organizar productos sobre un palé formando niveles horizontales uniformes agrupando varios elementos alineados o alternos para lograr estabilidad \cite{paletizado_capas}. Es ideal para cargas regulares y facilita la automatización, optimizando espacio, transporte y manipulación en entornos industriales \cite{paletizado_capas}. Para este trabajo se han utilizado bricks de leche como elementos para ser apilados siguendo la técnica ya mencionada. \\
+El cobot viene equipado con una pinza neumática como herramienta. Esta pinza permite sujetar, mover y soltar objetos de forma rápida y eficiente. Es ideal para tareas repetitivas como ensamblaje, paletizado, manipulación de piezas o carga de máquinas, especialmente cuando no se requiere un control preciso de la fuerza. Esta pinza se ha utilizado para la secuencia de paletizado, la cual siguie el esquema llamado \textbf{paletizado por capas}. Este tipo de paletizado por capas consiste en organizar productos sobre un palé formando niveles horizontales uniformes agrupando varios elementos alineados o alternos para lograr estabilidad \cite{paletizado_capas}. Es ideal para cargas regulares y facilita la automatización, optimizando espacio, transporte y manipulación en entornos industriales \cite{paletizado_capas}. 
 
-foto brazo con pinza
-\clearpage
+\begin{figure}[h!]
+  \begin{center}
+  	\includegraphics[width=11.5cm]{figs/brazo_pinza}
+  \end{center}
+  \caption{\centering UR5e junto con la pinza como herramienta.}
+  \label{fig:brazo_pinza}
+\end{figure}
 
-Como ya se ha visto en la sección \ref{sec:conectividad_dispositivos} el PLC 1 le envía un mensaje para iniciar el programa de paletizado. En este programa se (hablar del programa)
+Como ya se ha visto en la sección \ref{sec:conectividad_dispositivos}, el PLC 1 le envía un mensaje al UR para iniciar el programa de paletizado. En este programa se ha utilizado la herramienta de paletizado integrada en Polyscope. Esta funcionalidad permite crear un palé de cualquier tipo de elemento indicando únicamente el número de capas deseadas y las coordenadas de la posición de cada uno. Tal como se ha mencionado anteriormente, se ha llevado a cabo un paletizado por capas, utilizando bricks de leche como elementos a colocar, simulando una secuencia real en un entorno industrial. Se han configurado cuatro capas en total: dos con una disposición determinada y las otras dos con una diferente, obteniendo el siguiente resultado:
 
+\begin{figure}[h!]
+  \begin{center}
+  	\includegraphics[width=15cm]{figs/resultado_paletizado}
+  \end{center}
+  \caption{\centering Resultado final del paletizado de bricks de leche por el UR5e.}
+  \label{fig:resultado_paletizado}
+\end{figure}
+
+Las coordenadas de la posición de los bricks de leche en el paletizado se han tomado de forma relativa a la coordenada del primer brick de leche. La primera coordenada se definió en la posición que se quería colocar el primer elemento del palet, y a partir de esta y tomándola de referencia, se han definido las 5 coordenadas restantes. Al utilizar el sistema de coordenadas del primer punto se han podido colocar elementos paralelos y perpendiculares al primero, ayudando ha aportar gran estabilidad y orden al palet. Esta técnica ha ayudado mucho también a establecer la misma altura de todos los bricks de leche y asegurarse así que no se coloquen de forma uniforme. Adicionalmente se han establecido algunos puntos de paso también en este sistema de coordenadas para intentar establecer los movimientos lo más rectilíneos posibles. 
+
+\textbf{NOTA}: Qué es mejor opción de poner a continuación?: las coordenadas de los bricks de leche (por foto o tabla), una imagen del código del UR o ambas.
 
 \clearpage
 \section{Diseño del sistema SCADA}
