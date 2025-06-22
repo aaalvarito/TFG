@@ -11,7 +11,8 @@ Autor, \textit{Título}\\
 
 \vspace{1cm}
 
-Escribe aquí un párrafo explicando brevemente lo que vas a contar en este capítulo. En este capítulo (y quizás alguno más) es donde, por fin, describes detalladamente qué has hecho y qué experimentos has llevado a cabo para validar tus desarrollos. Escribe aquí un párrafo explicando brevemente lo que vas a contar en este capítulo. En este capítulo (y quizás alguno más) es donde, por fin, describes detalladamente qué has hecho y qué experimentos has llevado a cabo para validar tus desarrollos.Escribe aquí un párrafo explicando brevemente lo que vas a contar en este capítulo. En este capítulo (y quizás alguno más) es donde, por fin, describes detalladamente qué has hecho y qué experimentos has llevado a cabo para validar tus desarrollos.
+En este capítulo se describe el diseño completo del sistema automatizado desarrollado. En él se describen tanto los aspectos físicos de la instalación como la lógica de control implementada, abordando la selección de componentes, la configuración de la red de comunicación, y el funcionamiento de cada estación: distribución, unión y brazo robótico colaborativo. Se explican las conexiones entre los dispositivos, incluyendo los sensores, actuadores, PLCs y la interfaz HMI, así como la implementación de los distintos modos de operación mediante la Guía GEMMA, que ha servido de base para estructurar el comportamiento del sistema. También se incluye el diseño del sistema SCADA, el cual permite la supervisión y el control del sistema en tiempo real, mejorando su accesibilidad, fiabilidad y mantenibilidad.
+
 
 \section{Conectividad de los dispositivos}
 \label{sec:conectividad_dispositivos}
@@ -40,7 +41,7 @@ Para intercambiar mensajes y datos entre los dos PLCs se han utilizado las funci
   \label{fig:comunicacion_plcs}
 \end{figure} 
 
-falta hablar de la comunicacion plc y ur
+\textbf{NOTA:} falta hablar de la comunicacion plc y UR
 
 \section{Funcionamiento estación distribución}
 \label{sec:funcionamiento_distribucion}
@@ -211,6 +212,8 @@ La aplicación de la Guía Gemma explicada en la sección \ref{sec:terceraseccio
     & A3: Parada solicitada en un estado determinado & Estado al que llega la máquina alternativo el cual no coincide con el final de ciclo. \\
 \cline{2-3}
     & A4: Parada obtenida & Estado de reposo diferente al principal. \\
+\cline{2-3}
+    & A5: Puesta en marcha después de defecto & Estado posterior a un defecto y necesario para restablecer el sistema. \\
 \hline
 
 Proceso en defecto & D1: Parada de emergencia & Estado al que llega el sistema tras una parada de emergencia. Se para el funcionamiento de todo el sistema. \\
@@ -225,11 +228,99 @@ Proceso en defecto & D1: Parada de emergencia & Estado al que llega el sistema t
 
 \subsubsection{Proceso de funcionamiento}
 
+En el proceso de funcionamiento hay configurados dos estados distintos, El primer estado es el F1 o producción normal, estado en el que el sistema repite constantemente el ciclo de producción que ha sido programado. En este estado y como se puede observar en la figura \ref{fig:HMI_funcionamiento}, se pueden configurar los parámetros del sistema desde el HMI con aspectos clave como: seleccionar el tipo de pieza que se quiere dejar pasar, introducir el número de piezas que se quieren producir,  iniciar o parar la secuencia o decidir si se quiere utilizar el cargador o no. El sistema estará dentro de este estado principal, siempre y cuando no surja algún imprevisto o comportamiento extraño.
+
+En cuanto al estado A4 o marcha de verificación sin orden, tine como objetivo realizar un control manual de los actuadores y sensores para comprobar su correcto funcionamiento. Para este estado se han creado dos modos de test a cada estación física (distribución y unión, Estos modos de pruebas son seleccionables en el menú principal del HMI antes de entrar en el estado de producción A1 como se aprecia en la imágen \ref{fig:HMI_inicio}. Una vez dentro del modo test, y por lo tanto, dentro del estado A4, se puede escoger entre el modo de pruebas de la estación distribución o unión. La estación distribución sólo cuenta con un modo test, en cambio la estación unión cuenta con dos modos debido a que tiene más sensores y actuadores para probar el funcionamiento.
+
+\begin{figure}[H]
+  \centering
+
+  \begin{minipage}{0.6\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/HMI_inicio}
+    \captionof{figure}{\centering Estado inicial del HMI.}
+    \label{fig:HMI_inicio}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.6\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/HMI_test_principal}
+    \captionof{figure}{\centering Vista del HMI dentro de la opción Modo Test.}
+    \label{fig:HMI_test_principal}
+  \end{minipage}
+
+\end{figure}
+
+
+En la figura \ref{fig:HMI_test_distribucion} se pueden ver todos los test que se le pueden realizar en la estación distribución. Es posible activar y desactivar manualmente los actuadores del sistema, como la cinta transportadora, el separador o el cargador, con el fin de verificar su correcto funcionamiento. Además, se muestran tres columnas y tres filas de círculos que representan visualmente todos los sensores de la estación de distribución, así como el tipo de pieza detectado por el módulo adicional de dicha estación. Cuando un sensor está activo, su indicador aparece en verde; en caso contrario, se muestra en rojo. En cuanto al tipo de pieza, solo se activa el correspondiente al detectado durante el ciclo de trabajo en curso. Esta visualización facilita la comprobación del estado de los sensores y permite monitorizar el proceso para detectar posibles errores como se muestra en la siguiente imágen: 
+
+\begin{figure}[h!]
+  \begin{center}
+  	\includegraphics[width=13.5cm]{figs/HMI_test_distribucion}
+  \end{center}
+  \caption{\centering Visualización del modo Test de la estación distribución dentro del HMI.}
+  \label{fig:HMI_test_distribucion}
+\end{figure}
+
+Por otro lado, el modo test de la estación de unión se ha distribuido en dos pantallas distintas, ya que el elevado número de sensores y actuadores impide representarlos todos de forma clara en una sola vista. La estructura de este modo sigue el mismo esquema que en la estación de distribución: se emplean botones para activar o desactivar los actuadores, y se utilizan círculos de colores para indicar visualmente el estado de los sensores. Un círculo verde señala un sensor activo, mientras que el rojo indica que está desactivado. A continuación se muestra el modo test para la estación unión:
+
+\begin{figure}[H]
+  \centering
+
+  \begin{minipage}{0.74\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/HMI_test_union_1}
+    \captionof{figure}{\centering Vista del HMI dentro de la opción Modo Test 1 de la estación unión.}
+    \label{fig:HMI_test_union_1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.74\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/HMI_test_union_2}
+    \captionof{figure}{\centering Vista del HMI dentro de la opción Modo Test 2 de la estación unión.}
+    \label{fig:HMI_test_union_2}
+  \end{minipage}
+\end{figure}
+
 
 \subsubsection{Proceso de parada o puesta en marcha}
 
+Este conjunto de estados definidos por la Guía GEMMA describe las distintas situaciones en las que una máquina puede encontrarse durante la detención o reactivación del proceso. Son fundamentales para garantizar transiciones seguras y controladas entre ciclos de funcionamiento. A continuación, se explican los cuatro estados que componen este proceso:
+
+\begin{itemize}
+    \item \textbf{A1: Parada en el estado inicial} \\
+    Representa el estado de reposo principal de la máquina. Es el punto de partida al que se regresa tras completar un ciclo \cite{quia_gemma}. En este estado, no hay procesos activos y la máquina está lista para comenzar un nuevo ciclo de forma segura una vez se pulse dentro de la interfaz del HMI el botón ``Iniciar secuencia''.
+
+    \item \textbf{A2: Parada solicitada al final de ciclo} \\
+    Este estado funciona como transición entre la producción normal del sistema a la parada del estado inicial cuando se termina el ciclo principal \cite{guia_gemma}. Cada vez que el sistema termina su ciclo, se queda parado y pasa al estado A1 para volver a empezar la secuencia.
+    
+    \item \textbf{A3: Parada solicitada en un estado determinado} \\
+    Corresponde a una parada anticipada, en un punto concreto del ciclo, distinto del final \cite{guia_gemma}. Se emplea cuando es necesario interrumpir el proceso en un estado específico, por razones de control, mantenimiento o condiciones externas \cite{quia_gemma}. Este estado se alcanza cuando le llega a la estación unión una pieza mal oreintada, por lo que el estado se queda detenido hasta que el operario descarta la pieza en el HMI, la imágen \ref{fig:HMI_descarte} representa este estado.
+
+    \item \textbf{A4: Parada obtenida} \\
+    Indica que la máquina ha alcanzado un estado de reposo diferente al inicial A1 y proveniente del A3 \cite{guia_gemma}. Este estado alternativo está asociado a situaciones específicas, como pruebas, diagnóstico o pausas no planificadas \cite{guia_gemma}. 
+    
+   \item \textbf{A5: Puesta en marcha después de defecto} \\
+   En este estado se realizan las acciones necesarias para la reanudación del funcionamiento del sistema después de un defecto \cite{guia_gemma}. A este estado se llegará después de una parada de emergencia y será necesario pulsar el botón ``iniciar programa'' en la interfaz HMI de modo funcionamiento para transicionar al estado A1.
+\end{itemize}
+
+\clearpage
 
 \subsubsection{Proceso en defecto}
+
+Dentro del proceso de defecto sólo se ha programado el estado D1 de parada de emergencia. Este estado representa una situación crítica en la que el sistema se detiene de forma inmediata debido a una emergencia \cite{guia_gemma}. La parada se realiza sin esperar a que finalice el ciclo, con el objetivo de garantizar la seguridad de las personas, del sistema o del entorno \cite{guia_gemma}. Este estado puede ser alcanzado en cualquier momento que se presione el botón ``parada de emergencia'' desde el HMI en el modo de funcionamiento. Una vez pulsado el botón se para el funcionamiento de todo el sistema para ser revisado por un operario, y una vez resuelto el problema, se podrá volver a comenzar con el cíclo de producción desde 0.
+
+\subsubsection{Aplicación de la Guía Gemma}
+
+Una vez explicados todos los estados que puede tener el sistema, se muestra a continuación una iágen que refleja gráficamente todas las transiciones entre ellos dónde los elementos verdes pertenecen al proceso de funcionamiento, los amarillos al proceso de parada o puesta en marcha y los rojos al proceso de defecto:
+
+\begin{figure}[h!]
+  \begin{center}
+  	\includegraphics[width=10cm]{figs/guia_gemma_final}
+  \end{center}
+  \caption{\centering Esquema de transiciones de la aplicación de la Guía Gemma en el sistema.}
+  \label{fig:guia_gemma_final}
+\end{figure}
 
 \clearpage
 
