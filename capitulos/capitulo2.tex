@@ -11,14 +11,14 @@ Peter F. Drucker, \textit{ Management: Tasks, Responsibilities, Practices}\\
 
 \vspace{1cm}
 
-Tras haber contextualizado en el capítulo anterior los fundamentos de la automatización industrial y su relación con la robótica colaborativa, en esta sección se abordará el problema específico que se pretende resolver con este Trabajo Fin de Grado. Se definirá con precisión el objetivo principal del proyecto, centrado en la automatización de una línea de producción didáctica, y se establecerán las bases sobre las que se desarrollará la solución propuesta. Esta descripción permitirá entender el enfoque adoptado y servirá como punto de partida para detallar los requisitos, las competencias aplicadas y la metodología empleada en el desarrollo del sistema.
+Tras haber contextualizado en el capítulo anterior los fundamentos de la automatización industrial y su relación con la robótica industrial, en esta sección se abordará el problema específico que se pretende resolver con este Trabajo Fin de Grado. Se definirá con precisión el objetivo principal del proyecto, centrado en la automatización de una línea de producción didáctica, y se establecerán las bases sobre las que se desarrollará la solución propuesta. Esta descripción permitirá entender el enfoque adoptado y servirá como punto de partida para detallar los requisitos, las competencias aplicadas y la metodología empleada en el desarrollo del sistema.
 
 \section{Descripción del problema}
 \label{sec:descripcion}
 
 El objetivo principal de este Trabajo Fin de Grado es automatizar una línea de producción robotizada utilizando estaciones didácticas de Festo, incorporando un robot colaborativo (UR5e) y estableciendo un sistema de comunicaciones eficiente entre los distintos elementos que componen la celda. Se pretende lograr una integración realista y funcional que sirva tanto como entorno de pruebas para prácticas docentes como demostrador de capacidades en automatización industrial y robótica colaborativa.
 
-Este desarrollo se centra en mejorar la interacción entre los diferentes componentes del sistema (PLCs, HMIs y cobot), garantizando una comunicación fluida y segura, así como un control intuitivo y robusto de todo el proceso productivo.
+Este desarrollo se centra en crear una interacción fluida entre los diferentes componentes del sistema (PLCs, HMIs y cobot), garantizando una comunicación segura, así como un control intuitivo y robusto de todo el proceso productivo.
 
 \section{Requisitos}
 \label{sec:requisitos}
@@ -45,13 +45,13 @@ Durante el desarrollo del proyecto, se han definido y alcanzado los siguientes r
 Las competencias desarrolladas y aplicadas en este proyecto están contenidas dentro del grado en Ingeniería Robótica Software, y en particular con las asignaturas de robótica industrial, redes de ordenadores, y la asignatura propia de trabajo de fin de grado. A continuación se enumeran las competencias adquiridas:
 
 \begin{itemize}
-	\item Se han aplicado los conocimientos adquiridos de forma profesional, resolviendo problemas y elaborando argumentos dentro del ámbito de la robótica. Se ha demostrado capacidad para comunicar información, ideas y soluciones a públicos especializados y no especializados, y se ha fomentado la autonomía en el aprendizaje. Todo ello ha culminado en la realización y defensa de un proyecto que integra y sintetiza las competencias del grado.
+	\item \textbf{CB2, CB4, CB5, SE28:} Se han aplicado los conocimientos adquiridos de forma profesional, resolviendo problemas y elaborando argumentos dentro del ámbito de la robótica. Se ha demostrado capacidad para comunicar información, ideas y soluciones a públicos especializados y no especializados, y se ha fomentado la autonomía en el aprendizaje. Todo ello ha culminado en la realización y defensa de un proyecto que integra y sintetiza las competencias del grado.
 
-	\item Capacidad de diseñar y programar sistemas en red aplicando conceptos de arquitectura de red, protocolos e interfaces de comunicaciones.
+	\item \textbf{CE10:} Capacidad de diseñar y programar sistemas en red aplicando conceptos de arquitectura de red, protocolos e interfaces de comunicaciones.
 
-	\item Capacidad de diseñar, planificar y programar sistemas de manipulación robóticos.
+	\item \textbf{CE22:} Capacidad de diseñar, planificar y programar sistemas de manipulación robóticos.
 
-	\item Capacidad de diseñar robots y sistemas inteligentes atendiendo a los elementos de sensorización y actuación más adecuados dependiendo de la aplicación, los requerimientos del sistema y las condiciones del entorno.
+	\item \textbf{CE12:} Capacidad de diseñar robots y sistemas inteligentes atendiendo a los elementos de sensorización y actuación más adecuados dependiendo de la aplicación, los requerimientos del sistema y las condiciones del entorno.
 
 \end{itemize}
  
@@ -67,13 +67,13 @@ Respecto a la programación del cobot UR5e, se empleó una metodología centrada
 \section{Plan de trabajo}
 \label{sec:plantrabajo}
 
-El desarrollo del proyecto comenzó con la instalación del primer PLC y la interfaz HMI, así como su correspondiente configuración en el entorno TIA Portal. A continuación, se procedió a la instalación de la estación de distribución, realizando el conexionado de todas las entradas y salidas al PLC para su control. Una vez completada esta etapa, se inició la programación de la lógica de control de dicha estación en el PLC y el diseño de la interfaz gráfica del HMI, una fase que se extendió durante aproximadamente un mes hasta alcanzar un funcionamiento completo y estable.
+El desarrollo del proyecto comenzó con la instalación del primer PLC y la interfaz HMI, así como su correspondiente configuración en el entorno TIA Portal. A continuación, se procedió a la integración de la estación de distribución, realizando el conexionado de todas las entradas y salidas al PLC para su control. Una vez completada esta etapa, se inició la programación de la lógica de control de dicha estación en el PLC y el diseño de la interfaz gráfica del HMI, una fase que se extendió durante aproximadamente un mes hasta alcanzar un funcionamiento completo y estable.
 
 Finalizada la primera estación, se abordó la instalación del segundo PLC y de la estación unión, los cuales se integraron en el mismo proyecto de TIA Portal y se añadieron a la red PROFINET común, permitiendo así la comunicación entre todos los dispositivos del sistema. Del mismo modo, se conectaron las entradas y salidas de la estación de unión, y se comenzó con la programación de su lógica de control. Transcurrido otro mes de trabajo, ambas estaciones estaban totalmente automatizadas y operativas. En esta fase también se implementó la comunicación entre los dos PLCs, permitiendo así una coordinación eficiente que dio lugar a un proceso automatizado conjunto.
 
 Finalmente, una vez completada la automatización de las estaciones, se procedió a la programación del robot colaborativo UR5e. Se desarrolló una secuencia de paletizado de piezas, manipulados mediante una pinza hidráulica capaz de apilar hasta cuatro capas. Una vez definida la secuencia de trabajo del cobot, este fue incorporado a la red PROFINET del sistema, permitiendo su comunicación directa con los PLCs. Se implementó el intercambio de señales de control entre el UR5e y los controladores, integrando al robot dentro del mismo ciclo de operación automatizada. Esta última fase requirió aproximadamente un mes adicional.
 
-En cuanto a la redacción de la memoria, se ha llevado un trabajo progresivo en el que se establecían pequeños objetivos semanalmente para avanzar de forma continuada y detallada. Dependiendo de la dificultad y extensión de cada capítulo se ha empleado más o menos tiempo en él, para el primer capítulo se inviertió un mes y medio, para el segundo una semana, para el trecero dos semanas, para el cuarto tres semanas y para el quinto una semana.
+En cuanto a la redacción de la memoria, se ha llevado un trabajo progresivo en el que se establecían pequeños objetivos para avanzar de forma continuada y detallada. Gracias a este método de trabajo, se logró mantener una organización constante, facilitar la revisión de contenidos y asegurar la coherencia global del documento final
 
-Tamién se han realizado tutorías presenciales con el tutor cada martes y jueves durante los dos primeros meses del proyecto debido que eran necesarias para configurar y empezar el proyecto. Una vez que ya se habían entendido todos los conceptos y objetivos necesarios para trabajar solo, únicamente se tuvo alguna tutoría online para aclarar dudas de funcionamiento y orientación del trabajo.
+Tamién se han realizado tutorías presenciales con el tutor cada martes y jueves durante el primer mes del trabajo debido a que eran necesarias para configurar y empezar el proyecto correctamente. Una vez que ya se habían entendido todos los conceptos y objetivos necesarios para trabajar de forma autónoma, únicamente se tuvo alguna tutoría online para aclarar dudas de funcionamiento y orientación del trabajo.
 

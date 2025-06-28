@@ -3,50 +3,171 @@
 
 \begin{flushright}
 \begin{minipage}[]{10cm}
-\emph{Quizás algún fragmento de libro inspirador...}\\
+\emph{En la industria, la precisión no es un lujo: es la esencia de la automatización.}\\
 \end{minipage}\\
 
-Autor, \textit{Título}\\
+Anónimo \\
 \end{flushright}
 
 \vspace{1cm}
 
-En este capítulo se describe el diseño completo del sistema automatizado desarrollado. En él se describen tanto los aspectos físicos de la instalación como la lógica de control implementada, abordando la selección de componentes, la configuración de la red de comunicación, y el funcionamiento de cada estación: distribución, unión y brazo robótico colaborativo. Se explican las conexiones entre los dispositivos, incluyendo los sensores, actuadores, PLCs y la interfaz HMI, así como la implementación de los distintos modos de operación mediante la Guía GEMMA, que ha servido de base para estructurar el comportamiento del sistema. También se incluye el diseño del sistema SCADA, el cual permite la supervisión y el control del sistema en tiempo real, mejorando su accesibilidad, fiabilidad y mantenibilidad.
+En este capítulo se abarca y explica el diseño completo del sistema automatizado desarrollado. En él se describen tanto los aspectos físicos de la instalación como la lógica de control implementada, abordando la selección de componentes, la configuración de la red de comunicación, y el funcionamiento de cada estación: distribución, unión y brazo robótico colaborativo. Se explican las conexiones entre los dispositivos, incluyendo los sensores, actuadores, PLCs, la interfaz HMI y el UR, así como la implementación de los distintos modos de operación mediante la Guía GEMMA, que ha servido de base para estructurar el comportamiento del sistema. Para terminar se hará un pequeño resumen del resultado final obtenido como consecuencia del trabajo realizado.
+
+\section{Descripción general}
+\label{sec:descripcion_general}
+
+El objetivo de este trabajo es lograr que el ciclo de producción comience en la estación de distribución, donde se filtra el tipo y número de piezas que se quieren producir, después pasan a la estación unión donde se le colocará una tapa encima de las piezas bien orientadas, y finalmente, el brazo UR cogerá la pieza y la colocará en un palé para su posterior almacenamiento. 
+
+En la sección \ref{sec:descripcion} ya se presentó una visión general del objetivo del proyecto, pero en esta se profundizará en él con una descripción más detallada y específica. El sistema global está compuesto por dos PLCs, una interfaz HMI y un robot colaborativo UR5e. Una parte fundamental del trabajo es garantizar una comunicación fluida y fiable entre todos los componentes para asegurar un funcionamiento coordinado y realista. El trabajo va a ser desarrollado en TIA portal y la comunicación via PROFINET. \\
+
+El objetivo final es desarrollar un ciclo de producción en el que intervengan todos los componentes mencionados, simulando una aplicación industrial realista. Para ello, el ciclo debe iniciarse en la estación de distribución, donde se introducen las piezas en el proceso productivo y se identifica el tipo de material que las compone, con el fin de determinar el tratamiento correspondiente en función de sus características. Los parámetros de distinción de piezas se establecen el en HMI por el operario, si se descarta la pieza, se acabará el ciclo y se empezará de nuevo, pero si es aceptada pasará a la estación unión continuando el proceso. 
+
+Para que la estación unión comience su proceso dentro del ciclo, es necesario que el PLC que controla la estación distribución le envíe un mensaje al segundo PLC (el que controla la estación unión) para informarle de que debe empezar.  Una vez recibido el mensaje, la segunda estación inicia el proceso tomando la pieza y deteniéndola para verificar su orientación. Si la orientación es correcta, la pieza continúa su avance en el ciclo; en caso contrario, se genera un mensaje de error en el HMI y la pieza es descartada, regresando a la estación de distribución, donde se requerirá una nueva comunicación para reiniciar el proceso. Si la pieza está bien orientada continuará su camino hasta que se pare en un punto donde la tapa proveninte de otra cinta será colocada encima de la pieza con el módulo pick \& place. Una vez terminado el ciclo la estación vovlerá a comunicarse con la estación unión para hacerla saber que terminó su proceso.
+
+Una vez que el PLC de la estación unión recive el mensaje de fin de ciclo del otro PLC, el último paso es comunicarse con el UR para que termine el proceso global. El PLC asociado a la estación distribución es el encargado de mandar el mensaje vía Profinet al UR, quién iniciará una secuencia de paletizado simulando la ordenación de las piezas. Como físicamente las estaciones Festo y el UR están separadas, el proceso de paletizado del brazo robótico se realiza con bricks de leche como elemento manipulable. En el momento que el UR termine su proceso, el PLC será notificado terminando con el ciclo global y volviendo a empezar.
+
+\clearpage
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=13cm]{figs/sistemas_unidos}
+  \end{center}
+  \caption{\centering Estación distribución y estación unión unidas.}
+  \label{fig:sistemas_unidos}
+\end{figure}
 
 
 \section{Conectividad de los dispositivos}
 \label{sec:conectividad_dispositivos}
 
-Para realizar la conexión de todos los dispositivos entre si, se ha utilizado el switch Ethernet industrial \textbf{SCALANCE XB005\footnote{SCALANCE XB-000 unmanaged. (2025).\url{https://mall.industry.siemens.com/mall/es/es/Catalog/Product/6GK5005-0BA00-1AB2}}} y el protocolo PROFINET, el cual ya se ha explicado en la sección \ref{sec:terceraseccion}. Este dispositivo cuenta con 5 puertos, soporta cinexiones PROFINET y está pensado para usarse en fábricas o instalaciones automatizadas donde se requiere una red estable y confiable. El switch es ideal para el proyecto ya que se necesita comunicar 4 dispositivos más el ordenador que los programa entre ellos, ocupando los 5 puertos disponibles. Los cables Ethernet utilizados en son el modelo 6XV18703QN10 \footnote{6XV18703QN10. (n.d.). Radwell.eu. Retrieved June 10, 2025, from \url{https://www.radwell.eu/es/buy/siemens-6xv18703qn10/1018547.html}} los cuales son muy buenos para este tipo de aplicaciones industriales.  \\
+Para realizar la conexión de todos los dispositivos entre si, se ha utilizado el switch Ethernet industrial SCALANCE XB005 y el protocolo PROFINET, los cuales ya se ha explicado en el capítulo \ref{cap:capitulo3}. Este dispositivo cuenta con 5 puertos, soporta cinexiones PROFINET y está pensado para usarse en fábricas o instalaciones automatizadas donde se requiere una red estable y confiable. El switch es ideal para el proyecto ya que se necesita comunicar 4 dispositivos más el ordenador que los programa entre ellos, ocupando los 5 puertos disponibles. Los cables Ethernet utilizados en son el modelo 6XV18703QN10 \footnote{6XV18703QN10. (n.d.). Radwell.eu. Retrieved June 10, 2025, from \url{https://www.radwell.eu/es/buy/siemens-6xv18703qn10/1018547.html}} los cuales están especialmente diseñados para este tipo de aplicaciones industriales.  \\
 
 A continuación, se muestra un diagrama de conexiones de todos los dispositivos:
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=15cm]{figs/conexion_dispositivos}
+    \includegraphics[width=14cm]{figs/conexion_dispositivos}
   \end{center}
   \caption{\centering Representación de conexiones entre los dispositivos del proyecto.}
   \label{fig:conexion_dispositivos}
 \end{figure} 
 
-Para intercambiar mensajes y datos entre los dos PLCs se han utilizado las funciones de comunicación RECV y SEND. SEND permite enviar información desde un PLC a otro, mientras que RECV se encarga de recibir esos datos en el destino. Estas funciones son muy útiles para coordinar procesos distribuidos y compartir datos en tiempo real en redes como Ethernet/IP o Profinet. Para la comunicación entre los PLCs, se ha definido una estructura de datos específica para cada uno, la cual se utiliza en el intercambio de mensajes. Estas estructuras contienen toda la información necesaria para el proceso, permitiendo compartir y sincronizar los datos de forma eficiente entre los distintos controladores. Cada PLC envía y recibe mensajes a una frecuencia de 5Hz y van activando o desactivando los campos de la estructura según en la etapa que se encuentren. Seguidamente se muestra una imagen de las estructuras de datos y las funciones de comunicación de los PLCs:
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=15cm]{figs/conexiones_tiaportal}
+  \end{center}
+  \caption{\centering Representación de conexiones entre los dispositivos dentro del proyecto de Tia Portal.}
+  \label{fig:conexiones_tiaportal}
+\end{figure} 
+
+\clearpage
+
+Para intercambiar mensajes y datos entre los dos PLCs se han utilizado las funciones de comunicación RECV y SEND. SEND permite enviar información desde un PLC a otro, mientras que RECV se encarga de recibir esos datos en el destino. Estas funciones son muy útiles para coordinar procesos distribuidos y compartir datos en tiempo real en redes como Ethernet/IP o Profinet. Para la comunicación entre los PLCs, se ha definido una estructura de datos específica para cada uno, la cual se utiliza en el intercambio de mensajes. Las estructuras mostradas en la imagen \ref{fig:estructura_com_plcs} incluyen variables booleanas utilizadas para la comunicación de tres posibles finalizaciones de ciclo, así como una variable entera que indica el tipo de pieza detectada. Contienen toda la información necesaria para el proceso, permitiendo compartir y sincronizar los datos de forma eficiente entre los distintos controladores. Cada PLC envía y recibe mensajes a una frecuencia de 5Hz y van activando o desactivando los campos de la estructura según en la etapa que se encuentren. Seguidamente se muestra una imagen de las estructuras de datos y las funciones de comunicación de los PLCs: \\
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=16cm]{figs/estructura_com_plcs}
+  \end{center}
+  \caption{\centering Estructuras de datos utilizadas en la comunicación entre loas PLCs.}
+  \label{fig:estructura_com_plcs}
+\end{figure} 
 
 \clearpage
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=8cm]{figs/comunicacion_plcs}
+    \includegraphics[width=12cm]{figs/comunicacion_plcs}
   \end{center}
-  \caption{\centering Funciones SEND y RECV entre los PLCs (foto temporal).}
+  \caption{\centering Funciones SEND y RECV entre los PLCs.}
   \label{fig:comunicacion_plcs}
 \end{figure} 
 
-\textbf{NOTA:} falta hablar de la comunicacion plc y UR
+Para establecer la comunicación entre el UR y el PLC (el conectado a la estación distribución) a través de PROFINET, se ha seguido la guía oficial de UR PROFINET\footnote{Profinet Guide - 20596. (n.d.). Universal-robots.com. Retrieved June 25, 2025, from \url{https://www.universal-robots.com/articles/ur/interface-communication/profinet-how-to-guide-e-series/}}. Configurar la comunicación entre estos dispositivos ha sido una de las partes más difíciles de este trabajo debido a que se tuvieron muchos problemas para poder co seguirlo.
 
+El primer paso es activar la funcionalidad PROFINET en el UR, accediendo a la pestaña “Instalación” de este y guardando la configuración. Esta acción activa un LED amarillo en el controlador, indicando que la función está habilitada pero aún no conectada. A continuación, en el entorno de programación TIA Portal, se debe actualizar la lista de dispositivos accesibles en red, y cuándo el UR aparezca en ella, se le asignan tanto la dirección IP como el nombre del dispositivo al robot. Seguidamente, se importa el archivo GSD proporcionado por Universal Robots en la misma página de la guía, que permite al TIA Portal reconocer al robot como un dispositivo PROFINET compatible. Tras esto, el robot se agrega a la red en la vista de dispositivos y se enlaza con el PLC seleccionando y configurando los módulos de entrada y salida desde el catálogo, definiendo las direcciones de E/S. Este paso fue el más complicado de lograr, ya que no tenía claro que direcciones de memoria eran las correctas para los módulos (ya que si escribía en la dirección incorrecta el mensaje que le llegaba al UR iba vacío), pero finalmente se configuraron las correctas. Las direcciones de memoria de la imágen \ref{fig:com_ur_modulos} deben coincidir con las mismas de las variables de los datos utilizadas para la comunicación representadas en la imágen \ref{fig:com_plc_ur} para poder modificar los registros de propósito general utilizados en la comunicación (las entradas empiezan en la dirección \%I100 y las salidas en la \%Q100, coincidiendo con las de las variables \texttt{UR\_IN} y \texttt{UR\_OUT}). \\
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=15cm]{figs/com_ur_modulos}
+  \end{center}
+  \caption{\centering Configuración de los módulos de comunicación del UR en Tia Portal.}
+  \label{fig:com_ur_modulos}
+\end{figure} 
+
+\clearpage
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=13cm]{figs/com_plc_ur}
+  \end{center}
+  \caption{\centering Configuración de los módulos de comunicación del UR en Tia Portal.}
+  \label{fig:com_plc_ur}
+\end{figure} 
+
+Finalmente, una vez que las estructuras de datos definidas por el usuario permiten mapear adecuadamente los registros de entrada y salida del robot, se pueden modificar los registros booleanos, enteros o flotantes para enviarle información desde el PLC al UR. La configuración completa se descarga al PLC y se verifica que todos los bloques estén correctamente cargados. Cuando la comunicación entre el robot y el PLC se establece con éxito, el LED del controlador del robot cambia a verde como se observa en la siguiente imágen:.
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=12cm]{figs/ur_conectado_plc}
+  \end{center}
+  \caption{\centering Conexión establecida entre el UR y el PLC dentro del PolyScope. \cite{guia_profinet}}
+  \label{fig:ur_conectado_plc}
+\end{figure} 
+
+Seguidamente se mustra una tabla que resume todos los mensajes intercambiados entre los dispositivos en el ciclo global: 
+
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+\begin{table}[H]
+\begin{center}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|M{1.75cm}|M{1.75cm}|M{3.5cm}|M{6.5cm}|}
+\hline
+\textbf{Emisor} & 
+\textbf{Receptor} & 
+\textbf{Mensaje} & 
+\textbf{Explicación} \\
+\hline
+PLC 1  & PLC 2 &  \makecell{Send\_fase\_1  \\ (Bool)} & Se envía si el tipo de pieza es aceptado y pasa de la estación distribución a la estación unión. \\
+\hline
+PLC 2  & PLC 1 &  \makecell{Send\_fase\_1  \\ (Bool)} & Confirmación de que la pieza pasó exitosamente de la estación distribución a la estación unión. \\
+\hline
+PLC 1  & PLC 2 &  \makecell{Tipo\_de\_pieza   \\ (Int)} &  \makecell{Indica el tipo de pieza detectado: \\ Pieza negra: 1 \\ Pieza rosa: 2 \\ pieza metálica: 3}  \\
+\hline
+PLC 2  & PLC 1 &  \makecell{Secuencia\_acabada  \\ (Bool)} &  Se le indica a la estación unión que la estación distribución terminó su ciclo con éxito. \\
+\hline
+PLC 1  & PLC 2 &  \makecell{Secuencia\_ACK   \\ (Bool)} &  Confirmación de la recepción del mensaje Secuencia\_acabada. \\
+\hline
+PLC 2  & PLC 1 &  \makecell{Pieza\_mal\_orientada   \\ (Bool)} &  Se le indica a la estación unión que la pieza actual está mal orientada y se debe descartar. \\
+\hline
+PLC 1  & PLC 2 &  \makecell{Pieza\_mal\_ACK  \\ (Bool)} &  Confirmación de la recepción del mensaje Pieza\_mal\_orientada. \\
+\hline
+PLC 1  & UR5e &  \makecell{Start \\ Registro Gpbi [0] \\ (Bool)} & Indica el inicio de la secuencia de colocación de la pieza en el palé del UR. \\
+\hline
+PLC 1  & UR5e  &  \makecell{num\_capas \\ Registro Gpii [0] \\ (Int)} & Número de capas elegido en el HMI que se quieren para el paletizado. \\
+\hline
+UR5e   & PLC 1 &  \makecell{ejecutando\_proc \\ Registro Gpbo [0] \\ (Bool)} & Infomrma que el UR todavía está ejecutando su ciclo. \\
+\hline
+UR5e   & PLC 1 &  \makecell{pale\_completo \\ Registro Gpbo [1] \\ (Bool)} & Aviso de que el palé está completo. \\
+\hline
+PLC 1  & UR5e  &  \makecell{pale\_recogido  \\  Registro Gpbi [2] \\ (Bool)} & Informa de que el palé ha sido reogido. \\
+\hline
+UR5e   & PLC 1 &  \makecell{Pale\_ACK \\ Registro Gpbo [2] \\ (Bool)} & Confirmación de la recepción del mensaje pale\_recogido. \\
+\hline
+PLC 1  & UR5e  &  \makecell{parada\_emergencia  \\  Registro Gpbi [1] \\ (Bool)} & Parada de emergencia pulsada, parada obligatoria de la secuencia. \\
+\hline
+\end{tabular}
+
+\caption{Intercambio de mensajes en el ciclo global del sistema.}
+\label{cuadro:mensajes}
+\end{center}
+\end{table}
+ 
 \section{Funcionamiento estación distribución}
 \label{sec:funcionamiento_distribucion}
 
-La estación distribución es la encargada de iniciar la secuencia del proceso automático. Esta está conectada al primer PLC y tiene como objetivo distribuir piezas al sistema, ya sea por su cinta transportadora o por el dispensador de piezas, y permitir el paso a un número determinado y tipo de piezas elegido por el usuario en el HMI. Si la pieza no cumple con las condiciones impuestas establecidas en la interfaz de usuario, esta se desplazará de vuelta al inicio descartándose, y si las cumple, continuará hacia delante a la estación distribución. También se cuenta con un modo test programado para probar el funcionamiento de cada sensor y actuador permitiendo así poder detectar errores fácilmente. A continuación se muestra una tabla en la que se reflejan todas las entradas y salidas de la estación y su conexión al PLC:
+La estación distribución es la encargada de iniciar la secuencia del proceso automático. Está conectada al primer PLC y tiene como función principal suministrar piezas al sistema, ya sea a través de su cinta transportadora o mediante el dispensador de piezas. Además, permite el paso únicamente de aquellas piezas que cumplen con un número y tipo determinados, seleccionados previamente por el usuario a través del HMI. En caso de que la pieza no cumpla con las condiciones establecidas en la interfaz de usuario, esta será devuelta al inicio del recorrido y descartada. Si cumple los requisitos, continuará su avance hacia la siguiente estación. También se ha implementado un modo de prueba que permite verificar el funcionamiento individual de cada sensor y actuador, facilitando así la detección de posibles errores. A continuación, se presenta una tabla que recoge todas las entradas y salidas de la estación, así como su correspondencia con las conexiones al PLC:
 
 \begin{table}[H]
 \begin{center}
@@ -56,17 +177,17 @@ La estación distribución es la encargada de iniciar la secuencia del proceso a
 \hline
 \multicolumn{1}{|c|}{\textbf{Sensor}} & 
 \multicolumn{1}{c|}{\textbf{Entrada al PLC}} & 
-\multicolumn{1}{c|}{\textbf{Tipo de salida}} \\
+\multicolumn{1}{c|}{\makecell{\textbf{Tipo de salida} \\ \textbf{(normalmente)}}} \\
 \hline
-Láser inicio cinta  & \%I0.0 &  PNP \\
-Láser medio cinta  & \%I0.1 &  PNP \\
-Láser final cinta  & \%I0.2 &  NPN \\
-Identificador de piezas (pieza negra)  & \%I0.4 &  PNP \\
-Sensor de color (pieza rosa)  & \%I0.5 &  PNP \\
-Sensor metálico (pieza metálica)  & \%I0.6 &  PNP \\
-Corredera retraída  & \%I0.7 &  PNP \\
-Corredera extendida & \%I1.0 &  PNP \\
-Pieza en el cargador & \%I1.1 &  NPN \\
+Láser inicio cinta  & \%I0.0 &  abierta \\
+Láser medio cinta  & \%I0.1 &  abierta \\
+Láser final cinta  & \%I0.2 &  cerrada \\
+Identificador de piezas (pieza negra)  & \%I0.4 &  abierta \\
+Sensor de color (pieza rosa)  & \%I0.5 &  abierta \\
+Sensor metálico (pieza metálica)  & \%I0.6 &  abierta \\
+Corredera retraída  & \%I0.7 &  abierta \\
+Corredera extendida & \%I1.0 &  abierta \\
+Pieza en el cargador & \%I1.1 &  cerrada \\
 \hline
 \end{tabular}
 
@@ -90,13 +211,11 @@ Avance corredera & \%Q0.3 \\
 \end{center}
 \end{table}
 
-El Grafcet de la figura \ref{fig:grafcet_distribucion} describe la secuencia automatizada de funcionamiento de la estación de unión. El sistema se inicializa con la variable de conteo de piezas a cero y permanece en espera hasta recibir una orden de arranque desde la interfaz HMI. En función del modo de carga seleccionado (manual o automático), se activa el avance de la cinta transportadora mediante un separador temporizado o a través de la corredera que realiza un movimiento de extensión y retracción para depositar la pieza retenida en el cargador. A continuación, se lleva a cabo una etapa de identificación en la que se determina el tipo de pieza (negra, rosa o metálica), registrándose dicha información en el sistema y actualizándose el contador de piezas correspondiente. El HMI cuenta con una interfaz para seleccionar el tipo de pieza que se quiere aceptar y la que se quiere descartar, como se observa en la imagen \ref{fig:HMI_funcionamiento}, en la que con esa configuración los tres tipos de piezas serían descartados. Si se ha alcanzado el número total de piezas especificado por el operador o el tipo de pieza no está permitida por el operario, el sistema ejecuta un retroceso de la cinta para descartar la pieza y repetir el ciclo hasta que se reseté el contador de piezas o se amplíe el número desde el HMI. En caso contrario, se da por finalizado el proceso de carga, se envía una señal al PLC 2 informando de la finalización de la secuencia y el tipo de pieza detectada, se espera su respuesta para asegurar que ha recibido el mensaje y termina el ciclo. 
-
-\clearpage
+El Grafcet de la figura \ref{fig:grafcet_distribucion} describe la secuencia automatizada de funcionamiento de la estación de unión. El sistema se inicializa con la variable de conteo de piezas a cero y permanece en espera hasta recibir una orden de arranque desde la interfaz HMI. En función del modo de carga seleccionado (manual o automático), se activa el avance de la cinta transportadora mediante un separador temporizado o a través de la corredera que realiza un movimiento de extensión y retracción para depositar la pieza retenida en el cargador. A continuación, se lleva a cabo una etapa de identificación en la que se determina el tipo de pieza (negra, rosa o metálica), registrándose dicha información en el sistema y actualizándose el contador de piezas correspondiente. El HMI cuenta con una interfaz para seleccionar el tipo de pieza que se quiere aceptar y la que se quiere descartar, como se observa en la imagen \ref{fig:HMI_funcionamiento}, con la configuración mostrada, los tres tipos de piezas serían descartados. Si se ha alcanzado el número total de piezas especificado por el operador o el tipo de pieza no está permitida por el operario, el sistema ejecuta un retroceso de la cinta para descartar la pieza y repetir el ciclo hasta que se reseté el contador de piezas o se amplíe el número desde el HMI. Puede haber otro caso de descarte en la estación unión, por lo que si sucede, el PLC 1 recibirá un mensaje de error procedente del PLC 2 comunicándole que le devuelve la pieza expulsándola por la zona inicial de la cinta y terminando el ciclo global. En caso contrario, se da por finalizado el proceso de carga al recibir un mensaje del PLC 2 de éxito, se envía una señal al PLC 2 para confirmar la recepción de su mensaje, y a continuación se procede a comunicar al robot UR el inicio de su secuencia de colocación de la pieza en el palé (siempre y cuando no esté colocando ya una pieza). Esta comunicación se realiza mediante la activación de un registro booleano global a través del canal PROFINET, acompañado por un registro entero que indica el número de capas de paletizado definidas previamente en el HMI. En este punto hay dos posibles estados diferentes a los que transitar, si el UR indica que está ejecutando su secuencia, se da por terminado el ciclo global y se inicia de nuevo permitiendo comenzar el siguiente ciclo sin la necesidad de esperar a que el brazo termine su proceso. Por otro lado, si el UR indica que el palé está completo, salta un aviso en la pantalla del HMI para retirarlo. Tras retirar el palé, se pulsa el botón correspondiente en el HMI y, al recibir el mensaje de confirmación (ACK), el ciclo concluye.
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=15cm]{figs/grafcet_distribucion}
+    \includegraphics[width=15.5cm]{figs/grafcet_distribucion}
   \end{center}
   \caption{\centering Grafcet del funcionamiento de la estación distribución.}
   \label{fig:grafcet_distribucion}
@@ -106,16 +225,44 @@ El Grafcet de la figura \ref{fig:grafcet_distribucion} describe la secuencia aut
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=15cm]{figs/HMI_funcionamiento}
+    \includegraphics[width=13.5cm]{figs/HMI_funcionamiento}
   \end{center}
-  \caption{\centering Modo funcionamiento en el HMI.}
+  \caption{\centering Pantalla del modo funcionamiento en el HMI.}
   \label{fig:HMI_funcionamiento}
 \end{figure} 
+
+
+En la foto anterior se muestra la pantalla del modo funcionamiento del sistema, en la que cada botón tiene el siguiente funcionamiento:
+
+\begin{itemize}
+    \item \textbf{Número de capas:} Introducir el número de capas de paletizado deseado, siendo 1 el mínimo y 4 el máximo de capas.
+    
+    \item \textbf{Número de piezas:} Introducir el número de piezas que se desean permitir en el proceso. El botón azul ``Reset `` reinicia el contador a 0.
+    
+    \item \textbf{Inicar programa:} Inicia el programa después de una parada de emergencia.
+    
+    \item \textbf{Inicar secuencia:} Inicia la secuencia global de producción.
+    
+    \item \textbf{Sólo cargador:} Indica que sólo se quieren utilizar piezas provenientes del cargador. De lo contrario, las piezas serán introducidas al sistema desde el inicio de la cinta transportadora.
+    
+    \item \textbf{Contador de piezas:} Muestra un contador con el número de piezas producidas hasta el momento.
+    
+    \item \textbf{Parada de emergencia:} Botón de seguridad que provoca que todos los elementos del proceso se paren intantáneamente.
+    
+    \item \textbf{Piezas Rosas:} Permite el paso de piezas rosas, de lo contrario se descartan.
+    
+    \item \textbf{Piezas Negras:} Permite el paso de piezas negras, de lo contrario se descartan.
+    
+    \item \textbf{Piezas Metálicas:} Permite el paso de piezas metálicas, de lo contrario se descartan.
+
+\end{itemize}
+
+
 
 \section{Funcionamiento estación unión}
 \label{sec:funcionamiento_union}
 
-La estación unión es la encargada de ensamblar las diferentes piezas que llegan desde las estaciones anteriores, formando así subconjuntos dentro del proceso automatizado. Esta estación se encuentra conectada al segundo PLC del sistema y tiene como objetivo principal unir una base con una tapa, verificando previamente que ambas piezas estén correctamente posicionadas. El proceso de unión se realiza mediante un actuador neumático equipado con una ventosa, este puede desplazarse entre las dos cintas para así ascender y descender para recoger o dejar las tapas. En caso de que alguna de las piezas esté mal posicionada, el sistema detendrá el ciclo, notificará el error mediante un mensaje en la pantalla del HMI y posteriormente descartará la pieza. Esta estación también cuenta con un modo test que permite revisar individualmente el funcionamiento de cada sensor y actuador, facilitando la identificación de posibles fallos mecánicos o de programación. A continuación, se muestra la tabla \ref{cuadro:union} en la que se detallan todas las entradas y salidas de la estación y su conexión al PLC:
+La estación de unión es la encargada de ensamblar las diferentes piezas que llegan desde las estaciones anteriores. Dicha estación se encuentra conectada al segundo PLC del sistema y tiene como objetivo principal la unión de una base con una tapa, verificando previamente que ambas piezas estén correctamente posicionadas. El proceso de unión se lleva a cabo mediante un actuador neumático equipado con una ventosa, el cual puede desplazarse entre las dos cintas transportadoras para ascender o descender con el fin de recoger o depositar las tapas. En caso de que alguna de las piezas se encuentre mal posicionada, el sistema detiene el ciclo, notifica el error a través de un mensaje mostrado en la pantalla del HMI y, posteriormente, descarta la pieza afectada. Esta estación, al igual que la estación de distribución, dispone de un modo de prueba que permite revisar de forma individual el funcionamiento de cada sensor y actuador, lo cual facilita la identificación de posibles fallos tanto mecánicos como de programación. A continuación, se presenta la tabla \ref{cuadro:union}, en la que se detallan todas las entradas y salidas de la estación, así como su correspondiente conexión con el PLC.
 
 \begin{table}[H]
 \begin{center}
@@ -125,24 +272,29 @@ La estación unión es la encargada de ensamblar las diferentes piezas que llega
 \hline
 \multicolumn{1}{|c|}{\textbf{Sensor}} & 
 \multicolumn{1}{c|}{\textbf{Entrada al PLC}} & 
-\multicolumn{1}{c|}{\textbf{Tipo de salida}} \\
+\multicolumn{1}{c|}{\makecell{\textbf{Tipo de salida} \\ \textbf{(normalmente)}}} \\
 \hline
-Láser inicio cinta 1 & \%I0.0 &  PNP \\
-Láser medio cinta 1  & \%I0.1 &  PNP \\
-Láser final cinta 1  & \%I0.2 &  NPN \\
-Orientación correcta  & \%I0.3 &  PNP \\
-Láser final cinta 2 & \%I0.4 &  PNP \\
-Láser inicio cinta 2 & \%I0.5 &  NPN \\
-Carro retraido & \%I0.6 &  PNP \\
-Carro extendido & \%I0.7 &  PNP \\
-Ventosa arriba & \%I1.0 &  PNP \\
-Pieza succionada & \%I1.1 &  PNP \\
+Láser inicio cinta 1 & \%I0.0 &  abierta \\
+Láser medio cinta 1  & \%I0.1 &  abierta \\
+Láser final cinta 1  & \%I0.2 &  cerrada \\
+Orientación correcta  & \%I0.3 &  abierta \\
+Láser final cinta 2 & \%I0.4 &  abierta \\
+Láser inicio cinta 2 & \%I0.5 &  cerrada \\
+Carro retraido & \%I0.6 &  abierta \\
+Carro extendido & \%I0.7 &  abierta \\
+Ventosa arriba & \%I1.0 &  abierta \\
+Pieza succionada & \%I1.1 &  abierta \\
 
 \hline
 \end{tabular}
+\end{center}
 
-\vspace{0.2cm}
+\caption{Entradas y salidas de la estación unión conectadas al PLC 2}
+\label{cuadro:union_entradas}
+\end{table}
 
+\begin{table}[H]
+\begin{center}
 % Tabla 2 (Actuadores)
 \begin{tabular}{|P{6.95cm}|P{6.95cm}|}
 \hline
@@ -151,7 +303,7 @@ Pieza succionada & \%I1.1 &  PNP \\
 \hline
 Avance cinta 1 & \%Q0.0 \\
 Retroceso cinta  2 & \%Q0.1 \\
-Extender derivador & \%Q0.2 \\
+Extender separador & \%Q0.2 \\
 Retraer tope & \%Q0.3 \\
 Avance cinta 2 & \%Q0.4 \\
 Retroceso cinta 2 & \%Q0.5 \\
@@ -162,32 +314,32 @@ Vacío conectado & \%Q1.1 \\
 \hline
 \end{tabular}
 
-\caption{Entradas y salidas de la estación unión conectadas al PLC 2}
-\label{cuadro:union}
+\caption{Salidas de la estación unión conectadas al PLC 2}
+\label{cuadro:union_salidas}
 \end{center}
 \end{table}
 
-El grafcet de la estación distribución puede observarse en la figura \ref{fig:grafcet_union}, cuya función es colocarle una tapa a las provenientes de la estación de distribución encima de ellas, siempre y cuando estén bien orientadas.  El proceso comienza activando el avance de la cinta 1 hasta que la pieza proveniente de la estación distribución es detectada por el láser del inicio, después, se envía un mensaje al PLC 1 de respuesta de confirmación de que la pieza ha llegado al segundo sistema. La cinta continúa moviéndose hasta que es detectada en el centro de la cinta por el segúndo láser y se extiende el retenedor para poder así comprobar correctamente la orientación de la pieza. A continuación se verifica la orientación de la pieza utilizando un sensor capacitivo que responde de forma inversa a las piezas metálicas: si la pieza está correctamente orientada, el sensor no la detecta, mientras que si está invertida, el sensor la activa, indicando una orientación incorrecta. Si se confirma que la orientación es válida, paralelamente se dan dos sucesos: en el primero se vuelve a activar la cinta 1, se extiende el derivador y se espera el tiempo necesario para que la pieza llegue hasta este último y el segundo consiste en que la cinta 2 avanza hasta que en el láser del inicio de esta detecta una tapa. Una vez está la pieza parada y la tapa lista para ser recogida, el carro se extiende, desciende la ventosa, succiona la pieza, se eleva y se retrae colocándola encima de la pieza. Después la ventosa se desactiva, se activa la cinta 1 nuevamente y se retrae el derivador permitiendo a la pieza llegar al final de la cinta, que, cuando es detectada por el último láser le manda un mensaje al PLC 1 indicándole que la secuencia ha terminado. Si la orientación es incorrecta, se activa un proceso de rechazo y se activa una notificación al operario mediante el HMI informando que la pieza es defectuosa y mostrando un contador de ellas. El sistema se quedará esperando hasta que el operario le de al botón de ``descartar pieza'' como se observa en la imagen  \ref{fig:HMI_descarte}, una vez pulsado el botón, se activa el retroceso de la cinta 1 y el envío de un mensaje de error al PLC 1 avisándole de que debe descartar la pieza. El ciclo finaliza tras la confirmación de recepción de la secuencia completada o de pieza defectuosa por parte del PLC 1. \\
+El Grafcet de la estación distribución se muestra en la figura \ref{fig:grafcet_union}, cuyo proceso inicia activando el avance de la cinta 1 al recibir un mensaje del PLC 1 hasta que la pieza proveniente de la estación distribución es detectada por el láser del inicio, luego se envía un mensaje de confirmación de que la pieza llegó al segundo sistema. La cinta continúa moviéndose hasta que la pieza es detectada en el centro de la cinta por el segúndo láser y se extiende el retenedor para poder así comprobar correctamente la orientación de la pieza. A continuación se verifica la orientación de la pieza utilizando un sensor capacitivo que responde de forma inversa a las piezas metálicas: si la pieza está correctamente orientada, el sensor no la detecta, mientras que si está invertida, el sensor la activa, indicando una orientación incorrecta. Si se confirma que la orientación es válida, paralelamente se dan dos sucesos: en el primero se vuelve a activar la cinta 1, se extiende el derivador y se espera el tiempo necesario para que la pieza llegue hasta este último y el segundo consiste en que la cinta 2 avanza hasta que en el láser del inicio de esta detecta una tapa.
 
-\begin{figure}[h!]
-  \includegraphics[width=16cm]{figs/HMI_descarte}
-  \caption{\centering Aviso de pieza defectuosa en el modo funcionamiento en el HMI.}
-  \label{fig:HMI_descarte}
-\end{figure}
-
-\begin{figure}[h!]
+Una vez la pieza está parada y la tapa lista para recogerse, el carro se extiende, desciende la ventosa, succiona la pieza, se eleva y se retrae colocándola encima. Después la ventosa se desactiva, se activa la cinta 1 nuevamente y se retrae el separador permitiendo a la pieza llegar al final de la cinta, que, cuando es detectada por el último láser, manda un mensaje al PLC 1 indicando que la secuencia ha terminado. Si la orientación es incorrecta, se activa un proceso de rechazo y una notificación al operario en el HMI mostrando un mensaje y contador de piezas defectuosas. El sistema esperará hasta que el operario pulse el botón de “descartar pieza” como se ve en la imagen \ref{fig:HMI_descarte}. Una vez pulsado, se activa el retroceso de la cinta y el envío de un mensaje de error al PLC 1 avisando que debe descartar la pieza. El ciclo finaliza tras la confirmación de recepción de la secuencia completada o de pieza defectuosa por parte del PLC 1.
+ 
+ \begin{figure}[h!]
   \includegraphics[width=15cm]{figs/grafcet_union}
   \caption{\centering Grafcet de funcionamiento de la estación unión.}
   \label{fig:grafcet_union}
 \end{figure}
-
 \clearpage
 
+\begin{figure}[h!]
+  \includegraphics[width=15cm]{figs/HMI_descarte}
+  \caption{\centering Aviso de pieza defectuosa en el modo funcionamiento en el HMI.}
+  \label{fig:HMI_descarte}
+\end{figure}
 
-\section{Aplicación de la Guía Gemma}
+\section{Aplicación de la Guía GEMMA}
 \label{sec:aplicacion_gemma}
 
-La aplicación de la Guía Gemma explicada en la sección \ref{sec:terceraseccion} es un aspecto muy importante a la hora de programar las estaciones si se quiere obtener un resultado funcional, seguro y estructurado.  Facilita la identificación de modos de funcionamiento, fallos y transiciones entre estados. Para la aplicación de la Guía Gemma en el proyecto se han utilizado los siguientes estados:
+La aplicación de la Guía GEMMA, explicada previamente en la sección \ref{sec:terceraseccion}, representa un elemento clave en el desarrollo de sistemas automatizados, especialmente en entornos industriales. En el contexto del proyecto, la Guía GEMMA ha sido de gran utilidad para estructurar de forma lógica y ordenada las distintas estaciones que componen el ciclo global de producción. Gracias a su enfoque, ha sido posible identificar de manera precisa las condiciones iniciales, las etapas activas del proceso y las posibles interrupciones. Esta clasificación favorece la implementación de programas más robustos y fácilmente mantenibles, además de mejorar la comprensión del funcionamiento general del sistema por parte de otros desarrolladores o técnicos. Para su correcta aplicación, se han definido y utilizado en el proyecto los siguientes estados operativos:
 
 \begin{table}[H] 
 \begin{center}
@@ -230,19 +382,19 @@ Proceso en defecto & D1: Parada de emergencia & Estado al que llega el sistema t
 
 En el proceso de funcionamiento hay configurados dos estados distintos, El primer estado es el F1 o producción normal, estado en el que el sistema repite constantemente el ciclo de producción que ha sido programado. En este estado y como se puede observar en la figura \ref{fig:HMI_funcionamiento}, se pueden configurar los parámetros del sistema desde el HMI con aspectos clave como: seleccionar el tipo de pieza que se quiere dejar pasar, introducir el número de piezas que se quieren producir,  iniciar o parar la secuencia o decidir si se quiere utilizar el cargador o no. El sistema estará dentro de este estado principal, siempre y cuando no surja algún imprevisto o comportamiento extraño.
 
-En cuanto al estado A4 o marcha de verificación sin orden, tine como objetivo realizar un control manual de los actuadores y sensores para comprobar su correcto funcionamiento. Para este estado se han creado dos modos de test a cada estación física (distribución y unión, Estos modos de pruebas son seleccionables en el menú principal del HMI antes de entrar en el estado de producción A1 como se aprecia en la imágen \ref{fig:HMI_inicio}. Una vez dentro del modo test, y por lo tanto, dentro del estado A4, se puede escoger entre el modo de pruebas de la estación distribución o unión. La estación distribución sólo cuenta con un modo test, en cambio la estación unión cuenta con dos modos debido a que tiene más sensores y actuadores para probar el funcionamiento.
+En cuanto al estado F4 o marcha de verificación sin orden, tine como objetivo realizar un control manual de los actuadores y sensores para comprobar su correcto funcionamiento. Para este estado se han creado dos modos de test a cada estación física (distribución y unión, Estos modos de pruebas son seleccionables en el menú principal del HMI antes de entrar en el estado de producción F1 como se aprecia en la imágen \ref{fig:HMI_inicio}. Una vez dentro del modo test, y por lo tanto, dentro del estado F4, se puede acceder a una vista de diagnóstio de errores general o  se puede escoger entre el modo de pruebas de la estación distribución o unión. La estación distribución sólo cuenta con un modo test, en cambio la estación unión cuenta con dos modos debido a que tiene más sensores y actuadores para probar el funcionamiento.
 
 \begin{figure}[H]
   \centering
 
-  \begin{minipage}{0.6\textwidth}
+  \begin{minipage}{0.8\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/HMI_inicio}
     \captionof{figure}{\centering Estado inicial del HMI.}
     \label{fig:HMI_inicio}
   \end{minipage}
   \hfill
-  \begin{minipage}{0.6\textwidth}
+  \begin{minipage}{0.8\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/HMI_test_principal}
     \captionof{figure}{\centering Vista del HMI dentro de la opción Modo Test.}
@@ -250,31 +402,31 @@ En cuanto al estado A4 o marcha de verificación sin orden, tine como objetivo r
   \end{minipage}
 
 \end{figure}
-
+\clearpage
 
 En la figura \ref{fig:HMI_test_distribucion} se pueden ver todos los test que se le pueden realizar en la estación distribución. Es posible activar y desactivar manualmente los actuadores del sistema, como la cinta transportadora, el separador o el cargador, con el fin de verificar su correcto funcionamiento. Además, se muestran tres columnas y tres filas de círculos que representan visualmente todos los sensores de la estación de distribución, así como el tipo de pieza detectado por el módulo adicional de dicha estación. Cuando un sensor está activo, su indicador aparece en verde; en caso contrario, se muestra en rojo. En cuanto al tipo de pieza, solo se activa el correspondiente al detectado durante el ciclo de trabajo en curso. Esta visualización facilita la comprobación del estado de los sensores y permite monitorizar el proceso para detectar posibles errores como se muestra en la siguiente imágen: 
 
 \begin{figure}[h!]
   \begin{center}
-  	\includegraphics[width=13.5cm]{figs/HMI_test_distribucion}
+  	\includegraphics[width=12cm]{figs/HMI_test_distribucion}
   \end{center}
   \caption{\centering Visualización del modo Test de la estación distribución dentro del HMI.}
   \label{fig:HMI_test_distribucion}
 \end{figure}
 
-Por otro lado, el modo test de la estación de unión se ha distribuido en dos pantallas distintas, ya que el elevado número de sensores y actuadores impide representarlos todos de forma clara en una sola vista. La estructura de este modo sigue el mismo esquema que en la estación de distribución: se emplean botones para activar o desactivar los actuadores, y se utilizan círculos de colores para indicar visualmente el estado de los sensores. Un círculo verde señala un sensor activo, mientras que el rojo indica que está desactivado. A continuación se muestra el modo test para la estación unión:
+Por otro lado, el modo test de la estación de unión se ha distribuido en dos pantallas distintas, ya que el elevado número de sensores y actuadores impide representarlos todos de forma clara en una sola vista. La estructura de este modo sigue el mismo esquema que en la estación de distribución: se emplean botones para activar o desactivar los actuadores, y se utilizan círculos de colores para indicar visualmente el estado de los sensores. Un círculo verde señala un sensor activo, mientras que el rojo indica que está desactivado y también se cuenta con un botón que al presionarlo el HMI abre la pantalla del otro test programado para esta estación. A continuación se muestra el modo test para la estación unión:
 
 \begin{figure}[H]
   \centering
 
-  \begin{minipage}{0.74\textwidth}
+  \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/HMI_test_union_1}
     \captionof{figure}{\centering Vista del HMI dentro de la opción Modo Test 1 de la estación unión.}
     \label{fig:HMI_test_union_1}
   \end{minipage}
   \hfill
-  \begin{minipage}{0.74\textwidth}
+  \begin{minipage}{0.95\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/HMI_test_union_2}
     \captionof{figure}{\centering Vista del HMI dentro de la opción Modo Test 2 de la estación unión.}
@@ -289,22 +441,21 @@ Este conjunto de estados definidos por la Guía GEMMA describe las distintas sit
 
 \begin{itemize}
     \item \textbf{A1: Parada en el estado inicial} \\
-    Representa el estado de reposo principal de la máquina. Es el punto de partida al que se regresa tras completar un ciclo \cite{quia_gemma}. En este estado, no hay procesos activos y la máquina está lista para comenzar un nuevo ciclo de forma segura una vez se pulse dentro de la interfaz del HMI el botón ``Iniciar secuencia''.
+    Representa el estado de reposo principal de la máquina. Es el punto de partida al que se regresa tras completar un ciclo \cite{guia_gemma}. En este estado, no hay procesos activos y la máquina está lista para comenzar un nuevo ciclo de forma segura una vez se pulse dentro de la interfaz del HMI el botón ``Iniciar secuencia''.
 
     \item \textbf{A2: Parada solicitada al final de ciclo} \\
-    Este estado funciona como transición entre la producción normal del sistema a la parada del estado inicial cuando se termina el ciclo principal \cite{guia_gemma}. Cada vez que el sistema termina su ciclo, se queda parado y pasa al estado A1 para volver a empezar la secuencia.
+    Este estado funciona como transición entre la producción normal del sistema a la parada del estado inicial cuando se termina el ciclo principal \cite{guia_gemma}. Cada vez que el sistema termina su ciclo, se queda parado y transiciona al estado A1 de forma automática para volver a empezar la secuencia. Esta parada permite volver al estado inicial de parada una vez ha terminado el ciclo de producción si no está activado el botón ``iniciar secuencia'' en el HMI, permitiendo así parar el ciclo de producción.
     
     \item \textbf{A3: Parada solicitada en un estado determinado} \\
-    Corresponde a una parada anticipada, en un punto concreto del ciclo, distinto del final \cite{guia_gemma}. Se emplea cuando es necesario interrumpir el proceso en un estado específico, por razones de control, mantenimiento o condiciones externas \cite{quia_gemma}. Este estado se alcanza cuando le llega a la estación unión una pieza mal oreintada, por lo que el estado se queda detenido hasta que el operario descarta la pieza en el HMI, la imágen \ref{fig:HMI_descarte} representa este estado.
+    Corresponde a una parada anticipada, en un punto concreto del ciclo, distinto del final \cite{guia_gemma}. Se emplea cuando es necesario interrumpir el proceso en un estado específico, por razones de control, mantenimiento o condiciones externas \cite{guia_gemma}. Este estado se alcanza cuando le llega a la estación unión una pieza mal oreintada, por lo que el estado se queda detenido hasta que el operario descarta la pieza en el HMI, la imágen \ref{fig:HMI_descarte} representa este estado.
 
     \item \textbf{A4: Parada obtenida} \\
     Indica que la máquina ha alcanzado un estado de reposo diferente al inicial A1 y proveniente del A3 \cite{guia_gemma}. Este estado alternativo está asociado a situaciones específicas, como pruebas, diagnóstico o pausas no planificadas \cite{guia_gemma}. 
     
    \item \textbf{A5: Puesta en marcha después de defecto} \\
-   En este estado se realizan las acciones necesarias para la reanudación del funcionamiento del sistema después de un defecto \cite{guia_gemma}. A este estado se llegará después de una parada de emergencia y será necesario pulsar el botón ``iniciar programa'' en la interfaz HMI de modo funcionamiento para transicionar al estado A1.
+   En este estado se realizan las acciones necesarias para la reanudación del correcto funcionamiento del sistema después de un defecto \cite{guia_gemma}. \\
+   A este estado se llegará después de una parada de emergencia y será necesario pulsar el botón ``iniciar programa'' en la interfaz HMI de modo funcionamiento para transicionar al estado A1.
 \end{itemize}
-
-\clearpage
 
 \subsubsection{Proceso en defecto}
 
@@ -312,11 +463,11 @@ Dentro del proceso de defecto sólo se ha programado el estado D1 de parada de e
 
 \subsubsection{Aplicación de la Guía Gemma}
 
-Una vez explicados todos los estados que puede tener el sistema, se muestra a continuación una iágen que refleja gráficamente todas las transiciones entre ellos dónde los elementos verdes pertenecen al proceso de funcionamiento, los amarillos al proceso de parada o puesta en marcha y los rojos al proceso de defecto:
+Una vez descritos en detalle todos los posibles estados que puede adoptar el sistema a lo largo de su funcionamiento, se presenta a continuación la imagen \ref{fig:guia_gemma_final} representa gráficamente todas las transiciones entre dichos estados. Esta representación visual resulta especialmente útil para comprender de forma global el comportamiento del sistema automatizado en sus distintas fases operativas. En la figura, los elementos de color verde corresponden al proceso de funcionamiento normal, los de color amarillo al proceso de parada o de puesta en marcha, y los de color rojo al proceso de detección de defectos o fallos. La imágen también cuenta con una leyenda explicando las acciones necesarias para transicionar entre estados.
 
 \begin{figure}[h!]
   \begin{center}
-  	\includegraphics[width=10cm]{figs/guia_gemma_final}
+  	\includegraphics[width=16.5cm]{figs/guia_gemma_final}
   \end{center}
   \caption{\centering Esquema de transiciones de la aplicación de la Guía Gemma en el sistema.}
   \label{fig:guia_gemma_final}
@@ -354,8 +505,6 @@ Las coordenadas de la posición de los bricks de leche en el paletizado se han t
 \textbf{NOTA}: Qué es mejor opción de poner a continuación?: las coordenadas de los bricks de leche (por foto o tabla), una imagen del código del UR o ambas.
 
 \clearpage
-\section{Diseño del sistema SCADA}
-\label{sec:diseño_scada}
 
 
 

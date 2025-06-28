@@ -11,7 +11,7 @@ Robert Cannon\\
 
 \vspace{1cm}
 
-En este capítulo se detallan los recursos hardware y software empleados para llevar a cabo el desarrollo de la aplicación. A nivel hardware, se han utilizado dos maquetas didácticas de automatización industrial del fabricante FESTO, cada una equipada con un PLC y una interfaz HMI común de SIEMENS y un brazo robótico colaborativo de la empresa Universal Robots (UR). En cuanto al software, se han utilizado distintos entornos de desarrollo específicos para cada dispositivo: el software TIA Portal para la programación de los PLCs y la configuración de la HMI, y la plataforma URSim para la simulación y control del brazo robótico. Además, se han empleado librerías propias de los fabricantes, sistemas operativos compatibles con las herramientas utilizadas y conexiones mediante protocolos estándar de comunicación industrial como Profinet. También se ha realizado el montaje completo y el conexionado de todos los elementos.
+En este capítulo se detallan los recursos hardware y software empleados para llevar a cabo el desarrollo de la aplicación. A nivel hardware, se han utilizado dos estaciones didácticas de automatización industrial del fabricante FESTO, cada una equipada con un PLC. Además, el sistema completo incluye una interfaz HMI de SIEMENS y un brazo robótico colaborativo de la empresa Universal Robots (UR). En cuanto al software, se han utilizado distintos entornos de desarrollo específicos para cada dispositivo: el software TIA Portal para la programación de los PLCs y la configuración de la HMI, y la plataforma URSim para la simulación y control del brazo robótico. Además, se han empleado librerías propias de los fabricantes, sistemas operativos compatibles con las herramientas utilizadas y conexiones mediante protocolos estándar de comunicación industrial como Profinet. También se ha realizado el montaje completo y el conexionado de todos los elementos.
 
 \section{Estación distribución}
 \label{sec:estacion_distribucion}
@@ -38,7 +38,7 @@ En la tabla \ref{fig:estacion_distribucion_3} se detallan las características g
 
 \clearpage
 
-Las piezas utilizadas en las estaciones MPS de Festo Didactic suelen estar divididas en tres colores: rosa, negro y metálico. Estas piezas representan distintos tipos de materiales o componentes, lo que permite que los sensores (como óptico o inductivo) las distingan fácilmente facilitando su clasificación, inspección o tratamiento diferenciado por el sistema automatizado. Cada pieza mantiene dimensiones normalizadas para un manejo preciso y repetible y vienen equipadas con una tapa la cual puede ser colocada en estas para ofrecer mayor libertad al crear el proceso automático \\
+Las piezas utilizadas en las estaciones MPS de Festo Didactic están divididas en tres colores: rosa, negro y metálico. Estas piezas representan distintos tipos de materiales o componentes, lo que permite que los sensores (como óptico o inductivo) las distingan fácilmente facilitando su clasificación, inspección o tratamiento diferenciado por el sistema automatizado. Cada pieza mantiene dimensiones normalizadas para un manejo preciso y repetible y vienen equipadas con una tapa la cual puede ser colocada en estas para ofrecer mayor libertad al crear el proceso automático \\
 
 La estación distribución está formada por los siguientes componentes:
 
@@ -47,7 +47,7 @@ La estación distribución está formada por los siguientes componentes:
    
     \item \textbf{Cinta transportadora:} Encargada de desplazar las piezas entre las estaciones. Puede moverse en ambas direcciones. 
     
-     \item \textbf{Separador:} Actuador neumático situada al inicio de la cinta cuya función es controlar el flujo de piezas en la cinta transportadora. Si se activa retiene las piezas provenientes del inicio de la cinta y da paso a las almacenadas en el almacén de piezas \cite{estacion_distribucion}.
+     \item \textbf{Separador:} Actuador neumático situada al inicio de la cinta cuya función es controlar el flujo de piezas en la cinta transportadora. Si se activa, retiene las piezas provenientes del inicio de la cinta y da paso a las almacenadas en el almacén de piezas \cite{estacion_distribucion}.
      
       \item \textbf{Sensor para la distinción de piezas:} El sistema viene equipado con un módulo extra situado a la mitad de la cinta el cual es capaz de distinguir el color y material de la pieza. Este sensor distingue entre tres tipos de piezas dependiendo de cuantos bits se activen. Cada bit que se activa es la salida de un sensor, el primerio es un sensor óptico que detecta presencia y se activa siempre (pieza negra), el segundo es òptico también y se enciende si la pieza rebota luz de color (pieza rosa) y el tercero es un sensor inductivo el cual se activa si la pieza es metálica. \cite{estacion_distribucion}.
 
@@ -164,7 +164,7 @@ TIA Portal (Totally Integrated Automation Portal) es una plataforma de ingenier�
   \begin{center}
     \includegraphics[width=14cm]{figs/TIA_portal}
   \end{center}
-  \caption{\centering Pantallazo de la aplicación TIA Portal.}
+  \caption{\centering Captura de pantalla de la aplicación TIA Portal.}
   \label{fig:TIA_portal}
 \end{figure} 
 
@@ -203,4 +203,18 @@ Su diseño ligero, con un peso total de aproximadamente 20,6 kg, permite montarl
   \label{fig:PolyScope}
 \end{figure} 
 
+\section{Switch ethernet industrial}
+\label{sec:switch_industrial}
+
+En el sistema se ha utilizado el modelo 6GK5005-0GA10-1AB2 de Siemens, un switch Ethernet industrial de tipo no gestionado perteneciente a la gama SCALANCE XB005\footnote{SCALANCE XB-000 unmanaged. (2025).\url{https://mall.industry.siemens.com/mall/es/es/Catalog/Product/6GK5005-0BA00-1AB2}} \cite{switch_industrial}. Este dispositivo proporciona cinco puertos RJ-45 con soporte para velocidades de 10/100/1000 Mbit/s, lo cual lo hace adecuado para redes industriales donde se requiere una comunicación eficiente y estable entre distintos equipos, como controladores, paneles HMI o dispositivos de supervisión \cite{switch_industrial}.  \\
+
+Su diseño está orientado a aplicaciones industriales, funciona con una tensión de alimentación de 24 V DC y presenta un consumo reducido, lo cual es beneficioso en términos de eficiencia energética \cite{switch_industrial}. A pesar de no ser gestionable, incorpora indicadores LED que permiten supervisar el estado de los enlaces y la actividad de red en tiempo real \cite{switch_industrial}. Además, ofrece compatibilidad con PROFINET, siendo una solución adecuada para pequeñas topologías dentro de entornos industriales controlados \cite{switch_industrial}. \\
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=5cm]{figs/switch_industrial}
+  \end{center}
+  \caption{\centering Switch industrial 6GK5005-0GA10-1AB2 de Siemens \cite{switch_industrial}}
+  \label{fig:switch_industrial}
+\end{figure}
 

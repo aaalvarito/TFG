@@ -1,0 +1,215 @@
+\chapter{Anexo}
+\label{cap:anexo}
+
+\section{Ecuaciones lógicas estación distribución}
+\label{sec:anexo_distribucion}
+
+\subsubsection{Ecuaciones de transición de etapas}
+
+\begin{table}[H]
+\begin{center}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|M{1.5cm}|M{6cm}|M{6cm}|}
+\hline
+\textbf{Etapa} & 
+\textbf{Set} & 
+\textbf{Reset} \\
+\hline
+E0  &  FSM + Iniciar\_programa & E1 + Parada\_emergencia \\
+\hline
+E1  &  Inicio\_HMI * (E0 + (t\_inicio  * (E17 + E20+ E22 + E23)) & E2 + E4 + Parada\_emergencia  \\
+\hline
+E2  &  E1 * Inicio\_cinta * Cargador\_HMI & E3 + Parada\_emergencia \\
+\hline
+E3  &  E2 * Tiempo\_separador & E7 + Parada\_emergencia \\
+\hline
+E4  &  E1 * Pieza\_cragador * $\overline{\text{Cargador\_HMI}}$ & E5 + Parada\_emergencia \\
+\hline
+E5  &  E4 + (Corredera\_extendida * Medio\_cinta) & E6 + Parada\_emergencia \\
+\hline
+E6  &  E5 * Corredera\_retraida & E7 + Parada\_emergencia \\
+\hline
+E7  &  (E3 + E6) * Identificador\_piezas & E8 + Parada\_emergencia \\
+\hline
+E8  &  E7 * Tiempo\_sensor\_piezas & E9 + E12 + Parada\_emergencia \\
+\hline
+E9 & 
+E8 * espera\_sensor\_piezas * Contador\_pieza * 
+( (Pieza\_metalica\_HMI * Pieza\_metalica * Pieza\_rosa) + 
+(Pieza\_rosa\_HMI * $\overline{\text{Pieza\_metalica}}$ * Pieza\_rosa) + 
+(Pieza\_negra\_HMI * $\overline{\text{Pieza\_metalica}}$ * $\overline{\text{Pieza\_rosa}}$) )
+ & E10 + Parada\_emergencia \\
+\hline
+E10  &  E9 * $\overline{\text{Final\_cinta}}$ & E11 + Parada\_emergencia \\
+\hline
+E11  &  E10 * Comunicacion\_PLC\_1.Recive\_fase\_1 & E14 + E18 + Parada\_emergencia \\
+\hline
+
+\end{tabular}
+
+\caption{Ecuaciones de transición de estados de la estación distribución.}
+\label{cuadro:transiciones_distribucion_1}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|M{1.5cm}|M{6cm}|M{6cm}|}
+\hline
+\textbf{Etapa} & 
+\textbf{Set} & 
+\textbf{Reset} \\
+\hline
+E12  &  E8 * $\overline{\text{E9}}$ espera\_sensor\_piezas\_2 & E13 + Parada\_emergencia \\
+\hline
+E13  &  E12 * tiempo\_separador\_ret & E23 + Parada\_emergencia \\
+\hline
+E14  &  E11 *  Comunicacion\_PLC\_1.Pieza\_mal\_orientada & E15 + Parada\_emergencia \\
+\hline
+E15  &  E14 * $\overline{\text{Final\_cinta}}$ & E16 + Parada\_emergencia \\
+\hline
+E16  &  E15 * T\_sep\_2 & E17 + Parada\_emergencia \\
+\hline
+E17  &  E16 * Inicio\_cinta & E1 + Parada\_emergencia \\
+\hline
+E18  &  E11 *  Comunicacion\_PLC\_1.Secuencia\_acabada & E19 + Parada\_emergencia \\
+\hline
+E19  &  E18 * $\overline{\text{UR\_IN.Bits.Register[0]}}$  * t\_espera & E20 + E21 + Parada\_emergencia \\
+\hline
+E20  &  E19 * UR\_IN.Bits.Register[0] & E1 + Parada\_emergencia \\
+\hline
+E21  &  E19 * UR\_IN.Bits.Register[1] & E22 + Parada\_emergencia \\
+\hline
+E22  &  E21 * UR\_IN.Bits.Register[2] & E1 + Parada\_emergencia \\
+\hline
+E23  &  E13 * Inicio\_cinta & E1 + Parada\_emergencia \\
+\hline
+
+\end{tabular}
+
+\caption{Ecuaciones de transición de estados de la estación distribución.}
+\label{cuadro:transiciones_distribucion_2}
+\end{center}
+\end{table}
+
+\subsubsection{Ecuaciones de ejecución de acciones}
+
+\begin{table}[H]
+\begin{center}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|M{5cm}|M{8.5cm}|}
+\hline
+\textbf{Acción} & 
+\textbf{Lógica de activación} \\ 
+\hline
+Avance\_cinta &  E2 + E3 + E6 + E7 + E9 + E10 \\
+\hline
+Retroceso\_cinta &  E12 + E13 * E14 + E15 + E16 \\
+\hline
+Separador &  E2 + E13 + E16 \\
+\hline
+Avance\_corredera &  E4 \\
+\hline
+
+\end{tabular}
+
+\caption{Ecuaciones lógicas de las acciones de la estación distribución.}
+\label{cuadro:acciones_distribucion}
+\end{center}
+\end{table}
+
+\section{Ecuaciones lógicas estación unión}
+\label{sec:anexo_union}
+
+\subsubsection{Ecuaciones de transición de etapas}
+
+\begin{table}[H]
+\begin{center}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|M{1.5cm}|M{6cm}|M{6cm}|}
+\hline
+\textbf{Etapa} & 
+\textbf{Set} & 
+\textbf{Reset} \\
+\hline
+E0  &  FSM + Iniciar\_programa & E1 + Parada\_emergencia \\
+\hline
+E1  &  Inicio\_HMI * (E0 + (t\_inicio  * (E17 + E20+ E22 + E23)) & E2 + E4 + Parada\_emergencia  \\
+\hline
+E2  &  E1 * Inicio\_cinta * Cargador\_HMI & E3 + Parada\_emergencia \\
+\hline
+E3  &  E2 * Tiempo\_separador & E7 + Parada\_emergencia \\
+\hline
+E4  &  E1 * Pieza\_cragador * $\overline{\text{Cargador\_HMI}}$ & E5 + Parada\_emergencia \\
+\hline
+E5  &  E4 + (Corredera\_extendida * Medio\_cinta) & E6 + Parada\_emergencia \\
+\hline
+E6  &  E5 * Corredera\_retraida & E7 + Parada\_emergencia \\
+\hline
+E7  &  (E3 + E6) * Identificador\_piezas & E8 + Parada\_emergencia \\
+\hline
+E8  &  E7 * Tiempo\_sensor\_piezas & E9 + E12 + Parada\_emergencia \\
+\hline
+E9 & 
+E8 * espera\_sensor\_piezas * Contador\_pieza * 
+( (Pieza\_metalica\_HMI * Pieza\_metalica * Pieza\_rosa) + 
+(Pieza\_rosa\_HMI * $\overline{\text{Pieza\_metalica}}$ * Pieza\_rosa) + 
+(Pieza\_negra\_HMI * $\overline{\text{Pieza\_metalica}}$ * $\overline{\text{Pieza\_rosa}}$) )
+ & E10 + Parada\_emergencia \\
+\hline
+E10  &  E9 * $\overline{\text{Final\_cinta}}$ & E11 + Parada\_emergencia \\
+\hline
+E11  &  E10 * Comunicacion\_PLC\_1.Recive\_fase\_1 & E14 + E18 + Parada\_emergencia \\
+\hline
+
+\end{tabular}
+
+\caption{Ecuaciones de transición de estados de la estación uni.}
+\label{cuadro:transiciones_union}
+\end{center}
+\end{table}
+
+\subsubsection{Ecuaciones de ejecución de acciones}
+
+\begin{table}[H]
+\begin{center}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|M{5cm}|M{8.5cm}|}
+\hline
+\textbf{Acción} & 
+\textbf{Lógica de activación} \\ 
+\hline
+Avance\_cinta\_1 &  E2 + E3 + E5 + E17 \\
+\hline
+Avance\_cinta\_2 &  E13 \\
+\hline
+Retroceso\_cinta\_1 & E18 \\
+\hline
+Extender\_separador &  E5 + E6 + E7 + E8 + E9 + E10 + E11 \\
+\hline
+Retraer\_tope &  E5 \\
+\hline
+Avance\_carro &  E6 \\
+\hline
+Retroceso\_carro &  E10 \\
+\hline
+Ventosa\_abajo &  E7 + E8 + E10 \\
+\hline
+Vacío\_conectado & E8 + E9 + E10 + E11 \\
+\hline
+
+
+\end{tabular}
+
+\caption{Ecuaciones lógicas de las acciones de la estación distribución.}
+\label{cuadro:acciones_distribucion}
+\end{center}
+\end{table}
+
+

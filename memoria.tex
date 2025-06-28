@@ -4,7 +4,9 @@
 
 \usepackage{array}
 \usepackage{multirow}
-\usepackage{caption}  % para usar \captionof
+\usepackage{caption} 
+\usepackage{makecell}
+\usepackage{amsmath}
 
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 
@@ -39,5 +41,7 @@
 \printindex \nocite{*}
 \appendix
 \bibliographystyle{apalike} \bibliography{bibliografia}
+
+\input{capitulos/anexo}
 
 \end{document}
