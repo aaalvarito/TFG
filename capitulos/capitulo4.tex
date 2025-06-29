@@ -122,7 +122,7 @@ Seguidamente se mustra una tabla que resume todos los mensajes intercambiados en
 \begin{center}
 
 \renewcommand{\arraystretch}{1.5}
-\begin{tabular}{|M{1.75cm}|M{1.75cm}|M{3.5cm}|M{6.5cm}|}
+\begin{tabular}{|M{1.75cm}|M{1.75cm}|M{3.5cm}|M{7.5cm}|}
 \hline
 \textbf{Emisor} & 
 \textbf{Receptor} & 
@@ -143,19 +143,21 @@ PLC 2  & PLC 1 &  \makecell{Pieza\_mal\_orientada   \\ (Bool)} &  Se le indica a
 \hline
 PLC 1  & PLC 2 &  \makecell{Pieza\_mal\_ACK  \\ (Bool)} &  Confirmación de la recepción del mensaje Pieza\_mal\_orientada. \\
 \hline
-PLC 1  & UR5e &  \makecell{Start \\ Registro Gpbi [0] \\ (Bool)} & Indica el inicio de la secuencia de colocación de la pieza en el palé del UR. \\
+PLC 1  & UR5e &  \makecell{Start \\ Registro GPbi [0] \\ (Bool)} & Indica el inicio de la secuencia de colocación de la pieza en el palé del UR. \\
 \hline
-PLC 1  & UR5e  &  \makecell{num\_capas \\ Registro Gpii [0] \\ (Int)} & Número de capas elegido en el HMI que se quieren para el paletizado. \\
+PLC 1  & UR5e  &  \makecell{num\_capas \\ Registro GPii [0] \\ (Int)} & Número de capas elegido en el HMI que se quieren para el paletizado. \\
 \hline
-UR5e   & PLC 1 &  \makecell{ejecutando\_proc \\ Registro Gpbo [0] \\ (Bool)} & Infomrma que el UR todavía está ejecutando su ciclo. \\
+Ur5e  & PLC 1 &  \makecell{piezas\_paletizadas \\ Registro GPio [0] \\ (Int)} & Número de piezas paletizadas actualmente. \\
 \hline
-UR5e   & PLC 1 &  \makecell{pale\_completo \\ Registro Gpbo [1] \\ (Bool)} & Aviso de que el palé está completo. \\
+UR5e   & PLC 1 &  \makecell{ejecutando\_proc \\ Registro GPbo [0] \\ (Bool)} & Infomrma que el UR todavía está ejecutando su ciclo. \\
 \hline
-PLC 1  & UR5e  &  \makecell{pale\_recogido  \\  Registro Gpbi [2] \\ (Bool)} & Informa de que el palé ha sido reogido. \\
+UR5e   & PLC 1 &  \makecell{pale\_completo \\ Registro GPbo [1] \\ (Bool)} & Aviso de que el palé está completo. \\
 \hline
-UR5e   & PLC 1 &  \makecell{Pale\_ACK \\ Registro Gpbo [2] \\ (Bool)} & Confirmación de la recepción del mensaje pale\_recogido. \\
+PLC 1  & UR5e  &  \makecell{pale\_recogido  \\  Registro GPbi [2] \\ (Bool)} & Informa de que el palé ha sido reogido. \\
 \hline
-PLC 1  & UR5e  &  \makecell{parada\_emergencia  \\  Registro Gpbi [1] \\ (Bool)} & Parada de emergencia pulsada, parada obligatoria de la secuencia. \\
+UR5e   & PLC 1 &  \makecell{Pale\_ACK \\ Registro GPbo [2] \\ (Bool)} & Confirmación de la recepción del mensaje pale\_recogido. \\
+\hline
+PLC 1  & UR5e  &  \makecell{parada\_emergencia  \\  Registro GPbi [1] \\ (Bool)} & Parada de emergencia pulsada, parada obligatoria de la secuencia. \\
 \hline
 \end{tabular}
 
@@ -211,15 +213,19 @@ Avance corredera & \%Q0.3 \\
 \end{center}
 \end{table}
 
-El Grafcet de la figura \ref{fig:grafcet_distribucion} describe la secuencia automatizada de funcionamiento de la estación de unión. El sistema se inicializa con la variable de conteo de piezas a cero y permanece en espera hasta recibir una orden de arranque desde la interfaz HMI. En función del modo de carga seleccionado (manual o automático), se activa el avance de la cinta transportadora mediante un separador temporizado o a través de la corredera que realiza un movimiento de extensión y retracción para depositar la pieza retenida en el cargador. A continuación, se lleva a cabo una etapa de identificación en la que se determina el tipo de pieza (negra, rosa o metálica), registrándose dicha información en el sistema y actualizándose el contador de piezas correspondiente. El HMI cuenta con una interfaz para seleccionar el tipo de pieza que se quiere aceptar y la que se quiere descartar, como se observa en la imagen \ref{fig:HMI_funcionamiento}, con la configuración mostrada, los tres tipos de piezas serían descartados. Si se ha alcanzado el número total de piezas especificado por el operador o el tipo de pieza no está permitida por el operario, el sistema ejecuta un retroceso de la cinta para descartar la pieza y repetir el ciclo hasta que se reseté el contador de piezas o se amplíe el número desde el HMI. Puede haber otro caso de descarte en la estación unión, por lo que si sucede, el PLC 1 recibirá un mensaje de error procedente del PLC 2 comunicándole que le devuelve la pieza expulsándola por la zona inicial de la cinta y terminando el ciclo global. En caso contrario, se da por finalizado el proceso de carga al recibir un mensaje del PLC 2 de éxito, se envía una señal al PLC 2 para confirmar la recepción de su mensaje, y a continuación se procede a comunicar al robot UR el inicio de su secuencia de colocación de la pieza en el palé (siempre y cuando no esté colocando ya una pieza). Esta comunicación se realiza mediante la activación de un registro booleano global a través del canal PROFINET, acompañado por un registro entero que indica el número de capas de paletizado definidas previamente en el HMI. En este punto hay dos posibles estados diferentes a los que transitar, si el UR indica que está ejecutando su secuencia, se da por terminado el ciclo global y se inicia de nuevo permitiendo comenzar el siguiente ciclo sin la necesidad de esperar a que el brazo termine su proceso. Por otro lado, si el UR indica que el palé está completo, salta un aviso en la pantalla del HMI para retirarlo. Tras retirar el palé, se pulsa el botón correspondiente en el HMI y, al recibir el mensaje de confirmación (ACK), el ciclo concluye.
+El Grafcet de la figura \ref{fig:grafcet_distribucion} describe la secuencia automatizada de funcionamiento de la estación de unión. El sistema se inicializa con la variable de conteo de piezas a cero y permanece en espera hasta recibir una orden de arranque desde la interfaz HMI. En función del modo de carga seleccionado (manual o automático), se activa el avance de la cinta transportadora mediante un separador temporizado o a través de la corredera que realiza un movimiento de extensión y retracción para depositar la pieza retenida en el cargador. A continuación, se lleva a cabo una etapa de identificación en la que se determina el tipo de pieza (negra, rosa o metálica), registrándose dicha información en el sistema y actualizándose el contador de piezas correspondiente. El HMI cuenta con una interfaz para seleccionar el tipo de pieza que se quiere aceptar y la que se quiere descartar, como se observa en la imagen \ref{fig:HMI_funcionamiento}, con la configuración mostrada, los tres tipos de piezas serían descartados. Si se ha alcanzado el número total de piezas especificado por el operador o el tipo de pieza no está permitida por el operario, el sistema ejecuta un retroceso de la cinta para descartar la pieza y repetir el ciclo hasta que se reseté el contador de piezas o se amplíe el número desde el HMI. Puede haber otro caso de descarte en la estación unión, por lo que si sucede, el PLC 1 recibirá un mensaje de error procedente del PLC 2 comunicándole que le devuelve la pieza expulsándola por la zona inicial de la cinta y terminando el ciclo global. En caso contrario, se da por finalizado el proceso de carga al recibir un mensaje del PLC 2 de éxito, se envía una señal al PLC 2 para confirmar la recepción de su mensaje, y a continuación se procede a comunicar al robot UR el inicio de su secuencia de colocación de la pieza en el palé (siempre y cuando no esté colocando ya una pieza). Esta comunicación se realiza mediante la activación de un registro booleano global a través del canal PROFINET, acompañado por un registro entero que indica el número de capas de paletizado definidas previamente en el HMI. En este punto hay dos posibles estados diferentes a los que transitar, si el UR indica que está ejecutando su secuencia, se da por terminado el ciclo global y se inicia de nuevo permitiendo comenzar el siguiente ciclo sin la necesidad de esperar a que el brazo termine su proceso. Por otro lado, si el UR indica que el palé está completo y salta un aviso en la pantalla del HMI para retirarlo como se observa en la figura \ref{fig:HMI_funcionamiento_UR_recoger} la cual ya se explicará más adelante. Tras retirar el palé, se pulsa el botón correspondiente en el HMI y, al recibir el mensaje de confirmación (ACK), el ciclo concluye.
+
+\clearpage
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=15.5cm]{figs/grafcet_distribucion}
+    \includegraphics[width=14cm]{figs/grafcet_distribucion}
   \end{center}
   \caption{\centering Grafcet del funcionamiento de la estación distribución.}
   \label{fig:grafcet_distribucion}
 \end{figure} 
+
+En el anexo \ref{sec:anexo_distribucion} se detallan las ecuaciones lógicas del Grafcet de la estación distribución.
 
 \clearpage
 
@@ -328,6 +334,9 @@ Una vez la pieza está parada y la tapa lista para recogerse, el carro se extien
   \caption{\centering Grafcet de funcionamiento de la estación unión.}
   \label{fig:grafcet_union}
 \end{figure}
+
+En el anexo \ref{sec:anexo_union} se detallan las ecuaciones lógicas del Grafcet de la estación distribución.
+
 \clearpage
 
 \begin{figure}[h!]
@@ -478,7 +487,7 @@ Una vez descritos en detalle todos los posibles estados que puede adoptar el sis
 \section{Funcionamiento cobot UR5e}
 \label{sec:funcionamiento_ur5e}
 
-El cobot UR5e es un brazo robótico colaborativo diseñado para trabajar de forma segura junto a operarios. En este proyecto, su función principal es comunicarse con los PLCs para ejecutar una secuencia de paletizado en la fase final del ciclo global del sistema. Una vez que la estación de distribución completa su ciclo, el PLC 1 envía una señal al UR5e indicándole que inicie su secuencia. Al finalizar la operación de paletizado, el cobot notifica al PLC 1 que ha concluido, permitiendo así reiniciar el ciclo completo. El propósito de integrar el brazo en la ejecución del sistema es simular su uso dentro del proceso automático (aunque físicamente no se pudo integrar debido a la distancia entre estaciones) y aportar así mayor realismo y complejidad al resultado final. 
+El cobot UR5e es un brazo robótico colaborativo diseñado para trabajar de forma segura junto a operarios. En este proyecto, su función principal es comunicarse con los PLCs para ejecutar una secuencia de paletizado en la fase final del ciclo global del sistema. Una vez que la estación de unión completa su ciclo, el PLC 1 envía una señal al UR5e indicándole que inicie su secuencia. Al finalizar la operación de colocación de la pieza en el palé, el cobot notifica al PLC 1 que ha concluido, permitiendo así reiniciar el ciclo completo. El propósito de integrar el brazo en la ejecución del sistema es simular su uso dentro del proceso automático (aunque físicamente no se pudo integrar debido a la distancia entre estaciones) para ordenar las piezas , aportando así mayor realismo y complejidad al resultado final. 
 
 El cobot viene equipado con una pinza neumática como herramienta. Esta pinza permite sujetar, mover y soltar objetos de forma rápida y eficiente. Es ideal para tareas repetitivas como ensamblaje, paletizado, manipulación de piezas o carga de máquinas, especialmente cuando no se requiere un control preciso de la fuerza. Esta pinza se ha utilizado para la secuencia de paletizado, la cual siguie el esquema llamado \textbf{paletizado por capas}. Este tipo de paletizado por capas consiste en organizar productos sobre un palé formando niveles horizontales uniformes agrupando varios elementos alineados o alternos para lograr estabilidad \cite{paletizado_capas}. Es ideal para cargas regulares y facilita la automatización, optimizando espacio, transporte y manipulación en entornos industriales \cite{paletizado_capas}. 
 
@@ -500,16 +509,245 @@ Como ya se ha visto en la sección \ref{sec:conectividad_dispositivos}, el PLC 1
   \label{fig:resultado_paletizado}
 \end{figure}
 
-Las coordenadas de la posición de los bricks de leche en el paletizado se han tomado de forma relativa a la coordenada del primer brick de leche. La primera coordenada se definió en la posición que se quería colocar el primer elemento del palet, y a partir de esta y tomándola de referencia, se han definido las 5 coordenadas restantes. Al utilizar el sistema de coordenadas del primer punto se han podido colocar elementos paralelos y perpendiculares al primero, ayudando ha aportar gran estabilidad y orden al palet. Esta técnica ha ayudado mucho también a establecer la misma altura de todos los bricks de leche y asegurarse así que no se coloquen de forma uniforme. Adicionalmente se han establecido algunos puntos de paso también en este sistema de coordenadas para intentar establecer los movimientos lo más rectilíneos posibles. 
+Las coordenadas de la posición de las piezas en el paletizado se han tomado de forma relativa a la coordenada del primer brick de leche. La primera coordenada se definió en la posición que se quería colocar el primer elemento del palé, y a partir de esta y tomándola de referencia, se han definido las 5 coordenadas restantes. Al utilizar el sistema de coordenadas del primer punto se han podido colocar elementos paralelos y perpendiculares al primero, ayudando ha aportar gran estabilidad y orden al palé. Esta técnica también ha ayudado mucho a establecer la misma altura de todos los bricks de leche y asegurarse así que no se coloquen de forma uniforme. Adicionalmente, se han establecido algunos puntos de paso también utilizando este sistema de coordenadas para intentar establecer los movimientos lo más rectilíneos posibles. Seguidamente se muestra una tabla que refleja las coordenadas de los puntos de cada pieza, tomando como referencia la primera posición:
 
-\textbf{NOTA}: Qué es mejor opción de poner a continuación?: las coordenadas de los bricks de leche (por foto o tabla), una imagen del código del UR o ambas.
+\begin{table}[H]
+\begin{center}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|M{2.45cm}|M{2.7cm}|M{1.35cm}|M{1.35cm}|M{1.35cm}|M{1.2cm}|M{1.2cm}|M{1.2cm}|}
+\hline
+\textbf{Coordenada} &
+\textbf{Sistema de coordenadas} & 
+\textbf{X (mm)} & 
+\textbf{Y (mm)} & 
+\textbf{Z (mm)} &
+\textbf{RX (rad)} &
+\textbf{RY (rad)} &
+\textbf{RZ (rad)} \\
+\hline
+Punto 1  & Base &  -333,63 & 270,96 & 70,04 & 0 & 3,15 & 0 \\
+\hline
+Punto 2  & Punto 1 &  0 & -128 & 0 & 0 & 0 & 0 \\
+\hline
+Punto 3  & Punto 1 &  198,3 & -82,3 & 0 & 0 & 0 & 1,57 \\
+\hline
+Punto 4  & Punto 1 &  -43,3 & -24,8 & 0 & 0 & 0 & 4,715 \\
+\hline
+Punto 5  & Punto 1 &  90 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+Punto 6  & Punto 1 &  90 & -128 & 0 & 0 & 0 & 0 \\
+\hline
+\end{tabular}
+
+\caption{\centering Coordenadas de colocación de las piezas en el palé utilizando el UR5e.}
+\label{cuadro:coordenadas}
+\end{center}
+\end{table}
+
+En cuanto a la comunicación PROFINET entre el UR y el PLC 1 ya explicada en la sección \ref{sec:conectividad_dispositivos}, se han utilizado los siguientes registros de propósito general para el intercambio de información en los mensajes entre ambos:
+
+\begin{table}[H]
+\begin{center}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|M{3.75cm}|M{2.65cm}|M{3.1cm}|M{2.6cm}|M{2.1cm}|}
+\hline
+\textbf{Nombre variable} &
+\textbf{Número de registro} & 
+\textbf{Direcci\'on para el UR5e} & 
+\textbf{Direcci\'on para el PLC} &
+\textbf{Tipo de dato} \\
+\hline
+Start  & GPbi [0] & Entrada & Salida & Bool \\
+\hline
+parada\_emergencia  & GPbi [1] & Entrada & Salida & Bool \\
+\hline
+pale\_recogido  & GPbi [2] & Entrada & Salida & Bool \\
+\hline
+num\_capas  & GPii [0] & Entrada & Salida & Int \\
+\hline
+piezas\_paletizadas  & GPio [0] & Entrada & Salida & Int \\
+\hline
+ejecutando\_proc  & GPbo [0] & Salida & Entrada & Bool \\
+\hline
+pale\_completo  & GPbo [1] & Salida & Entrada & Bool \\
+\hline
+pale\_ACK  & GPb0 [2] & Salida & Entrada & Bool \\
+\hline
+
+\end{tabular}
+
+\caption{Registros utilizados para la comunicación entre el UR5e y el PLC 1.}
+\label{cuadro:registros}
+\end{center}
+\end{table}
+
+En el cuadro \ref{cuadro:mensajes} ya se ha explicado el objetivo y significado de la utilización de estos registros en el código del UR; sin embargo, en este apartado se va a profundizar aún más en su funcionamiento, describiendo detalladamente la lógica implementada, comentando el código del brazo robótico que se muestra a continuación, y explicando cómo se gestionan las señales de comunicación y sincronización de tareas.
+
+\begin{code}[h]
+\begin{lstlisting}[]
+# AntesDeIniciar
+capa_controller := 0
+contador_piezas := 0
+num_capas := numero_capas*3
+if num_capas>12
+    num_capas:=12
+
+# Programa de robot
+Bucle num_capas>contador_piezas:
+    Ajustar ejecutando_proc= False
+    Ajustar pale_ACK= False
+    Esperar: start:=Hi
+    Ajustar piezas_paletizadas= contador_piezas + 1
+    if contador_piezas + 1 >= num_capas:
+        Ajustar pale_completo= True
+    Else:
+        Ajustar ejecutando_proc= True
+    Moverj
+        Punto_inicio
+        Recogida_alto
+    # Coger pieza
+    Moverj
+        Recogida_leche
+        Ajustar_pinza := Encender
+        Esperar: 1.5
+        Recogida_alto
+    # Punto de paso de coordenada 3
+    if capa_controller == 2
+        Moverj
+            base_colocar_3
+    # Punto de paso de coordenada 4
+    Elseif capa_controller == 3:
+        Moverj
+            base_colocar_1
+            base_colocar_2
+    # Punto de paso del resto de coordenadas
+    Else:
+        Moverj
+            base_colocar_1
+    # Coordenadas de las posiciones de las piezas
+    Pallet
+        Irregular Pattern 1
+            Item_1
+            Item_2
+            Item_3
+        Irregular Pattern 2
+            Item_4
+            Item_5
+            Item_6
+\end{lstlisting}
+\caption[Programa de robot en Polyscope]{\centering Programa del UR5e exportado desde Polyscope.}
+\label{cod:prog_ur_1}
+\end{code}
 
 \clearpage
 
+\begin{code}[h]
+\begin{lstlisting}[]
+    # Dentro de la capa actual
+    Capas
+        for articulo in articulos:
+            Moverj
+                ToolActionPoint
+            MoverL
+                ToolActionPoint
+            # Soltar la pieza
+            Tool action
+                Ajustar pinza= Apagar
+                Esperar: 1.0
+            MoverL
+                if capa_controller != 3
+                    Exit
+    # En la coordenada 4 subir de forma manual
+    if capa_controller == 3:
+        MoverL
+            Salida_coord_4
+    # Actualizar contadores
+    capa_controller += 1
+    contador_piezas += 1
+    if capa_controller > 5:
+        capa_controller := 0
+    Ajustar ejecutando_proc= False
+# Fin del programa
+contador_piezas := 0
+capa_controller := 0
+Moverj
+    Punto_inicio
+Esperar: pale_recogido:=Hi
+	Ajustar pale_completo= False
+	Ajustar pale_ACK= True
+Esperar: 3.0
+
+\end{lstlisting}
+\caption[Programa de robot en Polyscope]{\centering Programa del UR5e exportado desde Polyscope.}
+\label{cod:prog_ur_2}
+\end{code} 
+
+\FloatBarrier
+
+El código del UR5e define un programa de control que ejecuta un ciclo de recogida y colocación de piezas en distintas coordenadas de un pallé. Al inicio, se inicializan variables de control: \texttt{final\_programa} se pone en falso, \texttt{capa\_controller} y \texttt{contador\_piezas} se inicializan en cero, y se calcula \texttt{num\_capas} multiplicando \texttt{numero\_capas} (información leída del registro GPii [0] cuyo valor es introducido por el operario en el HMI) por tres debido a que cada capa consta de tres elementos, limitándolo a un máximo de 12.
+
+El programa del robot se repite en bucle constantemente, y dentro de él, el ciclo principal se ejecuta siempre y cuando \texttt{contador\_capas} sea menor que \texttt{num\_capas}. Dentro del bucle, primero se escriben a cero los registros \texttt{ejecutando\_proc} y \texttt{pale\_ACK} para informar al PLC que el UR está a la espera de la orden para iniciar su secuencia. Cuando el PLC activa el registro \texttt{start}, el programa verifica si la pieza a colocar es la última del palé. En ese caso, se activa el registro \texttt{pale\_completo} para indicar al sistema que, una vez colocada esta pieza, el palé debe ser retirado por estar completo mediante un mensaje en el HMI como se observa en la figura \ref{fig:HMI_funcionamiento_UR}. Si no se trata de la última pieza, se activa el registro \texttt{ejecutando\_proc} para indicar al PLC que el UR ha iniciado su ciclo. Además, se muestra en la pantalla del HMI un contador que indica el número de pieza colocada, comunicándolo mediante el registro \texttt{piezas\_paletizadas}.
+
+\begin{figure}[h!]
+  \begin{center}
+  	\includegraphics[width=12cm]{figs/HMI_funcionamiento_UR}
+  \end{center}
+  \caption{\centering Mensaje del número pieza siendo colocada por el UR en la pantalla de funcionamiento del HMI.}
+  \label{fig:HMI_funcionamiento_UR}
+\end{figure}
+
+Una vez la comunicación con el PLC realizada, el robot se mueve a la posición inicial, se aproxima a la posición de recogida de piezas, baja con cuidado hasta la pieza, activa la pinza para agarrarla, espera 1,5 segundos y la sube ligeramente. Siempre que el brazo lleva la pieza sujeta se mueve más lento que cuando no la tiene. Según el valor de \texttt{capa\_controller} (la posición de la pieza actual), el robot ajusta su trayectoria para pasar por distintas coordenadas definidas para optimizar el recorrido. Estos puntos de paso que sigue el UR5e también han sido definidos utilizando la posición de la coordenada 1 de colocación de la pieza como referencia para conseguir trayectorias lo más seguras posibles.
+
+Luego, mediante la estructura de datos del palé previamente definida, el robot coloca las piezas en posiciones específicas dentro de la capa actual. En el momento que el brazo coloca la pieza en su posición, abre la pinza y sube hacia arriba en línea recta para no golpear a las demás piezas ya colocadas. En el caso de la pieza 4, el brazo ejecuta un movimiento programado manualmente para elevarse, ya que, al hacerlo de forma automática, el TCP quedaba demasiado cerca del codo del robot, lo que provocaba la activación del estado de parada de emergencia por razones de seguridad.
+
+Después, se actualizan los contadores de piezas y capa, si se superan cinco capas, el controlador de capa se reinicia (ya han sido colocadas todas las piezas en las dos capas). También se desactiva el registro \texttt{ejecutando\_proc} para indicar que la pieza ya ha sido colocada finalizando así el ciclo del UR.
+
+Si el UR ya ha colocado todas las piezas en sus respectivas coordenadas y el pale está completo, se resetean los contadores, se mueve a su posición de inicio y se queda esperando a que el PLC le confirme que el pale ha sido retirado con éxito. En el momento que le llega el mensaje, cuando el operario presione el botón ``pale recogido'' en el HMI de la figura \ref{fig:HMI_funcionamiento_UR}, le confirma la recepción del mismo a través de la activación del registro \texttt{pale\_ACK} y esperará 3 segundos para asegurarse de que la información le llega correctamente al PLC. El estado de espera del UR cuando el pale ha sido completado ha sido diseñado para aportar seguridad al sistema, asegurandose de que no coloca una nueva pieza cuando todavía no se ha retirado el pale anterior, si se dispusiese de una cinta transportadora se podría retirar el pale automáticamente en vez de forma manual.
+
+\begin{figure}[h!]
+  \begin{center}
+  	\includegraphics[width=12cm]{figs/HMI_funcionamiento_UR_recoger}
+  \end{center}
+  \caption{\centering Botón para la confirmación de pale recogido en la pantalla de funcionamiento del HMI.}
+  \label{fig:HMI_funcionamiento_UR_recoger}
+\end{figure}
 
 
 \section{Resultado final}
 \label{sec:resultado_final}
+
+En este apartado se presentan los resultados finales obtenidos tras el desarrollo e implementación del proyecto. Se incluyen videos demostrativos en los que se puede observar el funcionamiento del sistema automático industrial en condiciones reales de operación. Estos videos ilustran el comportamiento del proceso completo, mostrando cómo el sistema responde a las diferentes señales de control, coordina sus componentes y ejecuta de forma autónoma las tareas para las que fue diseñado.
+
+\subsubsection{Funcionamiento estación distribución}
+
+\textbf{Vídeo:} \url{https://youtu.be/nUW7nG6U8uE} \\
+
+En el vídeo se observa el funcionamiento de la estación distribución junto con la interfaz del HMI. el proceso inicia cuando se pulsa el botón ``iniciar secuencia'', pero la pieza rosa no es aceptada por el sistema porque el botón ``Piezas rosas'' está desactivado. Una vez se activa, se observa como la pieza ahora si es aceptada, pero otra de otro material como la metálica no hasta que se activa su respectivo botón ``Piezas metálicas''. Finalmente se cambia el valor del contador de piezas, pasándo de permitir 8 piezas a 0, por lo que aunque se permita el paso de todo tipo de materiales de piezas, no lo harán ya que no cumplen la condición del número máximo de piezas permitido.
+
+\subsubsection{Descarte de pieza mal orientada}
+
+\textbf{Vídeo:} \url{https://youtu.be/pbC6FhVJhaw} \\
+
+Este ejemplo se enfoca en el funcionamiento de la detección de la orientación de las piezas en la estación unión. En este caso una pieza rosa llega hasta el sensor capacitivo después de pasar los filtros de la estación distribución, pero al detectar que su orientación no es la correcta (está al revés y la tapa no puede colocarse encima de ella) es descartada. Cuando su orientación incorrecta es detectada por el sensor, salta un mensaje en el HMI mostrándo el contador de piezas defectuosas y el bo´ton para descartarla. Hasta que el botón no es pulsado el sistema se queda en espera, y una vez presionado, la pieza es descartada pasando por la estación distribución. Después se ejecuta otra vez la secuencia con la pieza bién orientada y esta vez si es aceptada por el sistema y continúa con su ciclo.
+
+\subsubsection{Secuencia de paletizado completa}
+
+\textbf{Vídeo:} \url{https://youtu.be/vDtNlI_9-sc} \\
+
+El vídeo muestra la secuencia completa de paletizado realizada por el robot UR. En esta demostración se omite el proceso de las dos estaciones para enfocarse exclusivamente en el paletizado de las piezas, partiendo de la premisa de que estas llegan correctamente posicionadas para que el brazo las recoja. El sistema está configurado para realizar cuatro capas de paletizado, que es el máximo permitido. Se puede observar que las capas 1 y 3 presentan la misma disposición, mientras que las capas 2 y 4 tienen una configuración distinta que complementa a las anteriores, formando una estructura más sólida en comparación con otras configuraciones posibles.
+
+\subsubsection{Funcionamiento global del proceso}
+
+\textbf{Vídeo:} \url{https://youtu.be/w0F8mmgS1rM} \\
+
+Este vídeo muestra el ciclo global del sistema funcionando correctamente, sin presentar ningún imprevisto. En él se integran las dos estaciones junto con el robot UR. Según la configuración establecida, el sistema acepta todo tipo de piezas, las cuales son dispensadas por el cargador, pasan por la estación de unión para la colocación de las tapas y finalmente llegan al extremo de la cinta transportadora. En un momento del vídeo se observa que, cuando la pieza está lista para recibir la tapa pero no hay ninguna disponible, el sistema permanece en espera hasta que una nueva tapa es suministrada para poder continuar con el proceso. 
+
+Cuando la pieza llega al final de la cinta, comienza la secuencia del robot UR, que simula la recogida y  colocación de la pieza en la posición correspondiente para formar el pale. . En la pantalla del HMI aparece un mensaje sobre la secuencia en curso. Además, antes de finalizar este ciclo, se inicia un nuevo ciclo global, optimizando el tiempo al permitir que una nueva pieza entre al sistema mientras se coloca la anterior. El ciclo global se ejecuta tres veces hasta completar el paletizado (con solo una capa configurada), momento en el que aparece en el HMI el mensaje de "recoger el pale". En el vídeo se muestra cómo se pulsa dicho botón antes de que el UR coloque la última pieza (que realmente no lo hace porque no hubo tiempo de preparar el brik de leche a recoger), sin embargo, el sistema no responde hasta que el brazo termina de colocar la pieza. En ese instante, al pulsar el botón y confirmar la retirada del palé, el ciclo comienza nuevamente desde el inicio.
+
+
+
 
 
 
