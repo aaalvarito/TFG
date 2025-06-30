@@ -3,30 +3,23 @@
 
 \begin{flushright}
 \begin{minipage}[]{10cm}
-\emph{Quizás algún fragmento de libro inspirador...}\\
+\emph{La robótica industrial convierte lo imposible en rutinario}\\
 \end{minipage}\\
 
-Autor, \textit{Título}\\
+Anónimo\\
 \end{flushright}
 
 \vspace{1cm}
 
-Escribe aquí un párrafo explicando brevemente lo que vas a contar en este capítulo, que básicamente será una recapitulación de los problemas que has abordado, las soluciones que has prouesto, así como los experimentos llevados a cabo para validarlos. Y con esto, cierras la memoria.
+En este último capítulo se presenta una síntesis de todo el trabajo realizado a lo largo de este proyecto. Se repasan los principales problemas abordados, las soluciones propuestas para cada uno de ellos y los experimentos desarrollados para validar dichas soluciones. Este capítulo ofrece una visión global de los retos enfrentados, los resultados obtenidos y las conclusiones derivadas del proceso de diseño, implementación y evaluación de la automatización industrial estudiada.
+
 
 \section{Conclusiones}
 
-Enumera los objetivos y cómo los has cumplido.\\
+Durante el desarrollo de este trabajo se ha logrado cumplir con todos objetivos propuestos: se ha llevado a cabo el montaje, conexionado y validación del sistema completo en condiciones reales, comprobando su funcionamiento y fiabilidad. Se ha automatizado el funcionamiento de las estaciones didácticas mediante la programación en TIA Portal, implementando una lógica de control robusta. Se ha diseñado y configurado una interfaz HMI que permite al operario controlar el sistema y supervisar sus estados en tiempo real, facilitando su trabajo y proporcionando una abstracción de bajo nivel que simplifica la interacción con los procesos automatizados. Se ha integrado con éxito el robot colaborativo UR5e en el flujo de trabajo, realizando operaciones de paletizado coordinadas. Además, se ha creado una red de comunicaciones PROFINET entre PLCs, HMI y el cobot, asegurando un intercambio de datos fiable y continuo. Por último, la lógica de control secuencial se ha desarrollado utilizando Grafcet y la guía GEMMA como referencia metodológica, integrándose de manera coherente con el resto de la programación y contribuyendo a garantizar un funcionamiento ordenado y seguro del sistema. \\
 
-Enumera también los requisitos implícitos en la consecución de esos objetivos, y cómo se han satisfecho.\\
+A lo largo de este trabajo, se ha conseguido desarrollar un sistema de automatización integral que reúne control, comunicación y robótica colaborativa, lo que representa un avance significativo respecto al estado inicial, donde los procesos estaban fragmentados y carecían de integración eficiente. La implementación de una red PROFINET y la utilización de metodologías estructuradas como Grafcet y GEMMA han permitido mejorar la coordinación y fiabilidad del sistema, facilitando su escalabilidad y mantenimiento. Además, se ha logrado programar y dejar preparadas las estaciones físicas en el laboratorio para que puedan servir como plataforma de pruebas y aprendizaje para futuras generaciones de estudiantes que cursen asignaturas relacionadas con este ámbito, facilitando su comprensión de la materia y ofreciéndoles un entorno práctico para desarrollar sus competencias. 
 
-No olvides dedicar un par de párrafos para hacer un balance global de qué has conseguido, y por qué es un avance respecto a lo que tenías inicialmente. Haz mención expresa de alguna limitación o peculiaridad de tu sistema y por qué es así. Y también, qué has aprendido desarrollando este trabajo.\\
+No obstante, el sistema presenta ciertas limitaciones, como la separación física entre las estaciones y el robot colaborativo, lo que impide una integración completa del brazo robótico en el proceso de producción y limita su capacidad para recoger las piezas utilizadas en las estaciones durante la secuencia de paletizado. Además, la complejidad de la integración entre diferentes dispositivos obliga a un conocimiento especializado para su operación y mantenimiento. A nivel personal, este proyecto ha sido una oportunidad valiosa para profundizar en la programación industrial de PLCs y del brazo robótico, protocolos de comunicación y diseño de interfaces, consolidando habilidades prácticas y teóricas que serán fundamentales en mi desarrollo profesional.
 
-Por último, añade otro par de párrafos de líneas futuras; esto es, cómo se puede continuar tu trabajo para abarcar una solución más amplia, o qué otras ramas de la investigación podrían seguirse partiendo de este trabajo, o cómo se podría mejorar para conseguir una aplicación real de este desarrollo (si es que no se ha llegado a conseguir).
-
-\section{Corrector ortográfico}
-
-Una vez tengas todo, no olvides pasar el corrector ortográfico de \LaTeX a todos tus ficheros \textit{.tex}. En \texttt{Windows}, el propio editor \texttt{TeXworks} incluye el corrector. En \texttt{Linux}, usa \texttt{aspell} ejecutando el siguiente comando en tu terminal:
-
-\begin{verbatim}
-aspell --lang=es --mode=tex check capitulo1.tex
-\end{verbatim}
+De cara al futuro, este trabajo podría ampliarse integrando nuevas estaciones de producción o adaptando el sistema para entornos industriales reales con mayor variabilidad y exigencia de seguridad tanto física como virtual. También sería posible profundizar en la optimización de las secuencias de paletizado y en la comunicación entre dispositivos para obtener ciclos de producción más cortos y eficientes. Por otro lado, se podrían explorar técnicas de inteligencia artificial aplicadas al control del sistema y al reconocimiento de objetos como las piezas utilizadas, abriendo así nuevas líneas de investigación que conectan la automatización industrial con los desarrollos más recientes en Industria 4.0.
