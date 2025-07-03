@@ -16,10 +16,30 @@ En este último capítulo se presenta una síntesis de todo el trabajo realizado
 
 \section{Conclusiones}
 
-Durante el desarrollo de este trabajo se ha logrado cumplir con todos objetivos propuestos: se ha llevado a cabo el montaje, conexionado y validación del sistema completo en condiciones reales, comprobando su funcionamiento y fiabilidad. Se ha automatizado el funcionamiento de las estaciones didácticas mediante la programación en TIA Portal, implementando una lógica de control robusta. Se ha diseñado y configurado una interfaz HMI que permite al operario controlar el sistema y supervisar sus estados en tiempo real, facilitando su trabajo y proporcionando una abstracción de bajo nivel que simplifica la interacción con los procesos automatizados. Se ha integrado con éxito el robot colaborativo UR5e en el flujo de trabajo, realizando operaciones de paletizado coordinadas. Además, se ha creado una red de comunicaciones PROFINET entre PLCs, HMI y el cobot, asegurando un intercambio de datos fiable y continuo. Por último, la lógica de control secuencial se ha desarrollado utilizando Grafcet y la guía GEMMA como referencia metodológica, integrándose de manera coherente con el resto de la programación y contribuyendo a garantizar un funcionamiento ordenado y seguro del sistema. \\
+Durante el desarrollo de este trabajo se ha logrado cumplir con todos objetivos propuestos: 
+
+\begin{itemize}
+
+	 \item Se ha llevado a cabo el montaje, conexionado y validación del sistema completo en condiciones reales, comprobando su funcionamiento y fiabilidad.
+
+	 \item Se ha automatizado el funcionamiento de las estaciones didácticas mediante la programación en TIA Portal, implementando una lógica de control robusta. 
+	 
+	 \item Se ha diseñado y configurado una interfaz HMI que permite al operario controlar el sistema y supervisar sus estados en tiempo real, facilitando su trabajo y proporcionando una abstracción de bajo nivel que simplifica la interacción con los procesos automatizados.
+	 
+	 \item Se ha integrado con éxito el robot colaborativo UR5e en el flujo de trabajo, realizando operaciones de paletizado coordinadas.
+	 
+	 \item Se ha creado una red de comunicaciones PROFINET entre PLCs, HMI y el cobot, asegurando un intercambio de datos fiable y continuo.
+	 
+	 \item La lógica de control secuencial se ha desarrollado utilizando Grafcet y la guía GEMMA como referencia metodológica, integrándose de manera coherente con el resto de la programación y contribuyendo a garantizar un funcionamiento ordenado y seguro del sistema.
+\end{itemize}
+
 
 A lo largo de este trabajo, se ha conseguido desarrollar un sistema de automatización integral que reúne control, comunicación y robótica colaborativa, lo que representa un avance significativo respecto al estado inicial, donde los procesos estaban fragmentados y carecían de integración eficiente. La implementación de una red PROFINET y la utilización de metodologías estructuradas como Grafcet y GEMMA han permitido mejorar la coordinación y fiabilidad del sistema, facilitando su escalabilidad y mantenimiento. Además, se ha logrado programar y dejar preparadas las estaciones físicas en el laboratorio para que puedan servir como plataforma de pruebas y aprendizaje para futuras generaciones de estudiantes que cursen asignaturas relacionadas con este ámbito, facilitando su comprensión de la materia y ofreciéndoles un entorno práctico para desarrollar sus competencias. 
 
 No obstante, el sistema presenta ciertas limitaciones, como la separación física entre las estaciones y el robot colaborativo, lo que impide una integración completa del brazo robótico en el proceso de producción y limita su capacidad para recoger las piezas utilizadas en las estaciones durante la secuencia de paletizado. Además, la complejidad de la integración entre diferentes dispositivos obliga a un conocimiento especializado para su operación y mantenimiento. A nivel personal, este proyecto ha sido una oportunidad valiosa para profundizar en la programación industrial de PLCs y del brazo robótico, protocolos de comunicación y diseño de interfaces, consolidando habilidades prácticas y teóricas que serán fundamentales en mi desarrollo profesional.
 
+\section{Líneas de trabajo futuro}
+
 De cara al futuro, este trabajo podría ampliarse integrando nuevas estaciones de producción o adaptando el sistema para entornos industriales reales con mayor variabilidad y exigencia de seguridad tanto física como virtual. También sería posible profundizar en la optimización de las secuencias de paletizado y en la comunicación entre dispositivos para obtener ciclos de producción más cortos y eficientes. Por otro lado, se podrían explorar técnicas de inteligencia artificial aplicadas al control del sistema y al reconocimiento de objetos como las piezas utilizadas, abriendo así nuevas líneas de investigación que conectan la automatización industrial con los desarrollos más recientes en Industria 4.0.
+
+Otro aspecto a mejorar del proyecto es solucionar los problemas hardware descritos en la sección \ref{sec:resultado_final}, concretamente en el apartado dedicado al funcionamiento global del sistema. Estos errores están relacionados con la incorrecta colocación de las tapas sobre las piezas en algunos ciclos del proceso, así como con la retracción incompleta del separador, los cuales  impiden que el sistema opere de forma totalmente automática y eficiente. Estos fallos cometidos por las personas que montaron e instalaron la estación unión afectan negativamente al rendimiento general del sistema, y, aunque se mejoró su efectividad en mayor medida, siguen generando problemas que empeoran el resultado final.
