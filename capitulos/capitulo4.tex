@@ -22,7 +22,7 @@ En la sección \ref{sec:descripcion} ya se presentó una visión general del obj
 
 El objetivo final es desarrollar un ciclo de producción en el que intervengan todos los componentes mencionados, simulando una aplicación industrial realista. Para ello, el ciclo debe iniciarse en la estación de distribución, donde se introducen las piezas en el proceso productivo y se identifica el tipo de material que las compone, con el fin de determinar el tratamiento correspondiente en función de sus características. Los parámetros de distinción de piezas se establecen en el HMI por el operario, si se descarta la pieza, se acabará el ciclo y se empezará de nuevo, pero si es aceptada pasará a la estación unión continuando el proceso. 
 
-Para que la estación unión comience su proceso dentro del ciclo, es necesario que el PLC que controla la estación distribución le envíe un mensaje al segundo PLC (el que controla la estación unión) para informarle de que debe empezar.  Una vez recibido el mensaje, la segunda estación inicia el proceso tomando la pieza y deteniéndola para verificar su orientación. Si la orientación es correcta, la pieza continúa su avance en el ciclo; en caso contrario, se genera un mensaje de error en el HMI y la pieza es descartada, regresando a la estación de distribución, donde se requerirá una nueva comunicación para reiniciar el proceso. Si la pieza está bien orientada continuará su camino hasta que se pare en un punto donde la tapa proveninte de otra cinta será colocada encima de la pieza con el módulo pick \& place. Una vez terminado el ciclo la estación volverá a comunicarse con la estación unión para hacerle saber que terminó su proceso.
+Para que la estación unión comience su proceso dentro del ciclo, es necesario que el PLC que controla la estación distribución le envíe un mensaje al segundo PLC (el que controla la estación unión) para informarle de que debe empezar.  Una vez recibido el mensaje, la segunda estación inicia el proceso tomando la pieza y deteniéndola para verificar su orientación. Si la orientación es correcta, la pieza continúa su avance en el ciclo; en caso contrario, se genera un mensaje de error en el HMI y la pieza es descartada, regresando a la estación de distribución, donde se requerirá una nueva comunicación para reiniciar el proceso. Si la pieza está bien orientada continuará su camino hasta que se pare en un punto donde la tapa proveniente de otra cinta será colocada encima de la pieza con el módulo pick \& place. Una vez terminado el ciclo la estación volverá a comunicarse con la estación unión para hacerle saber que terminó su proceso.
 
 Una vez que el PLC de la estación unión recive el mensaje de fin de ciclo del otro PLC, el último paso es comunicarse con el UR para que termine el proceso global. El PLC asociado a la estación distribución es el encargado de mandar el mensaje vía Profinet al UR, quién iniciará una secuencia de paletizado simulando la ordenación de las piezas. Como físicamente las estaciones Festo y el UR están separadas, el proceso de paletizado del brazo robótico se realiza con bricks de leche como elemento manipulable. En el momento que el UR termine su proceso, el PLC será notificado terminando con el ciclo global y volviendo a empezar.
 
@@ -42,7 +42,7 @@ La función del HMI en este proyecto será proporcionar al operario una represen
 \section{Conectividad de los dispositivos}
 \label{sec:conectividad_dispositivos}
 
-Para realizar la conexión de todos los dispositivos entre si, se ha utilizado el switch Ethernet industrial SCALANCE XB005 y el protocolo PROFINET, los cuales ya se ha explicado en el capítulo \ref{cap:capitulo3}. Este dispositivo cuenta con 5 puertos, soporta cinexiones PROFINET y está pensado para usarse en fábricas o instalaciones automatizadas donde se requiere una red estable y confiable. El switch es ideal para el proyecto ya que se necesita comunicar 4 dispositivos más el ordenador que los programa entre ellos, ocupando los 5 puertos disponibles. Los cables Ethernet utilizados en son el modelo 6XV18703QN10 \footnote{6XV18703QN10. (n.d.). Radwell.eu. Retrieved June 10, 2025, from \url{https://www.radwell.eu/es/buy/siemens-6xv18703qn10/1018547.html}} los cuales están especialmente diseñados para este tipo de aplicaciones industriales.  \\
+Para realizar la conexión de todos los dispositivos entre si, se ha utilizado el switch Ethernet industrial SCALANCE XB005 y el protocolo PROFINET, los cuales ya se ha explicado en el capítulo \ref{cap:capitulo3}. Este dispositivo cuenta con 5 puertos, soporta conexiones PROFINET y está pensado para usarse en fábricas o instalaciones automatizadas donde se requiere una red estable y confiable. El switch es ideal para el proyecto ya que se necesita comunicar 4 dispositivos más el ordenador que los programa entre ellos, ocupando los 5 puertos disponibles. Los cables Ethernet utilizados en son el modelo 6XV18703QN10 \footnote{6XV18703QN10. (n.d.). Radwell.eu. Retrieved June 10, 2025, from \url{https://www.radwell.eu/es/buy/siemens-6xv18703qn10/1018547.html}} los cuales están especialmente diseñados para este tipo de aplicaciones industriales.  \\
 
 A continuación, se muestra un diagrama de conexiones de todos los dispositivos:
 
@@ -253,15 +253,15 @@ En la foto anterior se muestra la pantalla del modo funcionamiento del sistema, 
     
     \item \textbf{Número de piezas:} Introducir el número de piezas que se desean permitir en el proceso. El botón azul ``Reset `` reinicia el contador a 0.
     
-    \item \textbf{Inicar programa:} Inicia el programa después de una parada de emergencia.
+    \item \textbf{Iniciar programa:} Inicia el programa después de una parada de emergencia.
     
-    \item \textbf{Inicar secuencia:} Inicia la secuencia global de producción.
+    \item \textbf{Iniciar secuencia:} Inicia la secuencia global de producción.
     
     \item \textbf{Sólo cargador:} Indica que sólo se quieren utilizar piezas provenientes del cargador. De lo contrario, las piezas serán introducidas al sistema desde el inicio de la cinta transportadora.
     
     \item \textbf{Contador de piezas:} Muestra un contador con el número de piezas producidas hasta el momento.
     
-    \item \textbf{Parada de emergencia:} Botón de seguridad que provoca que todos los elementos del proceso se paren intantáneamente.
+    \item \textbf{Parada de emergencia:} Botón de seguridad que provoca que todos los elementos del proceso se paren instantáneamente.
     
     \item \textbf{Piezas Rosas:} Permite el paso de piezas rosas, de lo contrario se descartan.
     
@@ -304,7 +304,7 @@ Láser final cinta 1  & \%I0.2 &  cerrada \\
 Orientación correcta  & \%I0.3 &  abierta \\
 Láser final cinta 2 & \%I0.4 &  abierta \\
 Láser inicio cinta 2 & \%I0.5 &  cerrada \\
-Carro retraido & \%I0.6 &  abierta \\
+Carro retraído & \%I0.6 &  abierta \\
 Carro extendido & \%I0.7 &  abierta \\
 Ventosa arriba & \%I1.0 &  abierta \\
 Pieza succionada & \%I1.1 &  abierta \\
@@ -338,7 +338,7 @@ Vacío conectado & \%Q1.1 \\
 \end{center}
 \end{table}
 
-El Grafcet de la estación distribución se muestra en la figura \ref{fig:grafcet_union}, cuyo proceso inicia activando el avance de la cinta 1 al recibir un mensaje del PLC 1 hasta que la pieza proveniente de la estación distribución es detectada por el láser del inicio, luego se envía un mensaje de confirmación de que la pieza llegó al segundo sistema. La cinta continúa moviéndose hasta que la pieza es detectada en el centro de la cinta por el segúndo láser y se extiende el retenedor para poder así comprobar correctamente la orientación de la pieza. A continuación se verifica la orientación de la pieza utilizando un sensor capacitivo: si la pieza está correctamente orientada, el sensor no la detecta, mientras que si está invertida, el sensor la activa, indicando una orientación incorrecta. Hay que tener en cuenta que si se trata de una pieza metálica, el sensor tiene el comportamiento opuesto, detectándose en caso de que esté correctamente orientada, por lo que en el Grafcet se han tenido que establecer las condiciones específicas para las piezas de este material. Si se confirma que la orientación es válida, paralelamente se dan dos sucesos: en el primero se vuelve a activar la cinta 1, se extiende el derivador y se espera el tiempo necesario para que la pieza llegue hasta este último y el segundo consiste en que la cinta 2 avanza hasta que en el láser del inicio de esta detecta una tapa. \\
+El Grafcet de la estación distribución se muestra en la figura \ref{fig:grafcet_union}, cuyo proceso inicia activando el avance de la cinta 1 al recibir un mensaje del PLC 1 hasta que la pieza proveniente de la estación distribución es detectada por el láser del inicio, luego se envía un mensaje de confirmación de que la pieza llegó al segundo sistema. La cinta continúa moviéndose hasta que la pieza es detectada en el centro de la cinta por el segundo láser y se extiende el retenedor para poder así comprobar correctamente la orientación de la pieza. A continuación se verifica la orientación de la pieza utilizando un sensor capacitivo: si la pieza está correctamente orientada, el sensor no la detecta, mientras que si está invertida, el sensor la activa, indicando una orientación incorrecta. Hay que tener en cuenta que si se trata de una pieza metálica, el sensor tiene el comportamiento opuesto, detectándose en caso de que esté correctamente orientada, por lo que en el Grafcet se han tenido que establecer las condiciones específicas para las piezas de este material. Si se confirma que la orientación es válida, paralelamente se dan dos sucesos: en el primero se vuelve a activar la cinta 1, se extiende el derivador y se espera el tiempo necesario para que la pieza llegue hasta este último y el segundo consiste en que la cinta 2 avanza hasta que en el láser del inicio de esta detecta una tapa. \\
 
 Una vez la pieza está parada y la tapa lista para recogerse, el carro se extiende, desciende la ventosa, succiona la pieza, se eleva y se retrae colocándola encima. Después la ventosa se desactiva, se activa la cinta 1 nuevamente y se retrae el separador permitiendo a la pieza llegar al final de la cinta, que, cuando es detectada por el último láser, manda un mensaje al PLC 1 indicando que la secuencia ha terminado. Si la orientación es incorrecta, se activa un proceso de rechazo y una notificación al operario en el HMI mostrando un mensaje y contador de piezas defectuosas. El sistema esperará hasta que el operario pulse el botón de “descartar pieza” como se ve en la imagen \ref{fig:HMI_descarte}. Una vez pulsado, se activa el retroceso de la cinta y el envío de un mensaje de error al PLC 1 avisando que debe descartar la pieza. El ciclo finaliza tras la confirmación de recepción de la secuencia completada o de pieza defectuosa por parte del PLC 1.
 
@@ -397,7 +397,7 @@ Proceso en defecto & D1: Parada de emergencia & Estado al que llega el sistema t
 
 \end{tabular}
 
-\caption{Estados de la Guía Gemma utilizados en el sistema.}
+\caption{Estados de la Guía GEMMA utilizados en el sistema.}
 \label{cuadro:union}
 \end{center}
 \end{table}
@@ -406,7 +406,7 @@ Proceso en defecto & D1: Parada de emergencia & Estado al que llega el sistema t
 
 En el proceso de funcionamiento hay configurados dos estados distintos, El primer estado es el F1 o producción normal, estado en el que el sistema repite constantemente el ciclo de producción que ha sido programado. En este estado y como se puede observar en la figura \ref{fig:HMI_funcionamiento}, se pueden configurar los parámetros del sistema desde el HMI con aspectos clave como: seleccionar el tipo de pieza que se quiere dejar pasar, introducir el número de piezas que se quieren producir,  iniciar o parar la secuencia o decidir si se quiere utilizar el cargador o no. El sistema estará dentro de este estado principal, siempre y cuando no surja algún imprevisto o comportamiento extraño.
 
-En cuanto al estado F4 o marcha de verificación sin orden, tine como objetivo realizar un control manual de los actuadores y sensores para comprobar su correcto funcionamiento. Para este estado se han creado dos modos de test a cada estación física (distribución y unión, Estos modos de pruebas son seleccionables en el menú principal del HMI antes de entrar en el estado de producción F1 como se aprecia en la imagen \ref{fig:HMI_inicio}. Una vez dentro del modo test, y por lo tanto, dentro del estado F4, se puede acceder a una vista de diagnóstico de errores general o  se puede escoger entre el modo de pruebas de la estación distribución o unión. La estación distribución sólo cuenta con un modo test, en cambio la estación unión cuenta con dos modos debido a que tiene más sensores y actuadores para probar el funcionamiento.
+En cuanto al estado F4 o marcha de verificación sin orden, tiene como objetivo realizar un control manual de los actuadores y sensores para comprobar su correcto funcionamiento. Para este estado se han creado dos modos de test a cada estación física (distribución y unión, Estos modos de pruebas son seleccionables en el menú principal del HMI antes de entrar en el estado de producción F1 como se aprecia en la imagen \ref{fig:HMI_inicio}. Una vez dentro del modo test, y por lo tanto, dentro del estado F4, se puede acceder a una vista de diagnóstico de errores general o  se puede escoger entre el modo de pruebas de la estación distribución o unión. La estación distribución sólo cuenta con un modo test, en cambio la estación unión cuenta con dos modos debido a que tiene más sensores y actuadores para probar el funcionamiento.
 
 \begin{figure}[H]
   \centering
@@ -483,9 +483,9 @@ Este conjunto de estados definidos por la Guía GEMMA describe las distintas sit
 
 \subsubsection{Proceso en defecto}
 
-Dentro del proceso de defecto sólo se ha programado el estado D1 de parada de emergencia. Este estado representa una situación crítica en la que el sistema se detiene de forma inmediata debido a una emergencia \cite{guia_gemma}. La parada se realiza sin esperar a que finalice el ciclo, con el objetivo de garantizar la seguridad de las personas, del sistema o del entorno \cite{guia_gemma}. Este estado puede ser alcanzado en cualquier momento que se presione el botón ``parada de emergencia'' desde el HMI en el modo de funcionamiento. Una vez pulsado el botón se para el funcionamiento de todo el sistema para ser revisado por un operario, y una vez resuelto el problema, se podrá volver a comenzar con el cíclo de producción desde 0.
+Dentro del proceso de defecto sólo se ha programado el estado D1 de parada de emergencia. Este estado representa una situación crítica en la que el sistema se detiene de forma inmediata debido a una emergencia \cite{guia_gemma}. La parada se realiza sin esperar a que finalice el ciclo, con el objetivo de garantizar la seguridad de las personas, del sistema o del entorno \cite{guia_gemma}. Este estado puede ser alcanzado en cualquier momento que se presione el botón ``parada de emergencia'' desde el HMI en el modo de funcionamiento. Una vez pulsado el botón se para el funcionamiento de todo el sistema para ser revisado por un operario, y una vez resuelto el problema, se podrá volver a comenzar con el ciclo de producción desde 0.
 
-\subsubsection{Aplicación de la Guía Gemma}
+\subsubsection{Aplicación de la Guía GEMMA}
 
 Una vez descritos en detalle todos los posibles estados que puede adoptar el sistema a lo largo de su funcionamiento, se presenta a continuación la imagen \ref{fig:guia_gemma_final} muestra gráficamente todas las transiciones entre dichos estados. Esta representación visual resulta especialmente útil para comprender de forma global el comportamiento del sistema automatizado en sus distintas fases operativas. 
 
@@ -495,7 +495,7 @@ Una vez descritos en detalle todos los posibles estados que puede adoptar el sis
   \begin{center}
   	\includegraphics[width=16.5cm]{figs/guia_gemma_final}
   \end{center}
-  \caption{\centering Esquema de transiciones de la aplicación de la Guía Gemma en el sistema.}
+  \caption{\centering Esquema de transiciones de la aplicación de la Guía GEMMA en el sistema.}
   \label{fig:guia_gemma_final}
 \end{figure}
 
@@ -706,9 +706,9 @@ Esperar: 1.0
 
 \FloatBarrier
 
-El código del UR5e define un programa de control que ejecuta un ciclo de recogida y colocación de piezas en distintas coordenadas de un pallé. Al inicio, se inicializan variables de control: \texttt{ejecutando\_proc} se pone en falso, \texttt{capa\_controller} y \texttt{contador\_piezas} se inicializan en cero, y se calcula \texttt{num\_capas} multiplicando \texttt{numero\_capas} (información leída del registro GPii [0] cuyo valor es introducido por el operario en el HMI) por tres debido a que cada capa consta de tres elementos, limitándolo a un máximo de 12.
+El código del UR5e define un programa de control que ejecuta un ciclo de recogida y colocación de piezas en distintas coordenadas de un palé. Al inicio, se inicializan variables de control: \texttt{ejecutando\_proc} se pone en falso, \texttt{capa\_controller} y \texttt{contador\_piezas} se inicializan en cero, y se calcula \texttt{num\_capas} multiplicando \texttt{numero\_capas} (información leída del registro GPii [0] cuyo valor es introducido por el operario en el HMI) por tres debido a que cada capa consta de tres elementos, limitándolo a un máximo de 12.
 
-El programa del robot se repite en bucle constantemente, y dentro de él, el ciclo principal se ejecuta siempre y cuando \texttt{contador\_capas} sea menor que \texttt{num\_capas}. Dentro del bucle, se inicializan los registros \texttt{pale\_completo} y \texttt{pale\_ACK} con el valor cero para indicar al PLC que el robot UR está a la espera de la orden de inicio. A continuación, el robot se desplaza a la posición de inicio para quedar preparado y, cuando el PLC activa el registro \texttt{start}, el programa verifica si la pieza a colocar corresponde a la última del palé o no. En caso afirmativo, se activa el registro \texttt{pale\_completo} para indicar al sistema que, una vez colocada esta pieza, el palé debe ser retirado por estar completo mediante un mensaje en el HMI como se observa en la figura \ref{fig:HMI_funcionamiento_UR}. Si no se trata de la última pieza, se activa el registro \texttt{ejecutando\_proc} para indicar al PLC que el UR ha iniciado su ciclo. Para terminar la comunicación inicial de la secuencia, se le indica al PLC a través del registro \texttt{piezas\_paletizadas} el número de pieza que está siendo colacada en ese momento, mostrándose en la pantalla del HMI como se oserva en la siguiente imagen:
+El programa del robot se repite en bucle constantemente, y dentro de él, el ciclo principal se ejecuta siempre y cuando \texttt{contador\_capas} sea menor que \texttt{num\_capas}. Dentro del bucle, se inicializan los registros \texttt{pale\_completo} y \texttt{pale\_ACK} con el valor cero para indicar al PLC que el robot UR está a la espera de la orden de inicio. A continuación, el robot se desplaza a la posición de inicio para quedar preparado y, cuando el PLC activa el registro \texttt{start}, el programa verifica si la pieza a colocar corresponde a la última del palé o no. En caso afirmativo, se activa el registro \texttt{pale\_completo} para indicar al sistema que, una vez colocada esta pieza, el palé debe ser retirado por estar completo mediante un mensaje en el HMI como se observa en la figura \ref{fig:HMI_funcionamiento_UR}. Si no se trata de la última pieza, se activa el registro \texttt{ejecutando\_proc} para indicar al PLC que el UR ha iniciado su ciclo. Para terminar la comunicación inicial de la secuencia, se le indica al PLC a través del registro \texttt{piezas\_paletizadas} el número de pieza que está siendo colocada en ese momento, mostrándose en la pantalla del HMI como se observa en la siguiente imagen:
 
 \begin{figure}[h!]
   \begin{center}
@@ -724,12 +724,12 @@ Luego, mediante la estructura de datos del palé previamente definida, el robot 
 
 Después, se actualizan los contadores de piezas y capa, si se supera el valor a cinco, el controlador de capa se reinicia (ya han sido colocadas todas las piezas en las dos capas). También se desactiva el registro \texttt{ejecutando\_proc} para indicar que la pieza ya ha sido colocada finalizando así el ciclo del UR.
 
-Si el UR ya ha colocado todas las piezas en sus respectivas coordenadas y el palé está completo, se resetean los contadores, se mueve a su posición de inicio y se queda esperando a que el PLC le confirme que el palé ha sido retirado con éxito. En el momento que le llega el mensaje, cuando el operario presione el botón ``Palé recogido'' en el HMI de la figura \ref{fig:HMI_funcionamiento_UR}, le confirma la recepción del mismo a través de la activación del registro \texttt{pale\_ACK} y esperará 1 segundo para asegurarse de que la información le llega correctamente al PLC. El estado de espera del UR cuando el palé ha sido completado ha sido diseñado para aportar seguridad al sistema, asegurandose de que no coloca una nueva pieza cuando todavía no se ha retirado el palé anterior, si se dispusiese de una cinta transportadora se podría retirar el palé automáticamente en vez de forma manual. 
+Si el UR ya ha colocado todas las piezas en sus respectivas coordenadas y el palé está completo, se resetean los contadores, se mueve a su posición de inicio y se queda esperando a que el PLC le confirme que el palé ha sido retirado con éxito. En el momento que le llega el mensaje, cuando el operario presione el botón ``Palé recogido'' en el HMI de la figura \ref{fig:HMI_funcionamiento_UR}, le confirma la recepción del mismo a través de la activación del registro \texttt{pale\_ACK} y esperará 1 segundo para asegurarse de que la información le llega correctamente al PLC. El estado de espera del UR cuando el palé ha sido completado ha sido diseñado para aportar seguridad al sistema, asegurándose de que no coloca una nueva pieza cuando todavía no se ha retirado el palé anterior, si se dispusiese de una cinta transportadora se podría retirar el palé automáticamente en vez de forma manual. 
 
 \section{Resultado final}
 \label{sec:resultado_final}
 
-En este apartado se presentan los resultados finales obtenidos tras el desarrollo e implementación del proyecto. Se incluyen videos demostrativos en los que se puede observar el funcionamiento del sistema automático industrial en condiciones reales de operación. Estos videos ilustran el comportamiento del proceso completo, mostrando cómo el sistema responde a las diferentes señales de control, coordina sus componentes y ejecuta de forma autónoma las tareas para las que fue diseñado. 
+En este apartado se presentan los resultados finales obtenidos tras el desarrollo e implementación del proyecto. Se incluyen vídeos demostrativos en los que se puede observar el funcionamiento del sistema automático industrial en condiciones reales de operación. Estos vídeos ilustran el comportamiento del proceso completo, mostrando cómo el sistema responde a las diferentes señales de control, coordina sus componentes y ejecuta de forma autónoma las tareas para las que fue diseñado. 
 
 \clearpage
 
@@ -751,13 +751,13 @@ En el vídeo se observan dos pequeños problemas de hardware independientes a es
 
 \textbf{Vídeo:} \url{https://youtu.be/nUW7nG6U8uE} \\
 
-En el vídeo se observa el funcionamiento de la estación distribución junto con la interfaz del HMI. El primer paso consiste en pulsar el botón “iniciar programa”, ya que el sistema se encontraba previamente en estado de parada de emergencia, y al hacerlo, se transiciona al estado inicial. El proceso inicia cuando se pulsa el botón ``iniciar secuencia'', pero la pieza rosa no es aceptada por el sistema porque el botón ``Piezas rosas'' está desactivado. Una vez se activa, se observa como la pieza ahora si es aceptada, pero otra de otro material como la metálica se descarta hasta que se activa su respectivo botón ``Piezas metálicas''. Finalmente, se cambia el valor del contador de piezas, pasándo de permitir 8 piezas a 0, por lo que aunque se permita el paso de todo tipo de materiales de piezas, no lo harán ya que no cumplen la condición del número máximo de piezas permitido. \\
+En el vídeo se observa el funcionamiento de la estación distribución junto con la interfaz del HMI. El primer paso consiste en pulsar el botón “iniciar programa”, ya que el sistema se encontraba previamente en estado de parada de emergencia, y al hacerlo, se transiciona al estado inicial. El proceso inicia cuando se pulsa el botón ``iniciar secuencia'', pero la pieza rosa no es aceptada por el sistema porque el botón ``Piezas rosas'' está desactivado. Una vez se activa, se observa como la pieza ahora si es aceptada, pero otra de otro material como la metálica se descarta hasta que se activa su respectivo botón ``Piezas metálicas''. Finalmente, se cambia el valor del contador de piezas, pasando de permitir 8 piezas a 0, por lo que aunque se permita el paso de todo tipo de materiales de piezas, no lo harán ya que no cumplen la condición del número máximo de piezas permitido. \\
 
 \subsubsection{Descarte de pieza mal orientada}
 
 \textbf{Vídeo:} \url{https://youtu.be/pbC6FhVJhaw} \\
 
-Este ejemplo se enfoca en el funcionamiento de la detección de la orientación de las piezas en la estación unión. En este caso una pieza rosa llega hasta el sensor capacitivo después de pasar los filtros de la estación distribución, pero al detectar que su orientación no es la correcta (está al revés y la tapa no puede colocarse encima de ella) es descartada. Cuando su orientación incorrecta es detectada por el sensor, salta un mensaje en el HMI mostrándo el contador de piezas defectuosas y el botón para descartarla. Hasta que el botón no es pulsado el sistema se queda en espera, y una vez presionado, la pieza es descartada pasando por la estación distribución. Después se ejecuta otra vez la secuencia con la pieza bien orientada y esta vez si es aceptada por el sistema y continúa con su ciclo. 
+Este ejemplo se enfoca en el funcionamiento de la detección de la orientación de las piezas en la estación unión. En este caso una pieza rosa llega hasta el sensor capacitivo después de pasar los filtros de la estación distribución, pero al detectar que su orientación no es la correcta (está al revés y la tapa no puede colocarse encima de ella) es descartada. Cuando su orientación incorrecta es detectada por el sensor, salta un mensaje en el HMI mostrando el contador de piezas defectuosas y el botón para descartarla. Hasta que el botón no es pulsado el sistema se queda en espera, y una vez presionado, la pieza es descartada pasando por la estación distribución. Después se ejecuta otra vez la secuencia con la pieza bien orientada y esta vez si es aceptada por el sistema y continúa con su ciclo. 
 
 \clearpage
 

@@ -32,7 +32,7 @@ En la tabla \ref{fig:estacion_distribucion_3} se detallan las características g
   \begin{center}
     \includegraphics[width=15cm]{figs/estacion_distribucion_3}
   \end{center}
-  \caption{\centering Características generales de la etación distribución. \cite{estacion_distribucion}}
+  \caption{\centering Características generales de la estación distribución. \cite{estacion_distribucion}}
   \label{fig:estacion_distribucion_3}
 \end{figure} 
 
@@ -49,7 +49,7 @@ La estación distribución está formada por los siguientes componentes:
     
      \item \textbf{Separador:} Actuador neumático situada al inicio de la cinta cuya función es controlar el flujo de piezas en la cinta transportadora. Si se activa, retiene las piezas provenientes del inicio de la cinta y da paso a las almacenadas en el almacén de piezas \cite{estacion_distribucion}.
      
-      \item \textbf{Sensor para la distinción de piezas:} El sistema viene equipado con un módulo extra situado a la mitad de la cinta el cual es capaz de distinguir el color y material de la pieza. Este sensor distingue entre tres tipos de piezas dependiendo de cuantos bits se activen. Cada bit que se activa es la salida de un sensor, el primerio es un sensor óptico que detecta presencia y se activa siempre (pieza negra), el segundo es òptico también y se enciende si la pieza rebota luz de color (pieza rosa) y el tercero es un sensor inductivo el cual se activa si la pieza es metálica. \cite{estacion_distribucion}.
+      \item \textbf{Sensor para la distinción de piezas:} El sistema viene equipado con un módulo extra situado a la mitad de la cinta el cual es capaz de distinguir el color y material de la pieza. Este sensor distingue entre tres tipos de piezas dependiendo de cuantos bits se activen. Cada bit que se activa es la salida de un sensor, el primero es un sensor óptico que detecta presencia y se activa siempre (pieza negra), el segundo es óptico también y se enciende si la pieza rebota luz de color (pieza rosa) y el tercero es un sensor inductivo el cual se activa si la pieza es metálica. \cite{estacion_distribucion}.
 
     \item \textbf{Sensores láser:} La estación posee sensores ópticos y de proximidad que detectan la presencia de las piezas, funcionan mediante un láser el cual le proporciona datos al PLC.
 
@@ -69,7 +69,7 @@ A continuación, se muestra una imagen en la que se observan todos los component
 \section{Estación unión}
 \label{sec:estacion_union}
 
-La estación de unión de Festo Didactic\footnote{Image retrieved Festo.com.  (N.d.). Retrieved June 4, 2025, from  \url{https://www.festo.com/es/es/p/estacion-de-union-id_PROD_DID_8063910/}} simula un proceso industrial en el que se unen dos piezas mediante un actuador neumático equipado con una ventosa (Pick\&Place) \cite{estacion_union}. El objetivo de esta estación es colocerle o retirerle las tapas a las piezas que estén correctamente orientadas y así terminar la secuencia. La estación está compuesta por un brazo neumático, dos cintas para mover las piezas y tapas, sensores que detectan su presencia y adicionalmente un sensor cuya función es detectar la orientación de las piezas \cite{estacion_union}. Esta estación permite realizar prácticas de automatización como control secuencial, posicionamiento y verificación del montaje. Es ideal para formación técnica en tareas típicas de ensamblaje automatizadas. Se adjuntan las características generales de la estación como se puede ver en el gráfico \ref{fig:estacion_union_3}:
+La estación de unión de Festo Didactic\footnote{Image retrieved Festo.com.  (N.d.). Retrieved June 4, 2025, from  \url{https://www.festo.com/es/es/p/estacion-de-union-id_PROD_DID_8063910/}} simula un proceso industrial en el que se unen dos piezas mediante un actuador neumático equipado con una ventosa (Pick\&Place) \cite{estacion_union}. El objetivo de esta estación es colocarle o retírele las tapas a las piezas que estén correctamente orientadas y así terminar la secuencia. La estación está compuesta por un brazo neumático, dos cintas para mover las piezas y tapas, sensores que detectan su presencia y adicionalmente un sensor cuya función es detectar la orientación de las piezas \cite{estacion_union}. Esta estación permite realizar prácticas de automatización como control secuencial, posicionamiento y verificación del montaje. Es ideal para formación técnica en tareas típicas de ensamblaje automatizadas. Se adjuntan las características generales de la estación como se puede ver en el gráfico \ref{fig:estacion_union_3}:
 
 
 \begin{figure} [h!]
@@ -170,7 +170,7 @@ TIA Portal (Totally Integrated Automation Portal) es una plataforma de ingenier�
 
 Esta plataforma permite trabajar de forma integrada con controladores PLC, interfaces HMI, sistemas SCADA, variadores de velocidad, dispositivos de seguridad y redes industriales, todo desde una única interfaz \cite{TIA_portal}. El entorno TIA Portal combina software como STEP 7 (para programación de PLC), WinCC (para interfaces HMI y SCADA), Startdrive (para variadores SINAMICS), Safety Advanced (para funciones de seguridad) y Energy Suite (para gestión energética) \cite{TIA_portal}.
 
-En este proyecto se ha utilizado la versión \textbf{TIA Portal V16}, la cual permitedividir los proyectos en unidades de software independientes, permitiendo una programación modular con interfaces definidas \cite{TIA_portal}. Esto facilita la colaboración entre varios ingenieros, mejora la reutilización de código y simplifica la gestión de proyectos complejos.
+En este proyecto se ha utilizado la versión \textbf{TIA Portal V16}, la cual permite dividir los proyectos en unidades de software independientes, permitiendo una programación modular con interfaces definidas \cite{TIA_portal}. Esto facilita la colaboración entre varios ingenieros, mejora la reutilización de código y simplifica la gestión de proyectos complejos.
 
 En cuanto a la programación de PLCs, TIA Portal V16 ofrece soporte completo para los controladores SIMATIC S7-1200, S7-1500, S7-300 y S7-400, así como para soluciones de seguridad integradas mediante STEP 7 Safety \cite{TIA_portal}. La integración con WinCC permite el diseño y configuración de interfaces HMI.
 
