@@ -222,13 +222,13 @@ Entre sus principales ventajas frente a los sistemas de bus de campo tradicional
 
 En la automatización industrial, es fundamental seguir una metodología clara que permita diseñar, implementar y controlar los procesos de forma ordenada y eficiente. Para ello, existen herramientas y enfoques que ayudan a representar el comportamiento del sistema, identificar sus distintos modos de funcionamiento y supervisar su estado en tiempo real.
 
-Una de las herramientas más utilizadas es el GRAFCET, un método gráfico que permite describir de forma sencilla el funcionamiento secuencial de un sistema. Junto a él, la guía GEMMA ayuda a identificar los distintos modos de operación del sistema (como arranque, parada o fallo), y sirve como complemento al GRAFCET para organizar mejor el control general del proceso. Por último, los sistemas SCADA juegan un papel clave en la supervisión de procesos industriales, permitiendo al operador visualizar en tiempo real lo que ocurre en planta, modificar parámetros y detectar posibles errores de forma rápida.
+Una de las herramientas más utilizadas es el Grafcet, un método gráfico que permite describir de forma sencilla el funcionamiento secuencial de un sistema. Junto a él, la guía GEMMA ayuda a identificar los distintos modos de operación del sistema (como arranque, parada o fallo), y sirve como complemento al Grafcet para organizar mejor el control general del proceso. Por último, los sistemas SCADA juegan un papel clave en la supervisión de procesos industriales, permitiendo al operador visualizar en tiempo real lo que ocurre en planta, modificar parámetros y detectar posibles errores de forma rápida.
 
 \newpage
 
-\subsubsection{GRAFCET}
+\subsubsection{Grafcet}
 
-El modelo GRAFCET (Graphe Fonctionnel de Commande Étape Transition) es un método gráfico que se utiliza en la automatización industrial para representar y controlar procesos secuenciales. Creado en 1977 por la AFCET (Asociación Francesa para la Cibernética Económica y Técnica), su objetivo es describir el comportamiento de los sistemas de control mediante un diagrama de etapas y transiciones \cite{grafcet_info}. Esto no es un lenguaje de programación, sino una forma de resolver el problema de automatización secuencial previo a su programación en el PLC. A continuación, se describen los distintos elementos que conforman un GRAFCET:
+El modelo Grafcet (Graphe Fonctionnel de Commande Étape Transition) es un método gráfico que se utiliza en la automatización industrial para representar y controlar procesos secuenciales. Creado en 1977 por la AFCET (Asociación Francesa para la Cibernética Económica y Técnica), su objetivo es describir el comportamiento de los sistemas de control mediante un diagrama de etapas y transiciones \cite{grafcet_info}. Esto no es un lenguaje de programación, sino una forma de resolver el problema de automatización secuencial previo a su programación en el PLC. A continuación, se describen los distintos elementos que conforman un Grafcet:
 
 \begin{enumerate}
     \item \textbf{Etapas}: Se representan como cuadros numerados en el diagrama. Cada etapa indica un estado específico del sistema y las acciones que deben llevarse a cabo cuando esa etapa está activa. La etapa inicial se representa con un doble cuadrado.
@@ -243,7 +243,7 @@ Este modelo resulta muy útil en procesos industriales donde las operaciones sig
   \begin{center}
     \includegraphics[width=8cm]{figs/grafcet_def}
   \end{center}
-  \caption{\centering Ejemplo básico de GRAFCET.}
+  \caption{\centering Ejemplo básico de Grafcet.}
   \label{fig:grafcet_def}
 \end{figure} 
 
@@ -261,7 +261,7 @@ El núcleo de la guía se basa en tres grandes categorías: funcionamiento, para
   \item \textbf{Defecto}: La parada de emergencia \cite{guia_gemma}. 
 \end{itemize} 
 
-Además de su valor como herramienta de planificación, GEMMA se integra fácilmente con otras metodologías como el GRAFCET, permitiendo diseñar automatismos más seguros y eficientes. Al normalizar los distintos modos de operación y facilitar la interpretación de los estados de una automatización, la Guía GEMMA se ha convertido en un recurso esencial para la automatización de procesos.
+Además de su valor como herramienta de planificación, GEMMA se integra fácilmente con otras metodologías como el Grafcet, permitiendo diseñar automatismos más seguros y eficientes. Al normalizar los distintos modos de operación y facilitar la interpretación de los estados de una automatización, la Guía GEMMA se ha convertido en un recurso esencial para la automatización de procesos.
 
 \begin{figure} [h!]
   \begin{center}

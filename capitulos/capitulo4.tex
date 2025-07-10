@@ -20,7 +20,7 @@ El objetivo de este trabajo es lograr que el ciclo de producción comience en la
 
 En la sección \ref{sec:descripcion} ya se presentó una visión general del objetivo del proyecto, pero en esta se profundizará en él con una descripción más detallada y específica. El sistema global está compuesto por dos PLCs, una interfaz HMI y un robot colaborativo UR5e. Una parte fundamental del trabajo es garantizar una comunicación fluida y fiable entre todos los componentes para asegurar un funcionamiento coordinado y realista. El trabajo va a ser desarrollado en TIA portal y la comunicación via PROFINET. \\
 
-El objetivo final es desarrollar un ciclo de producción en el que intervengan todos los componentes mencionados, simulando una aplicación industrial realista. Para ello, el ciclo debe iniciarse en la estación de distribución, donde se introducen las piezas en el proceso productivo y se identifica el tipo de material que las compone, con el fin de determinar el tratamiento correspondiente en función de sus características. Los parámetros de distinción de piezas se establecen en el HMI por el operario, si se descarta la pieza, se acabará el ciclo y se empezará de nuevo, pero si es aceptada pasará a la estación unión continuando el proceso. 
+El objetivo final es desarrollar un ciclo de producción en el que intervengan todos los componentes mencionados, simulando una aplicación industrial realista. Para ello, el ciclo debe iniciarse en la estación de distribución, donde se introducen las piezas en el proceso productivo y se identifica el tipo de material que las compone, con el fin de determinar el tratamiento correspondiente en función de sus características. Los parámetros de distinción de piezas se establecen en el HMI por el operario, si se descarta la pieza, se acabará el ciclo y se empezará de nuevo, pero si es aceptada pasará a la estación unión continuando el proceso, ya que las dos estaciones están unidas como se aprecia en la figura \ref{fig:sistemas_unidos}. 
 
 Para que la estación unión comience su proceso dentro del ciclo, es necesario que el PLC que controla la estación distribución le envíe un mensaje al segundo PLC (el que controla la estación unión) para informarle de que debe empezar.  Una vez recibido el mensaje, la segunda estación inicia el proceso tomando la pieza y deteniéndola para verificar su orientación. Si la orientación es correcta, la pieza continúa su avance en el ciclo; en caso contrario, se genera un mensaje de error en el HMI y la pieza es descartada, regresando a la estación de distribución, donde se requerirá una nueva comunicación para reiniciar el proceso. Si la pieza está bien orientada continuará su camino hasta que se pare en un punto donde la tapa proveniente de otra cinta será colocada encima de la pieza con el módulo pick \& place. Una vez terminado el ciclo la estación volverá a comunicarse con la estación unión para hacerle saber que terminó su proceso.
 
@@ -84,7 +84,7 @@ Para intercambiar mensajes y datos entre los dos PLCs se han utilizado las funci
   \label{fig:comunicacion_plcs}
 \end{figure} 
 
-Para establecer la comunicación entre el UR y el PLC (el conectado a la estación distribución) a través de PROFINET, se ha seguido la guía oficial de UR PROFINET\footnote{Profinet Guide - 20596. (n.d.). Universal-robots.com. Retrieved June 25, 2025, from \url{https://www.universal-robots.com/articles/ur/interface-communication/profinet-how-to-guide-e-series/}}. El primer paso es activar la funcionalidad PROFINET en el UR, accediendo a la pestaña “Instalación” de este, esta acción activa un LED amarillo en el controlador, indicando que la función está habilitada pero aún no conectada. A continuación, en el entorno de programación TIA Portal, se debe actualizar la lista de dispositivos accesibles en red, y cuándo el UR aparezca en ella, se le asignan tanto la dirección IP como el nombre del dispositivo al robot. Seguidamente, se importa el archivo GSD proporcionado por Universal Robots en la misma página de la guía, que permite al TIA Portal reconocer al robot como un dispositivo PROFINET compatible. \\
+Para establecer la comunicación entre el UR y el PLC (el conectado a la estación distribución) a través de PROFINET, se ha seguido la guía oficial de UR PROFINET\footnote{Profinet Guide - 20596. (n.d.). Universal-robots.com. Retrieved June 25, 2025, from \url{https://www.universal-robots.com/articles/ur/interface-communication/profinet-how-to-guide-e-series/}}. El primer paso es activar la funcionalidad PROFINET en el UR, accediendo a la pestaña “Instalación” de este, esta acción activa un LED amarillo en el controlador, indicando que la función está habilitada pero aún no conectada. A continuación, en el entorno de programación TIA Portal, se debe actualizar la lista de dispositivos accesibles en red, y cuando el UR aparezca en ella, se le asignan tanto la dirección IP como el nombre del dispositivo al robot. Seguidamente, se importa el archivo GSD proporcionado por Universal Robots en la misma página de la guía, que permite al TIA Portal reconocer al robot como un dispositivo PROFINET compatible. \\
 
 Tras esto, el robot se agrega a la red en la vista de dispositivos y se enlaza con el PLC seleccionando y configurando los módulos de entrada y salida desde el catálogo que se quieren utilizar para la comunicación (en este caso todos), definiendo las direcciones de E/S. Este paso resultó ser el más complejo, ya que al principio, al escribir en direcciones de memoria incorrectas, los mensajes enviados al UR llegaban vacíos, sin embargo, tras consultar la documentación y validar la configuración, se lograron establecer las direcciones adecuadas. Las direcciones de memoria de la imagen \ref{fig:com_ur_modulos} deben coincidir con las mismas de las variables de los datos utilizadas para la comunicación representadas en la imagen \ref{fig:com_plc_ur} para poder modificar los registros de propósito general utilizados en la comunicación (las entradas empiezan en la dirección \%I100 y las salidas en la \%Q100, coincidiendo con las de las variables \texttt{UR\_IN} y \texttt{UR\_OUT}). \\
 
@@ -102,7 +102,7 @@ Esta configuración no fue inmediata, puesto que las guías oficiales no detalla
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=13cm]{figs/com_plc_ur}
+    \includegraphics[width=14cm]{figs/com_plc_ur}
   \end{center}
   \caption{\centering Configuración de los módulos de comunicación del UR en Tia Portal.}
   \label{fig:com_plc_ur}
@@ -112,13 +112,13 @@ Finalmente, una vez que las estructuras de datos definidas por el usuario permit
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=12cm]{figs/ur_conectado_plc}
+    \includegraphics[width=13cm]{figs/ur_conectado_plc}
   \end{center}
   \caption{\centering Conexión establecida entre el UR y el PLC. \cite{guia_profinet}}
   \label{fig:ur_conectado_plc}
 \end{figure} 
 
-Seguidamente se muestra una tabla que resume todos los mensajes intercambiados entre los dispositivos en el ciclo global: 
+Seguidamente se muestra una tabla que resume todos los mensajes intercambiados entre los dos PLCs dentro del ciclo global del sistema: \\
 
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
@@ -126,7 +126,7 @@ Seguidamente se muestra una tabla que resume todos los mensajes intercambiados e
 \begin{center}
 
 \renewcommand{\arraystretch}{1.5}
-\begin{tabular}{|M{1.75cm}|M{1.75cm}|M{3.5cm}|M{7.5cm}|}
+\begin{tabular}{|M{1.5cm}|M{1.75cm}|M{3.75cm}|M{6.5cm}|}
 \hline
 \textbf{Emisor} & 
 \textbf{Receptor} & 
@@ -147,6 +147,30 @@ PLC 2  & PLC 1 &  \makecell{Pieza\_mal\_orientada   \\ (Bool)} &  Se le indica a
 \hline
 PLC 1  & PLC 2 &  \makecell{Pieza\_mal\_ACK  \\ (Bool)} &  Confirmación de la recepción del mensaje Pieza\_mal\_orientada. \\
 \hline
+\end{tabular}
+
+\caption{Intercambio de mensajes entre el PLC 1 y el PLC 2.}
+\label{cuadro:mensajes_plcs}
+\end{center}
+\end{table}
+
+Cada fila representa una comunicación concreta entre el PLC 1 (estación de distribución) y el PLC 2 (estación de unión). Los mensajes son de tipo booleano o entero y permiten coordinar el paso de piezas entre estaciones. Send\_fase\_1 se utiliza para indicar y confirmar el traslado de una pieza aceptada. Tipo\_de\_pieza transmite el tipo de pieza (negra, rosa o metálica) mediante un valor entero. Otros mensajes, como Secuencia\_acabada o Pieza\_mal\_orientada, informan sobre el estado del proceso o si la pieza debe descartarse. Cada mensaje importante cuenta con su correspondiente confirmación (ACK) para asegurar la correcta recepción y sincronización entre ambos PLCs.
+
+\newpage
+
+También se ha realizado una tabla que resume todos los mensajes intercambiados entre los dos el PLC 1 (estación distribución) y el cobot UR5e dentro del ciclo global del sistema: 
+
+\begin{table}[H]
+\begin{center}
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|M{1.5cm}|M{1.75cm}|M{3.75cm}|M{6.5cm}|}
+\hline
+\textbf{Emisor} & 
+\textbf{Receptor} & 
+\textbf{Mensaje} & 
+\textbf{Explicación} \\
+\hline
 PLC 1  & UR5e &  \makecell{Start \\ Registro GPbi [0] \\ (Bool)} & Indica el inicio de la secuencia de colocación de la pieza en el palé del UR. \\
 \hline
 PLC 1  & UR5e  &  \makecell{num\_capas \\ Registro GPii [0] \\ (Int)} & Número de capas elegido en el HMI que se quieren para el paletizado. \\
@@ -165,15 +189,17 @@ PLC 1  & UR5e  &  \makecell{parada\_emergencia  \\  Registro GPbi [1] \\ (Bool)}
 \hline
 \end{tabular}
 
-\caption{Intercambio de mensajes en el ciclo global del sistema.}
-\label{cuadro:mensajes}
+\caption{Intercambio de mensajes entre el PLC 1 y el UR5e.}
+\label{cuadro:mensajes_plc_ur}
 \end{center}
 \end{table}
+
+
  
 \section{Funcionamiento estación distribución}
 \label{sec:funcionamiento_distribucion}
 
-La estación distribución es la encargada de iniciar la secuencia del proceso automático. Está conectada al primer PLC y tiene como función principal suministrar piezas al sistema, ya sea a través de su cinta transportadora o mediante el dispensador de piezas. Además, el usuario puede seleccionar desde el HMI el tipo de material de la pieza para permitir o no su paso. También se establece un número máximo de piezas permitidas; una vez alcanzado este límite, se bloquea el paso de nuevas piezas hasta que el contador sea reiniciado, como medida de control y revisión del proceso. En caso de que la pieza no cumpla con las condiciones establecidas en la interfaz de usuario, esta será devuelta al inicio del recorrido y descartada. Si cumple los requisitos, continuará su avance hacia la siguiente estación. Adicionalmente se ha implementado un modo de prueba que permite verificar el funcionamiento individual de cada sensor y actuador, facilitando así la detección de posibles errores. A continuación, se presenta una tabla que recoge todas las entradas y salidas de la estación, así como su correspondencia con las conexiones al PLC:
+La estación distribución es la encargada de iniciar la secuencia del proceso automático. Está conectada al primer PLC y tiene como función principal suministrar piezas al sistema, ya sea a través de su cinta transportadora o mediante el dispensador de piezas. Además, el usuario puede seleccionar desde el HMI el tipo de material de la pieza para permitir o no su paso. También se establece un número máximo de piezas permitidas; una vez alcanzado este límite, se bloquea el paso de nuevas piezas hasta que el contador sea reiniciado, como medida de control y revisión del proceso. En caso de que la pieza no cumpla con las condiciones establecidas en la interfaz de usuario, esta será devuelta al inicio del recorrido y descartada. Si cumple los requisitos, continuará su avance hacia la siguiente estación. Adicionalmente se ha implementado un modo de prueba que permite verificar el funcionamiento individual de cada sensor y actuador, facilitando así la detección de posibles errores. Cabe resaltar que la conexión entre el PLC y la estación distribución se ha hecho punto a punto con los respectivos módulos de entradas y salidas digitales A continuación, se presenta una tabla que recoge todas las entradas y salidas de la estación, así como su correspondencia con las conexiones al PLC:
 
 \begin{table}[H]
 \begin{center}
@@ -227,13 +253,13 @@ En el caso de que no ocurra ningún imprevisto, se da por finalizado el proceso 
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=14cm]{figs/grafcet_distribucion}
+    \includegraphics[width=13cm]{figs/grafcet_distribucion}
   \end{center}
   \caption{\centering Grafcet del funcionamiento de la estación distribución.}
   \label{fig:grafcet_distribucion}
 \end{figure} 
 
-En el anexo \ref{sec:anexo_distribucion} se detallan las ecuaciones lógicas del Grafcet de la estación distribución.
+En el anexo \ref{sec:anexo_distribucion} se detallan las ecuaciones lógicas del Grafcet de la estación distribución. Además, en el material suplementario de la memoria está el diagrama de contactos que implementa el Grafcet en TIA Portal llamado \textbf{codigo\_estacion\_distribucion}.
 
 \clearpage
 
@@ -286,7 +312,7 @@ En la figura anterior se presenta una captura de pantalla del HMI en modo de fun
 \section{Funcionamiento estación unión}
 \label{sec:funcionamiento_union}
 
-La estación de unión es la encargada de ensamblar las diferentes piezas que llegan desde la estación anterior, la cual se encuentra conectada al segundo PLC del sistema y tiene como objetivo principal la unión de una base con una tapa, verificando previamente que ambas piezas estén correctamente posicionadas. El proceso de unión se lleva a cabo mediante un actuador neumático equipado con una ventosa, el cual puede desplazarse entre las dos cintas transportadoras para ascender o descender con el fin de recoger o depositar las tapas. En caso de que alguna de las piezas se encuentre mal posicionada, el sistema detiene el ciclo, notifica el error a través de un mensaje mostrado en la pantalla del HMI y descarta la pieza afectada. Esta estación, al igual que la estación de distribución, dispone de un modo de prueba que permite revisar de forma individual el funcionamiento de cada sensor y actuador, lo cual facilita la identificación de posibles fallos. A continuación, se presentan la tabla \ref{cuadro:union}, en la que se detallan todas las entradas y salidas de la estación, así como su correspondiente conexión con el PLC.
+La estación de unión es la encargada de ensamblar las diferentes piezas que llegan desde la estación anterior, la cual se encuentra conectada al segundo PLC del sistema y tiene como objetivo principal la unión de una base con una tapa, verificando previamente que ambas piezas estén correctamente posicionadas. El proceso de unión se lleva a cabo mediante un actuador neumático equipado con una ventosa, el cual puede desplazarse entre las dos cintas transportadoras para ascender o descender con el fin de recoger o depositar las tapas. En caso de que alguna de las piezas se encuentre mal posicionada, el sistema detiene el ciclo, notifica el error a través de un mensaje mostrado en la pantalla del HMI y descarta la pieza afectada. Esta estación, al igual que la estación de distribución, dispone de un modo de prueba que permite revisar de forma individual el funcionamiento de cada sensor y actuador y también se trata de una conexión punto a punto con los correspondientes módulos de E/S digitales.  A continuación, se presentan la tabla \ref{cuadro:union}, en la que se detallan todas las entradas y salidas de la estación, así como su correspondiente conexión con el PLC.
 
 \begin{table}[H]
 \begin{center}
@@ -345,12 +371,12 @@ Una vez la pieza está parada y la tapa lista para recogerse, el carro se extien
 \clearpage
  
  \begin{figure}[h!]
-  \includegraphics[width=15cm]{figs/grafcet_union}
+  \includegraphics[width=14.5cm]{figs/grafcet_union}
   \caption{\centering Grafcet de funcionamiento de la estación unión.}
   \label{fig:grafcet_union}
 \end{figure}
 
-En el anexo \ref{sec:anexo_union} se detallan las ecuaciones lógicas del Grafcet de la estación distribución.
+En el anexo \ref{sec:anexo_union} se detallan las ecuaciones lógicas del Grafcet de la estación distribución. Además, en el material suplementario de la memoria está el diagrama de contactos que implementa el Grafcet en TIA Portal llamado \textbf{codigo\_estacion\_union}.
 
 \clearpage
 
@@ -483,23 +509,25 @@ Este conjunto de estados definidos por la Guía GEMMA describe las distintas sit
 
 \subsubsection{Proceso en defecto}
 
-Dentro del proceso de defecto sólo se ha programado el estado D1 de parada de emergencia. Este estado representa una situación crítica en la que el sistema se detiene de forma inmediata debido a una emergencia \cite{guia_gemma}. La parada se realiza sin esperar a que finalice el ciclo, con el objetivo de garantizar la seguridad de las personas, del sistema o del entorno \cite{guia_gemma}. Este estado puede ser alcanzado en cualquier momento que se presione el botón ``parada de emergencia'' desde el HMI en el modo de funcionamiento. Una vez pulsado el botón se para el funcionamiento de todo el sistema para ser revisado por un operario, y una vez resuelto el problema, se podrá volver a comenzar con el ciclo de producción desde 0.
+Dentro del proceso de defecto sólo se ha programado el estado D1 de parada de emergencia. Este estado representa una situación crítica en la que el sistema se detiene de forma inmediata debido a una emergencia \cite{guia_gemma}. La parada se realiza sin esperar a que finalice el ciclo, con el objetivo de garantizar la seguridad de las personas, del sistema o del entorno \cite{guia_gemma}. Este estado puede ser alcanzado en cualquier momento que se presione el botón ``parada de emergencia'' desde el HMI en el modo de funcionamiento. Una vez pulsado el botón se para el funcionamiento de todo el sistema para ser revisado por un operario, y una vez resuelto el problema, se podrá volver a comenzar con el ciclo de producción desde 0. \\
 
-\subsubsection{Aplicación de la Guía GEMMA}
-
-Una vez descritos en detalle todos los posibles estados que puede adoptar el sistema a lo largo de su funcionamiento, se presenta a continuación la imagen \ref{fig:guia_gemma_final} muestra gráficamente todas las transiciones entre dichos estados. Esta representación visual resulta especialmente útil para comprender de forma global el comportamiento del sistema automatizado en sus distintas fases operativas. 
+Para activar la parada de emergencia del sistema, se ha definido una condición en cada etapa del Grafcet, si se pulsa el botón de "parada de emergencia", todas las etapas se desactivan inmediatamente. Esto provoca que se anulen también las señales enviadas a los actuadores, deteniendo por completo el funcionamiento del sistema.
 
 \clearpage
 
+\subsubsection{Aplicación de la Guía GEMMA}
+
+Una vez descritos en detalle todos los posibles estados que puede adoptar el sistema a lo largo de su funcionamiento, se presenta a continuación la imagen \ref{fig:guia_gemma_final} la cual muestra gráficamente todas las transiciones entre dichos estados. Esta representación visual resulta especialmente útil para comprender de forma global el comportamiento del sistema automatizado en sus distintas fases operativas. 
+
 \begin{figure}[h!]
   \begin{center}
-  	\includegraphics[width=16.5cm]{figs/guia_gemma_final}
+  	\includegraphics[width=14.7cm]{figs/guia_gemma_final}
   \end{center}
   \caption{\centering Esquema de transiciones de la aplicación de la Guía GEMMA en el sistema.}
   \label{fig:guia_gemma_final}
 \end{figure}
 
-En la figura, los elementos de color verde corresponden al proceso de funcionamiento normal, los de color amarillo al proceso de parada o de puesta en marcha, y los de color rojo al proceso de detección de defectos o fallos. La imagen también cuenta con una leyenda explicando las acciones necesarias para transicionar entre estados.
+En la figura \ref{fig:guia_gemma_final}, los elementos de color verde corresponden al proceso de funcionamiento normal, los de color amarillo al proceso de parada o de puesta en marcha, y los de color rojo al proceso de detección de defectos o fallos. La imagen también cuenta con una leyenda explicando las acciones para transicionar entre estados.
 
 \clearpage
 
@@ -528,7 +556,7 @@ Como ya se ha visto en la sección \ref{sec:conectividad_dispositivos}, el PLC 1
   \label{fig:resultado_paletizado}
 \end{figure}
 
-Las coordenadas de la posición de las piezas en el paletizado se han tomado de forma relativa a la coordenada del primer brick de leche. La primera coordenada se definió en la posición que se quería colocar el primer elemento del palé, y a partir de esta y tomándola de referencia, se han definido las 5 coordenadas restantes. Al utilizar el sistema de coordenadas del primer punto se han podido colocar elementos paralelos y perpendiculares al primero, ayudando a aportar gran estabilidad y orden al palé. Esta técnica también ha ayudado mucho a establecer la misma altura de todos los bricks de leche y asegurarse así que no se coloquen de forma uniforme. Adicionalmente, se han establecido algunos puntos de paso también utilizando este sistema de coordenadas para intentar establecer los movimientos lo más rectilíneos posibles. Seguidamente se muestra una tabla que refleja las coordenadas de las posiciones de cada pieza que forman el palé, tomando como referencia la primera posición para definir el resto de ellas:
+Las coordenadas de la posición de las piezas en el paletizado se han tomado de forma relativa a la coordenada del primer brick de leche. La primera coordenada se definió en la posición que se quería colocar el primer elemento del palé, y a partir de esta y tomándola de referencia, se han definido las 5 coordenadas restantes. Al utilizar el sistema de coordenadas del primer punto se han podido colocar elementos paralelos y perpendiculares al primero, ayudando a aportar gran estabilidad y orden al palé. Esta técnica también ha ayudado mucho a establecer la misma altura de todos los bricks de leche y asegurarse así que se coloquen de forma uniforme. Adicionalmente, se han establecido algunos puntos de paso también utilizando este sistema de coordenadas para establecer movimientos rectilíneos y dar estabilidad a las piezas durante el movimiento. Seguidamente se muestra una tabla que refleja las coordenadas de las posiciones de cada pieza que forman el palé, tomando como referencia la primera posición para definir el resto de ellas:
 
 \begin{table}[H]
 \begin{center}
@@ -602,7 +630,7 @@ pale\_ACK  & GPbo [2] & Salida & Entrada & Bool \\
 \end{center}
 \end{table}
 
-En el cuadro \ref{cuadro:mensajes} ya se ha explicado el objetivo y significado de la utilización de estos registros en el código del UR; sin embargo, en este apartado se va a profundizar aún más en su funcionamiento, describiendo detalladamente la lógica implementada, comentando el código del brazo robótico que se muestra a continuación, y explicando cómo se gestionan las señales de comunicación y sincronización de tareas.
+En el cuadro \ref{cuadro:mensajes_plc_ur} ya se ha explicado el objetivo y significado de la utilización de estos registros en el código del UR; sin embargo, en este apartado se va a profundizar aún más en su funcionamiento, describiendo detalladamente la lógica implementada, comentando el código del brazo robótico que se muestra a continuación, y explicando cómo se gestionan las señales de comunicación y sincronización de tareas.
 
 \begin{code}[h]
 \begin{lstlisting}[]
@@ -624,7 +652,7 @@ Bucle num_capas>contador_piezas:
     Esperar: start:=Hi
     if contador_piezas + 1 >= num_capas:
         Ajustar pale_completo= True
-    Else:
+    else:
         Ajustar ejecutando_proc= True
     Ajustar piezas_paletizadas= contador_piezas + 1
     # Coger pieza
@@ -639,12 +667,12 @@ Bucle num_capas>contador_piezas:
         Moverj
             base_colocar_3
     # Punto de paso de coordenada 4
-    Elseif capa_controller == 3:
+    else if capa_controller == 3:
         Moverj
             base_colocar_1
             base_colocar_2
     # Punto de paso del resto de coordenadas
-    Else:
+    else:
         Moverj
             base_colocar_1
     # Coordenadas de las posiciones de las piezas
@@ -708,7 +736,7 @@ Esperar: 1.0
 
 El código del UR5e define un programa de control que ejecuta un ciclo de recogida y colocación de piezas en distintas coordenadas de un palé. Al inicio, se inicializan variables de control: \texttt{ejecutando\_proc} se pone en falso, \texttt{capa\_controller} y \texttt{contador\_piezas} se inicializan en cero, y se calcula \texttt{num\_capas} multiplicando \texttt{numero\_capas} (información leída del registro GPii [0] cuyo valor es introducido por el operario en el HMI) por tres debido a que cada capa consta de tres elementos, limitándolo a un máximo de 12.
 
-El programa del robot se repite en bucle constantemente, y dentro de él, el ciclo principal se ejecuta siempre y cuando \texttt{contador\_capas} sea menor que \texttt{num\_capas}. Dentro del bucle, se inicializan los registros \texttt{pale\_completo} y \texttt{pale\_ACK} con el valor cero para indicar al PLC que el robot UR está a la espera de la orden de inicio. A continuación, el robot se desplaza a la posición de inicio para quedar preparado y, cuando el PLC activa el registro \texttt{start}, el programa verifica si la pieza a colocar corresponde a la última del palé o no. En caso afirmativo, se activa el registro \texttt{pale\_completo} para indicar al sistema que, una vez colocada esta pieza, el palé debe ser retirado por estar completo mediante un mensaje en el HMI como se observa en la figura \ref{fig:HMI_funcionamiento_UR}. Si no se trata de la última pieza, se activa el registro \texttt{ejecutando\_proc} para indicar al PLC que el UR ha iniciado su ciclo. Para terminar la comunicación inicial de la secuencia, se le indica al PLC a través del registro \texttt{piezas\_paletizadas} el número de pieza que está siendo colocada en ese momento, mostrándose en la pantalla del HMI como se observa en la siguiente imagen:
+El programa del robot se repite en bucle constantemente, y dentro de él, el ciclo principal se ejecuta siempre y cuando \texttt{contador\_capas} sea menor que \texttt{num\_capas}. Dentro del bucle, se inicializan los registros \texttt{pale\_completo} y \texttt{pale\_ACK} con el valor cero para indicar al PLC que el robot UR está a la espera de la orden de inicio. A continuación, el robot se desplaza a la posición de inicio para quedar preparado y, cuando el PLC activa el registro \texttt{start}, el programa verifica si la pieza a colocar corresponde a la última del palé o no. En caso afirmativo, se activa el registro \texttt{pale\_completo} para indicar al sistema que, una vez colocada esta pieza, el palé debe ser retirado por estar completo mediante un mensaje en el HMI como se observa en la figura \ref{fig:HMI_funcionamiento_UR_recoger}. Si no se trata de la última pieza, se activa el registro \texttt{ejecutando\_proc} para indicar al PLC que el UR ha iniciado su ciclo. Para terminar la comunicación inicial de la secuencia, se le indica al PLC a través del registro \texttt{piezas\_paletizadas} el número de pieza que está siendo colocada en ese momento, mostrándose en la pantalla del HMI como se observa en la siguiente imagen:
 
 \begin{figure}[h!]
   \begin{center}
@@ -729,7 +757,7 @@ Si el UR ya ha colocado todas las piezas en sus respectivas coordenadas y el pal
 \section{Resultado final}
 \label{sec:resultado_final}
 
-En este apartado se presentan los resultados finales obtenidos tras el desarrollo e implementación del proyecto. Se incluyen vídeos demostrativos en los que se puede observar el funcionamiento del sistema automático industrial en condiciones reales de operación. Estos vídeos ilustran el comportamiento del proceso completo, mostrando cómo el sistema responde a las diferentes señales de control, coordina sus componentes y ejecuta de forma autónoma las tareas para las que fue diseñado. 
+En este apartado se presentan los resultados finales obtenidos tras el desarrollo e implementación del proyecto. Se incluyen enlaces a vídeos demostrativos en los que se puede observar el funcionamiento del sistema automático industrial en condiciones reales de operación. Estos vídeos ilustran el comportamiento del proceso completo, mostrando cómo el sistema responde a las diferentes señales de control, coordina sus componentes y ejecuta de forma autónoma las tareas para las que fue diseñado. 
 
 \clearpage
 
@@ -771,7 +799,7 @@ El vídeo muestra la secuencia completa de paletizado realizada por el robot UR.
 
 \textbf{Vídeo:} \url{https://youtu.be/WvFtP7whsRg} \\
 
-Este último ejemplo ilustra una situación de parada de emergencia. En le vídeo se observa que, una vez iniciado el ciclo global, el sistema opera con normalidad hasta que se activa el botón “parada de emergencia”, lo que provoca la detención inmediata de todo el proceso y de todos los actuadores. En este estado, todos los elementos del sistema quedan bloqueados para permitir la identificación y resolución del fallo que originó la parada. Una vez solucionada la incidencia, se debe pulsar nuevamente el botón “iniciar programa” para retornar al estado inicial de parada.
+Este último ejemplo ilustra una situación de parada de emergencia. En el vídeo se observa que, una vez iniciado el ciclo global, el sistema opera con normalidad hasta que se activa el botón “parada de emergencia”, lo que provoca la detención inmediata de todo el proceso y de todos los actuadores. En este estado, todos los elementos del sistema quedan bloqueados para permitir la identificación y resolución del fallo que originó la parada. Una vez solucionada la incidencia, se debe pulsar nuevamente el botón “iniciar programa” para retornar al estado inicial de parada.
 
 En el vídeo se muestra una repetición de la secuencia, esta vez interrumpida mediante una parada de emergencia justo en el momento en que el robot UR se encuentra ejecutando su secuencia de paletizado. Tal como se observa, al pulsar el botón “parada de emergencia” desde el HMI, el UR recibe la orden de abortar el programa a través del registro \texttt{GPbi[1]}, finalizando inmediatamente su operación.
 
